@@ -28,7 +28,7 @@ public class Calc {
     public String getBurningTime() {
         return Math.round(softVal / (weight/10))+"";
     }
-
+//lasketaan kalorit
     public int getCalories() {
         return 0;
     }
