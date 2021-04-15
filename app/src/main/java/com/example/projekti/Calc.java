@@ -19,14 +19,14 @@ public class Calc {
         this.weight = weight;
     }
 
-    public double getAlcoholInBlood() {
+    public String getAlcoholInBlood() {
         double kerroin = gender == "man" ? 0.75 * weight : 0.66 * weight;
         double amount = softVal + strongVal + wineVal + liquorVal;
-        return Math.round(amount / kerroin * 100.0) / 100.0;
+        return Math.round(amount / kerroin * 100.0) / 100.0+"";
     }
 
-    public int getBurningTime() {
-        return 0;
+    public String getBurningTime() {
+        return Math.round(softVal / (weight/10))+"";
     }
 
     public int getCalories() {

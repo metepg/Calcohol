@@ -16,8 +16,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void laske() {
-        Calc laskin = new Calc(0, 0, 0, 500, "man", 60 );
-        String je = laskin.getAlcoholInBlood() + "";
-        Log.i(TAG, je);
+        Calc laskin = new Calc(1500, 0, 0, 0, "man", 60 );
+        String alcBlood = laskin.getAlcoholInBlood() + "";
+        String alcTime = laskin.getBurningTime()+"";
+        Log.i(TAG, "Alcohol in blood: " + alcBlood+"%");
+        Log.i(TAG, "Time to sober:  " +alcTime+" h");
     }
 }
