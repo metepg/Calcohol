@@ -29,6 +29,7 @@ public class Calc {
         return Math.round(softVal / (weight/10))+"";
     }
 //lasketaan kalorit
+    // joo iha vitun hyvä
     public int getCalories() {
         return 0;
     }
