@@ -26,7 +26,7 @@ public class Gender extends AppCompatActivity {
             Log.d("sukupuoli", "ei toimi");
         }
         else {
-            Log.d("sukupuoli", "toimii");
+            finish();
         }
     }
 }

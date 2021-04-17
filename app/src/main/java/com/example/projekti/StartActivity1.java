@@ -2,6 +2,7 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ public class StartActivity1 extends AppCompatActivity {
             ageElement.setError("Only +18 year old allowed to continue");
         }
         else {
-            ageElement.setError("You are allowed to continue!");
+            finish();
         }
     }
 }
