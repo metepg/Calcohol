@@ -9,16 +9,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.kofigyan.stateprogressbar.StateProgressBar;
+
 //First activity
 public class StartActivity1 extends AppCompatActivity {
+    String[] descriptionData = {"Age", "Gender", "Weight"};
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start1);
+
+        StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
+        stateProgressBar.setStateDescriptionData(descriptionData);
+
+        button = findViewById(R.id.btn);
+        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+
     }
     //check age
     public void checkAge(View view) {
+
         EditText ageElement = findViewById(R.id.age);
         Log.d("moi", ageElement.getText().toString());
         String age = ageElement.getText().toString();
@@ -28,7 +41,9 @@ public class StartActivity1 extends AppCompatActivity {
             ageElement.setError("Only +18 year old allowed to continue");
         }
         else {
-            finish();
+
+            Intent askGender = new Intent(this, Gender.class);
+            startActivity(askGender);
         }
     }
 }
