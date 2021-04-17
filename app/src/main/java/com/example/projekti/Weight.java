@@ -36,7 +36,7 @@ public class Weight extends AppCompatActivity {
         }
         else {
             Log.d("paino", "tarpeeksi painoa");
-
+    finish();
         }
     }
 }

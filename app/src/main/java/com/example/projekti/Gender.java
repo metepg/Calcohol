@@ -41,7 +41,7 @@ public class Gender extends AppCompatActivity {
             Log.d("sukupuoli", "ei toimi");
         }
         else {
-
+    finish();
             Intent askWeight = new Intent(this, Weight.class);
             startActivity(askWeight);
         }

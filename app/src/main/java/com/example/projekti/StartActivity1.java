@@ -41,7 +41,7 @@ public class StartActivity1 extends AppCompatActivity {
             ageElement.setError("Only +18 year old allowed to continue");
         }
         else {
-
+        finish();
             Intent askGender = new Intent(this, Gender.class);
             startActivity(askGender);
         }
