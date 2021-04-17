@@ -14,13 +14,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         laske();
-<<<<<<< HEAD
+
         Intent askGender = new Intent(this, Gender.class);
         startActivity(askGender);
-=======
+
         Intent askAge = new Intent(this, StartActivity1.class);
         startActivity(askAge);
->>>>>>> 5ac300607354a7423bd149effb174b4ec04af6b0
+
     }
 
     public void laske() {
