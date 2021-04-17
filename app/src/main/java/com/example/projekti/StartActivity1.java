@@ -24,7 +24,7 @@ public class StartActivity1 extends AppCompatActivity {
             allowed.setText("Only +18 year old allowed to continue");
         } else {
             allowed.setText("juujuu");
-        }
+        }//perse
 
     }
 }
