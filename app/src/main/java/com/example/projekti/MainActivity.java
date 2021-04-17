@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         laske();
-        Intent intent = new Intent(this, StartActivity1.class);
-        startActivity(intent);
+        Intent askAge = new Intent(this, StartActivity1.class);
+        startActivity(askAge);
     }
 
     public void laske() {

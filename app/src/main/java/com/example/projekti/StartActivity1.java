@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
+//First activity
 public class StartActivity1 extends AppCompatActivity {
 
     @Override
@@ -15,6 +15,7 @@ public class StartActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start1);
     }
+    //check age
     public void checkAge(View view) {
         EditText ageElement = findViewById(R.id.age);
         Log.d("moi", ageElement.getText().toString());
@@ -23,7 +24,7 @@ public class StartActivity1 extends AppCompatActivity {
         if (age < 18){
             allowed.setText("Only +18 year old allowed to continue");
         } else {
-            allowed.setText("juujuu");
+            allowed.setText("You are allowed to continue!");
         }
 
     }
