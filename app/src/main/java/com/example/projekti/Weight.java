@@ -28,7 +28,7 @@ public class Weight extends AppCompatActivity {
 
         EditText weightElement = findViewById(R.id.weight);
         String weight = (weightElement.getText().toString());
-        TextView allowed = findViewById(R.id.txtv);
+
 
         if(weight.isEmpty()) {
             weightElement.setError("painosi on liian vähän");
