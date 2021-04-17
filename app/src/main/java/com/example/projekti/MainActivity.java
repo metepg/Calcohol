@@ -15,12 +15,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         laske();
 
+<<<<<<< HEAD
         Intent askGender = new Intent(this, Gender.class);
         startActivity(askGender);
 
+=======
+>>>>>>> 8f799dd4c39098cf9f133f8b798773fca0f55b73
         Intent askAge = new Intent(this, StartActivity1.class);
+        Intent askWeight = new Intent(this, Weight.class);
+        Intent askGender = new Intent(this, Gender.class);
+
+        // Kysy ikä
         startActivity(askAge);
 
+<<<<<<< HEAD
+=======
+        // Kysy sp
+        startActivity(askGender);
+
+        // Kysy paino
+        startActivity(askWeight);
+
+        Log.d(TAG, "kaikki ok");
+>>>>>>> 8f799dd4c39098cf9f133f8b798773fca0f55b73
     }
 
     public void laske() {
