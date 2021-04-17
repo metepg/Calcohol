@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekti">
+<<<<<<< HEAD
         <activity android:name=".Gender"></activity>
+=======
+        <activity android:name=".StartActivity1"></activity>
+>>>>>>> 5ac300607354a7423bd149effb174b4ec04af6b0
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
