@@ -2,6 +2,7 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,9 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 public class Weight extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     Button button;
+    private final static String USER = "properties";
+    private static final String WEIGHTKEY = "weightValue";
+    private static final String INITKEY = "valuesSet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +40,16 @@ public class Weight extends AppCompatActivity {
         }
         else {
             Log.d("paino", "tarpeeksi painoa");
-    finish();
+            SharedPreferences userPreferences = getSharedPreferences(USER,  MODE_PRIVATE);
+            SharedPreferences.Editor editor = userPreferences.edit();
+            editor.putString(WEIGHTKEY, weight);
+
+            // Jos kaikki ok niin lisää boolean arvo
+            // Mainactivityssä verrataan siihen onko tiedot lisätty jo
+            // Laita false jos haluat pyörittää login valikkoa aina uusiks
+            editor.putBoolean(INITKEY, true);
+            editor.commit();
+            finish();
         }
     }
 }
