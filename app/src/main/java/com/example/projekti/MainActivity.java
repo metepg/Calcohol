@@ -17,20 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent askAge = new Intent(this, StartActivity1.class);
 
-
-
-        // Kysy ikä
-
-
-
-        // Kysy sp
-
-
-        // Kysy paino
-
-
         startActivity(askAge);
-
 
         Log.d(TAG, "kaikki ok");
 
