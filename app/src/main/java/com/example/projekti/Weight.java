@@ -49,7 +49,6 @@ public class Weight extends AppCompatActivity {
             // Laita false jos haluat pyörittää login valikkoa aina uusiks
             editor.putBoolean(INITKEY, true);
             editor.commit();
-            finish();
         }
     }
 }

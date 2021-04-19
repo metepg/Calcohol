@@ -52,7 +52,7 @@ public class StartActivity1 extends AppCompatActivity {
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(AGEKEY, age);
             editor.commit();
-            finish();
+
             Intent askGender = new Intent(this, Gender.class);
             startActivity(askGender);
         }

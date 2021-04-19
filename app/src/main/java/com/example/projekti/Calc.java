@@ -42,6 +42,16 @@ public class Calc {
         return total;
     }
 
+    // Return total amount of portions as a number
+    public int getPortions() {
+        double soft = softAmount / 330.0 ;
+        double strong = strongAmount / 330.0;
+        double wine = wineAmount / 120.0;
+        double liquor = liquorAmount / 40.0;
+        int total = (int) Math.round(soft + strong + wine + liquor);
+        return total;
+    }
+
     // How long until alcohol is gone
     // Return as hours e.g. 2
     public String getBurningTime() {
