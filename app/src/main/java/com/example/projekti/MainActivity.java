@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Tää on se storage mihin tietoja tallentuu tietoja
+        // Tää on se storage mihin tallentuu tietoja
         SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
         Log.d(TAG, String.valueOf(sharedPrefs.contains("valuesSet")));
 
@@ -27,24 +27,18 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
-            laske();
+
             //Intent mainView = new Intent(this, MainView.class);
             //startActivity(mainView);
+
+            Intent mainView = new Intent(this, MainView.class);
+            startActivity(mainView);
+
         }
         // Jos ei ole niin..
         else {
             Intent askAge = new Intent(this, StartActivity1.class);
             startActivity(askAge);
         }
-    }
-
-    public void laske() {
-        Calc laskin = new Calc(0, 0, 0, 80, "man", 60 );
-        String alcBlood = laskin.getAlcoholInBlood() + "";
-        String alcTime = laskin.getBurningTime()+"";
-        String cal = laskin.getCalories()+"";
-        Log.i(TAG, "Alcohol in blood: " + alcBlood+"%");
-        Log.i(TAG, "Time to sober:  " +alcTime+" h");
-        Log.i(TAG, "Calories:  " +cal+" kcal");
     }
 }

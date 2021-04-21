@@ -45,7 +45,6 @@ public class Gender extends AppCompatActivity {
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(GENDERKEY, gender);
             editor.commit();
-    finish();
             Intent askWeight = new Intent(this, Weight.class);
             startActivity(askWeight);
         }

@@ -13,13 +13,41 @@ public class Calc {
     // amount = alcohol amount as ml
     // gender = "woman" / "man"
     // weight = kg
-    public Calc(int softAmount, int strongAmount, int wineAmount, int liquorAmount, String gender, int weight){
-        this.softAmount = softAmount;
-        this.strongAmount = strongAmount;
-        this.wineAmount = wineAmount;
-        this.liquorAmount = liquorAmount;
+    public Calc(String gender, int weight){
+        this.softAmount = 0;
+        this.strongAmount = 0;
+        this.wineAmount = 0;
+        this.liquorAmount = 0;
         this.gender = gender;
         this.weight = weight;
+    }
+
+    public void addSoft(int amount){
+        softAmount += amount;
+        if(softAmount < 0){
+            softAmount = 0;
+        }
+    }
+
+    public void addStrong(int amount) {
+        strongAmount += amount;
+        if(strongAmount < 0){
+            strongAmount = 0;
+        }
+    }
+
+    public void addWine(int amount){
+        wineAmount += amount;
+        if(wineAmount < 0){
+            wineAmount = 0;
+        }
+    }
+
+    public void addLiquor(int amount) {
+        liquorAmount += amount;
+        if(liquorAmount < 0){
+            liquorAmount = 0;
+        }
     }
 
     // Calculate alcohol level in blood
@@ -28,7 +56,7 @@ public class Calc {
     public String getAlcoholInBlood() {
         double multiplier = gender == "man" ? 75 * weight : 66 * weight;
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
-        return alcoholLevel+"";
+        return "Alcohol in blood: " + alcoholLevel + "%";
     }
 
     // Return total alcohol amount as grams
@@ -39,6 +67,16 @@ public class Calc {
         double wine = 12.50 * (wineAmount/100.0);
         double liquor = 40.00 * (liquorAmount/100.0);
         double total = (soft + strong + wine + liquor) * 0.79;
+        return total;
+    }
+
+    // Return total amount of portions as a number
+    public int getPortions() {
+        double soft = softAmount / 330.0 ;
+        double strong = strongAmount / 330.0;
+        double wine = wineAmount / 120.0;
+        double liquor = liquorAmount / 40.0;
+        int total = (int) Math.round(soft + strong + wine + liquor);
         return total;
     }
 
