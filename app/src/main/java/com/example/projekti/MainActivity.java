@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             //Intent mainView = new Intent(this, MainView.class);
             //startActivity(mainView);
 
-            Intent mainView = new Intent(this, MainView.class);
+            Intent mainView = new Intent(this, AmountChart.class);
             startActivity(mainView);
 
         }
