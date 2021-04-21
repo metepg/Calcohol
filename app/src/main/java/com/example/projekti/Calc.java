@@ -22,28 +22,28 @@ public class Calc {
         this.weight = weight;
     }
 
-    public void addSoft(int amount){
+    public void addSoft(double amount){
         softAmount += amount;
         if(softAmount < 0){
             softAmount = 0;
         }
     }
 
-    public void addStrong(int amount) {
+    public void addStrong(double amount) {
         strongAmount += amount;
         if(strongAmount < 0){
             strongAmount = 0;
         }
     }
 
-    public void addWine(int amount){
+    public void addWine(double amount){
         wineAmount += amount;
         if(wineAmount < 0){
             wineAmount = 0;
         }
     }
 
-    public void addLiquor(int amount) {
+    public void addLiquor(double amount) {
         liquorAmount += amount;
         if(liquorAmount < 0){
             liquorAmount = 0;
