@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
             laske();
-            Intent mainView = new Intent(this, MainView.class);
-            startActivity(mainView);
+            //Intent mainView = new Intent(this, MainView.class);
+            //startActivity(mainView);
         }
         // Jos ei ole niin..
         else {
