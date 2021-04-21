@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class MainView extends AppCompatActivity {
 
     private Counter soft = new Counter();
@@ -25,6 +28,7 @@ public class MainView extends AppCompatActivity {
     TextView smallLiquor;
     TextView bigLiquor;
     TextView totalText;
+    TextView portions;
 
     Spinner softPortion;
     Spinner strongPortion;
@@ -74,6 +78,7 @@ public class MainView extends AppCompatActivity {
         smallLiquor = findViewById(R.id.smallLiquor);
         bigLiquor = findViewById(R.id.bigLiquor);
         totalText = findViewById(R.id.totalText);
+        portions = findViewById(R.id.portions);
 
         softPortion = findViewById(R.id.softSpinner);
         strongPortion = findViewById(R.id.strongSpinner);
@@ -133,6 +138,7 @@ public class MainView extends AppCompatActivity {
                 break;
         }
         totalText.setText(total.getAlcoholInBlood());
+        portions.setText(String.valueOf(total.getPortions()));
     }
 
 
@@ -201,6 +207,7 @@ public class MainView extends AppCompatActivity {
                 break;
         }
         totalText.setText(total.getAlcoholInBlood());
+        portions.setText(String.valueOf(total.getPortions()));
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -216,8 +223,42 @@ public class MainView extends AppCompatActivity {
                 return 500.0;
             case "0.375 l":
                 return 375.0;
-
         }
         return 0;
+    }
+
+    public void addToCalendar(View view) {
+        if(total.getPortions() == 0) {
+            return;
+        }
+        LocalDate myObj = LocalDate.now();
+        DateTimeFormatter getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String formattedDate = myObj.format(getDate);
+        System.out.println(formattedDate);
+        System.out.println(total.getPortions());
+        resetFields();
+    }
+
+    public void resetFields(){
+        soft.reset();
+        strong.reset();
+        wine.reset();
+        liquor.reset();
+        total.reset();
+
+        updateField(smallSoft, "0");
+        updateField(bigSoft, "0");
+
+        updateField(smallStrong, "0");
+        updateField(bigStrong, "0");
+
+        updateField(bigWine, "0");
+        updateField(smallWine, "0");
+
+        updateField(smallLiquor, "0");
+        updateField(bigLiquor, "0");
+
+        updateField(totalText, "0.0%");
+        updateField(portions, "0");
     }
 }

@@ -56,7 +56,7 @@ public class Calc {
     public String getAlcoholInBlood() {
         double multiplier = gender == "man" ? 66 * weight : 75 * weight;
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
-        return "Alcohol in blood: " + alcoholLevel + "%";
+        return alcoholLevel + "%";
     }
 
     // Return total alcohol amount as grams
@@ -89,5 +89,13 @@ public class Calc {
     //lasketaan kalorit
     public int getCalories() {
         return (int) Math.round(getAlcoholAmountAsGrams() * 11);
+    }
+
+    public void reset(){
+        softAmount = 0;
+        strongAmount = 0;
+        wineAmount = 0;
+        liquorAmount = 0;
+
     }
 }
