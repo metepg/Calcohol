@@ -5,30 +5,56 @@ public class Counter {
     private int min;
     private int max;
     private int step;
+    private int big;
+    private int small;
 
     public Counter(){
         this.min = 0;
         this.max = 50;
         this.step = 1;
+        this.big = 0;
+        this.small = 0;
     }
     public String getCounter(){
         return Integer.toString(counter);
     }
-    public int minus(){
-        counter -= step;
-        if(counter < min ) {
-            return counter = min;
+
+    // Jos kutsutaan + merkillä lisää 1
+    // Muuten vähennä 1
+    public void setBig(String prefix) {
+        if(prefix == "+") {
+            big++;
+            return;
         }
-        return counter;
-    }
-    public int add(){
-        counter += step;
-        if(counter > max){
-            return counter = max;
+        big--;
+        if(big < min){
+            big=0;
         }
-        return counter;
     }
-    public int reset(){
-        return 0;
+
+    // Jos kutsutaan + merkillä lisää 1
+    // Muuten vähennä 1
+    public void setSmall(String prefix) {
+        if(prefix == "+"){
+            small++;
+            return;
+        }
+        small--;
+        if(small < 0){
+            small=0;
+        }
+    }
+
+    public String getBig() {
+        return String.valueOf(big);
+    }
+
+    public String getSmall() {
+        return String.valueOf(small);
+    }
+
+    public void reset(){
+        small = 0;
+        big = 0;
     }
 }

@@ -22,28 +22,28 @@ public class Calc {
         this.weight = weight;
     }
 
-    public void addSoft(int amount){
+    public void addSoft(double amount){
         softAmount += amount;
         if(softAmount < 0){
             softAmount = 0;
         }
     }
 
-    public void addStrong(int amount) {
+    public void addStrong(double amount) {
         strongAmount += amount;
         if(strongAmount < 0){
             strongAmount = 0;
         }
     }
 
-    public void addWine(int amount){
+    public void addWine(double amount){
         wineAmount += amount;
         if(wineAmount < 0){
             wineAmount = 0;
         }
     }
 
-    public void addLiquor(int amount) {
+    public void addLiquor(double amount) {
         liquorAmount += amount;
         if(liquorAmount < 0){
             liquorAmount = 0;
@@ -54,9 +54,9 @@ public class Calc {
     // multiplier = ratio of body water to total weight (%)
     // Return level as ‰ e.g. 2.5
     public String getAlcoholInBlood() {
-        double multiplier = gender == "man" ? 75 * weight : 66 * weight;
+        double multiplier = gender == "man" ? 66 * weight : 75 * weight;
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
-        return "Alcohol in blood: " + alcoholLevel + "%";
+        return alcoholLevel + "%";
     }
 
     // Return total alcohol amount as grams
@@ -89,5 +89,13 @@ public class Calc {
     //lasketaan kalorit
     public int getCalories() {
         return (int) Math.round(getAlcoholAmountAsGrams() * 11);
+    }
+
+    public void reset(){
+        softAmount = 0;
+        strongAmount = 0;
+        wineAmount = 0;
+        liquorAmount = 0;
+
     }
 }

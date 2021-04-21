@@ -27,8 +27,13 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
+
+            //Intent mainView = new Intent(this, MainView.class);
+            //startActivity(mainView);
+
             Intent mainView = new Intent(this, MainView.class);
             startActivity(mainView);
+
         }
         // Jos ei ole niin..
         else {
