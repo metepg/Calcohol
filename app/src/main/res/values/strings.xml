@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">projekti</string>
     <string-array name="softdrink">
-        <item>0.5 l</item>
         <item>0.33 l</item>
+        <item>0.5 l</item>
     </string-array>
     <string-array name="strongdrink">
-        <item>0.5 l</item>
         <item>0.33 l</item>
+        <item>0.5 l</item>
     </string-array>
     <string-array name="winedrink">
         <item>12 cl</item>
     </string-array>
-    <string-array name="liquor">
+    <string-array name="liquordrink">
     <item>4 cl</item>
 </string-array>
 

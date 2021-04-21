@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
-            laske();
             Intent mainView = new Intent(this, MainView.class);
             startActivity(mainView);
         }
@@ -36,17 +35,5 @@ public class MainActivity extends AppCompatActivity {
             Intent askAge = new Intent(this, StartActivity1.class);
             startActivity(askAge);
         }
-    }
-
-    public void laske() {
-        Calc laskin = new Calc(330, 0, 0, 100, "man", 60 );
-        String alcBlood = laskin.getAlcoholInBlood() + "";
-        String alcTime = laskin.getBurningTime()+"";
-        String cal = laskin.getCalories()+"";
-        int portions = laskin.getPortions();
-        Log.i(TAG, "Alcohol in blood: " + alcBlood+"%");
-        Log.i(TAG, "Time to sober:  " +alcTime+" h");
-        Log.i(TAG, "Calories:  " +cal+" kcal");
-        Log.i(TAG, "Portions: "+ portions);
     }
 }
