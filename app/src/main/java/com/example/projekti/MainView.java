@@ -214,18 +214,18 @@ public class MainView extends AppCompatActivity {
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
-    public int getPortion(String portion) {
+    public double getPortion(String portion) {
         switch (portion) {
             case "4 cl":
-                return 40;
+                return 40.0;
             case "12 cl":
-                return 120;
+                return 120.0;
             case "0.33 l":
-                return 330;
+                return 330.0;
             case "0.5 l":
-                return 500;
+                return 500.0;
             case "0.375 l":
-                return 375;
+                return 375.0;
 
         }
         return 0;
