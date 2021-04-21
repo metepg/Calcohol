@@ -10,9 +10,11 @@
     </string-array>
     <string-array name="winedrink">
         <item>12 cl</item>
+        <item>0.375 l</item>
     </string-array>
     <string-array name="liquordrink">
-    <item>4 cl</item>
-</string-array>
+        <item>4 cl</item>
+        <item>0.5 l</item>
+    </string-array>
 
 </resources>
