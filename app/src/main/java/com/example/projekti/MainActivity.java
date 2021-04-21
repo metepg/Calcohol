@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "jes";
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
             laske();
+            Intent mainView = new Intent(this, MainView.class);
+            startActivity(mainView);
         }
         // Jos ei ole niin..
         else {

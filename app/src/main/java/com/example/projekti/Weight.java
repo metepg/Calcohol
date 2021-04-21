@@ -2,6 +2,7 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,8 @@ public class Weight extends AppCompatActivity {
             // Laita false jos haluat pyörittää login valikkoa aina uusiks
             editor.putBoolean(INITKEY, true);
             editor.commit();
+            Intent returnToMain = new Intent(this, MainActivity.class);
+            startActivity(returnToMain);
         }
     }
 }
