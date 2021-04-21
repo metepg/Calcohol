@@ -54,7 +54,7 @@ public class Calc {
     // multiplier = ratio of body water to total weight (%)
     // Return level as ‰ e.g. 2.5
     public String getAlcoholInBlood() {
-        double multiplier = gender == "man" ? 75 * weight : 66 * weight;
+        double multiplier = gender == "man" ? 66 * weight : 75 * weight;
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
         return "Alcohol in blood: " + alcoholLevel + "%";
     }

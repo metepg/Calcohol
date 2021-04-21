@@ -92,13 +92,12 @@ public class MainView extends AppCompatActivity {
     public void onPlus(View view) {
         switch (view.getId()) {
             case R.id.softPlus:
+                total.addSoft(getPortion(softPortion.getSelectedItem().toString()));
                 if (softPortion.getSelectedItem().equals("0.33 l")) {
                     soft.setSmall("+");
-                    total.addSoft(330);
                     updateField(findViewById(R.id.smallSoft), soft.getSmall());
                 } else {
                     soft.setBig("+");
-                    total.addSoft(500);
                     updateField(findViewById(R.id.bigSoft), soft.getBig());
                 }
                 break;
@@ -133,7 +132,6 @@ public class MainView extends AppCompatActivity {
                 }
                 break;
         }
-
         totalText.setText(total.getAlcoholInBlood());
     }
 
@@ -141,68 +139,60 @@ public class MainView extends AppCompatActivity {
     // Katso minus buttoneista mitä painettu
     public void onMinus(View view) {
         switch (view.getId()) {
-
-
             case R.id.softMinus:
                 if (softPortion.getSelectedItem().equals("0.33 l")) {
-                    if(Integer.parseInt(soft.getSmall()) > 0) {
+                    if (Integer.parseInt(soft.getSmall()) > 0) {
                         total.addSoft(-330);
                     }
                     soft.setSmall("-");
                     updateField(findViewById(R.id.smallSoft), soft.getSmall());
                 } else {
-                    if(Integer.parseInt(soft.getBig())> 0){
+                    if (Integer.parseInt(soft.getBig()) > 0) {
                         total.addSoft(-500);
                     }
                     soft.setBig("-");
                     updateField(findViewById(R.id.bigSoft), soft.getBig());
                 }
                 break;
-
-
             case R.id.strongMinus:
                 if (strongPortion.getSelectedItem().equals("0.33 l")) {
-                    if(Integer.parseInt(strong.getSmall())>0) {
+                    if (Integer.parseInt(strong.getSmall()) > 0) {
                         total.addStrong(-330);
                     }
                     strong.setSmall("-");
                     updateField(findViewById(R.id.smallStrong), strong.getSmall());
                 } else {
-                    if(Integer.parseInt(strong.getBig())> 0){
+                    if (Integer.parseInt(strong.getBig()) > 0) {
                         total.addStrong(-500);
                     }
                     strong.setBig("-");
                     updateField(findViewById(R.id.bigStrong), strong.getBig());
                 }
                 break;
-
-
             case R.id.wineMinus:
                 if (winePortion.getSelectedItem().equals("12 cl")) {
-                    if(Integer.parseInt(wine.getSmall())>0) {
+                    if (Integer.parseInt(wine.getSmall()) > 0) {
                         total.addWine(-120);
                     }
                     wine.setSmall("-");
                     updateField(findViewById(R.id.smallWine), wine.getSmall());
                 } else {
-                    if(Integer.parseInt(wine.getBig())> 0){
+                    if (Integer.parseInt(wine.getBig()) > 0) {
                         total.addWine(-375);
                     }
                     wine.setBig("-");
                     updateField(findViewById(R.id.bigWine), wine.getBig());
                 }
                 break;
-
-
             case R.id.liquorMinus:
                 if (liquorPortion.getSelectedItem().equals("4 cl")) {
-                    if(Integer.parseInt(liquor.getSmall())>0) {
+                    if (Integer.parseInt(liquor.getSmall()) > 0) {
                         total.addLiquor(-40);
                     }
                     liquor.setSmall("-");
                     updateField(findViewById(R.id.smallLiquor), liquor.getSmall());
                 } else {
-                    if(Integer.parseInt(liquor.getBig())> 0){
+                    if (Integer.parseInt(liquor.getBig()) > 0) {
                         total.addLiquor(-500);
                     }
                     liquor.setBig("-");
