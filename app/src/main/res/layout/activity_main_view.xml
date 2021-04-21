@@ -10,7 +10,7 @@
         android:id="@+id/spinner4"
         android:layout_width="128dp"
         android:layout_height="42dp"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.721" />
 
     <Button
-        android:id="@+id/plus4"
+        android:id="@+id/liquorPlus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="72dp"
@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.72" />
 
     <Button
-        android:id="@+id/minus4"
+        android:id="@+id/liquorMinus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="onMinus"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.72" />
 
     <TextView
-        android:id="@+id/textViewSoft4"
+        android:id="@+id/liquorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -65,7 +65,7 @@
         android:id="@+id/spinner3"
         android:layout_width="128dp"
         android:layout_height="42dp"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +76,7 @@
         app:layout_constraintVertical_bias="0.567" />
 
     <Button
-        android:id="@+id/plus3"
+        android:id="@+id/winePlus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="72dp"
@@ -91,7 +91,7 @@
         app:layout_constraintVertical_bias="0.567" />
 
     <Button
-        android:id="@+id/minus3"
+        android:id="@+id/wineMinus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="onMinus"
@@ -105,7 +105,7 @@
         app:layout_constraintVertical_bias="0.567" />
 
     <TextView
-        android:id="@+id/textViewSoft3"
+        android:id="@+id/wineText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -117,7 +117,7 @@
         app:layout_constraintVertical_bias="0.623" />
 
     <Button
-        android:id="@+id/minus2"
+        android:id="@+id/strongMinus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="onMinus"
@@ -131,7 +131,7 @@
         app:layout_constraintVertical_bias="0.406" />
 
     <Button
-        android:id="@+id/plus2"
+        android:id="@+id/strongPlus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="72dp"
@@ -149,7 +149,7 @@
         android:id="@+id/spinner"
         android:layout_width="128dp"
         android:layout_height="42dp"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -160,7 +160,7 @@
         app:layout_constraintVertical_bias="0.406" />
 
     <TextView
-        android:id="@+id/textViewSoft2"
+        android:id="@+id/strongText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -195,7 +195,7 @@
         android:id="@+id/spinner2"
         android:layout_width="128dp"
         android:layout_height="42dp"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -205,7 +205,7 @@
         app:layout_constraintVertical_bias="0.24" />
 
     <TextView
-        android:id="@+id/textViewSoft"
+        android:id="@+id/softText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -217,7 +217,7 @@
         app:layout_constraintVertical_bias="0.306" />
 
     <Button
-        android:id="@+id/plus"
+        android:id="@+id/softPlus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="72dp"
@@ -232,7 +232,7 @@
         app:layout_constraintVertical_bias="0.241" />
 
     <Button
-        android:id="@+id/minus"
+        android:id="@+id/softMinus"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="onMinus"

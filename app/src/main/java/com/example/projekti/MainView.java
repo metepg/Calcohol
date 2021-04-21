@@ -27,21 +27,57 @@ public class MainView extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
-    public void onPlus(View view){
-        if(view == findViewById(R.id.plus)){
-           TextView txt = findViewById(R.id.textViewSoft);
-           soft.add();
-           txt.setText(soft.getCounter());
+
+    // Päivitä tekstikenttä annetun idn ja counterin mukaan
+    public void updateField(TextView id, Counter counter) {
+        id.setText(counter.getCounter());
+    }
+
+    // Katso plus buttoneista mitä painettu
+    public void onPlus(View view) {
+        switch (view.getId()) {
+            case R.id.softPlus:
+                soft.add();
+                updateField(findViewById(R.id.softText), soft);
+                break;
+            case R.id.strongPlus:
+                strong.add();
+                updateField(findViewById(R.id.strongText), strong);
+                break;
+            case R.id.winePlus:
+                wine.add();
+                updateField(findViewById(R.id.wineText), wine);
+                break;
+            case R.id.liquorPlus:
+                liquor.add();
+                updateField(findViewById(R.id.liquorText), liquor);
+                break;
         }
     }
-    public void onMinus(View view){
-        if(view == findViewById(R.id.minus)){
-            TextView txt = findViewById(R.id.textViewSoft);
-            soft.minus();
-            txt.setText(soft.getCounter());
+
+    // Katso minus buttoneista mitä painettu
+    public void onMinus(View view) {
+        switch (view.getId()) {
+            case R.id.softMinus:
+                soft.minus();
+                updateField(findViewById(R.id.softText), soft);
+                break;
+            case R.id.strongMinus:
+                strong.minus();
+                updateField(findViewById(R.id.strongText), strong);
+                break;
+            case R.id.wineMinus:
+                wine.minus();
+                updateField(findViewById(R.id.wineText), wine);
+                break;
+            case R.id.liquorMinus:
+                liquor.minus();
+                updateField(findViewById(R.id.liquorText), liquor);
+                break;
         }
     }
-    public void onSpin(View view){
-        
+
+    public void onSpin(View view) {
+
     }
 }
