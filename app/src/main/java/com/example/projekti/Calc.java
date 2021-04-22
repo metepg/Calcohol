@@ -5,21 +5,16 @@ public class Calc {
     private int strongAmount;
     private int wineAmount;
     private int liquorAmount;
-
-    String gender;
-    int weight;
+    private String date;
 
     // Constructor
     // amount = alcohol amount as ml
-    // gender = "woman" / "man"
-    // weight = kg
-    public Calc(String gender, int weight){
+    public Calc(String date){
         this.softAmount = 0;
         this.strongAmount = 0;
         this.wineAmount = 0;
         this.liquorAmount = 0;
-        this.gender = gender;
-        this.weight = weight;
+        this.date = date;
     }
 
     public void addSoft(double amount){
@@ -53,8 +48,8 @@ public class Calc {
     // Calculate alcohol level in blood
     // multiplier = ratio of body water to total weight (%)
     // Return level as ‰ e.g. 2.5
-    public String getAlcoholInBlood() {
-        double multiplier = gender == "man" ? 66 * weight : 75 * weight;
+    public String getAlcoholInBlood(User user) {
+        double multiplier = (user.getGender() == "man" ? 66 : 75 ) * user.getWeight();
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
         return alcoholLevel + "%";
     }
@@ -82,8 +77,8 @@ public class Calc {
 
     // How long until alcohol is gone
     // Return as hours e.g. 2
-    public String getBurningTime() {
-        return Math.round(getAlcoholAmountAsGrams() / (weight/10))+"";
+    public String getBurningTime(User user) {
+        return Math.round(getAlcoholAmountAsGrams() / (user.getWeight()/10))+"";
     }
 
     //lasketaan kalorit
@@ -96,6 +91,14 @@ public class Calc {
         strongAmount = 0;
         wineAmount = 0;
         liquorAmount = 0;
+    }
+
+    public String getDate(){
+        return date;
+    }
+
+    public String toString() {
+        return "HEPSASSAA";
     }
 }
 
