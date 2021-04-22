@@ -24,13 +24,13 @@ public class AmountChart extends AppCompatActivity {
     TextView dateView;
     // variable for our bar data.
     BarData barData;
-
+    int startD = 0;
     // variable for our bar data set.
     BarDataSet barDataSet;
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;
-
+    int startDate = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class AmountChart extends AppCompatActivity {
 
         // calling method to get bar entries.
         getBarEntries();
-        testDate(0, 6, 0);
+        testDate(0);
         // creating a new bar data set.
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
@@ -83,39 +83,32 @@ public class AmountChart extends AppCompatActivity {
         barEntriesArrayList.add(new BarEntry(6f, 0));
         barEntriesArrayList.add(new BarEntry(7f, 0));
     }
-    public void testDate(int i, int j, int k){
+    public void testDate(int i){
         dateView = findViewById(R.id.dateView);
+
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK, k);
-        //c.add(Calendar.WEEK_OF_YEAR, 1);
-
-        int week = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
-
-
+        c.add(Calendar.WEEK_OF_YEAR, i);
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        c.setFirstDayOfWeek(Calendar.MONDAY);
-        c.add(Calendar.DAY_OF_WEEK, i);
         Date startOfWeek = c.getTime();
-        c.add(Calendar.DAY_OF_WEEK, j);
+
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.add(Calendar.DAY_OF_WEEK, 6);
         Date endOfWeek = c.getTime();
 
         SimpleDateFormat formatt = new SimpleDateFormat("dd.MM.yyyy");
         String firstDate = formatt.format(startOfWeek);
         String lastDate = formatt.format(endOfWeek);
-
-
-
-
-
-        dateView.setText(firstDate+ " - " + lastDate + "\n"+"Week: " + week);
+        dateView.setText(firstDate + " - " + lastDate);
     }
 
-    public void next(View view){
-
+    public void nextWeek(View view){
+        startD++;
+        testDate(startD);
         System.out.println("next");
     }
-    public void prev(View view){
-
+    public void prevWeek(View view){
+        startD--;
+        testDate(startD);
         System.out.println("prev");
     }
 

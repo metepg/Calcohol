@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="183dp"
         android:layout_marginBottom="48dp"
-        android:onClick="prev"
+        android:onClick="prevWeek"
         android:text="Button"
         app:layout_constraintBottom_toTopOf="@+id/idBarChart"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
-        android:onClick="next"
+        android:onClick="nextWeek"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dateView" />
