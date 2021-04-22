@@ -91,11 +91,11 @@ public class Calc {
         return (int) Math.round(getAlcoholAmountAsGrams() * 11);
     }
 
-    public void reset(){
+    public void reset() {
         softAmount = 0;
         strongAmount = 0;
         wineAmount = 0;
         liquorAmount = 0;
-
     }
 }
+

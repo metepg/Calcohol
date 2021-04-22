@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-public class Gender extends AppCompatActivity {
+public class AskGender extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     private final static String USER = "properties";
     private static final String GENDERKEY = "genderValue";
@@ -45,8 +45,9 @@ public class Gender extends AppCompatActivity {
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(GENDERKEY, gender);
             editor.commit();
-            Intent askWeight = new Intent(this, Weight.class);
+            Intent askWeight = new Intent(this, AskWeight.class);
             startActivity(askWeight);
+
         }
     }
 }
