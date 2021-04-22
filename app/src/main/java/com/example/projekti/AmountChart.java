@@ -87,6 +87,8 @@ public class AmountChart extends AppCompatActivity {
         dateView = findViewById(R.id.dateView);
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_WEEK, k);
+        //c.add(Calendar.WEEK_OF_YEAR, 1);
+
         int week = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
 
 
@@ -113,6 +115,7 @@ public class AmountChart extends AppCompatActivity {
         System.out.println("next");
     }
     public void prev(View view){
+
         System.out.println("prev");
     }
 

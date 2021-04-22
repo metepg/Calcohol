@@ -18,9 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity1" />
-        <activity android:name=".Weight" />
-        <activity android:name=".Gender" />
+        <activity android:name=".AskAge" />
+        <activity android:name=".AskWeight" />
+        <activity android:name=".AskGender" />
     </application>
 
 </manifest>

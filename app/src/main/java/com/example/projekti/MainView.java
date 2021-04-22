@@ -2,13 +2,19 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainView extends AppCompatActivity {
+
+    private String TAG = "jes";
+    private final static String USER = "properties";
 
     private Counter soft = new Counter();
     private Counter strong = new Counter();
@@ -34,53 +40,75 @@ public class MainView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_view);
-
-        // Dropdownien alustus
-        Spinner softVal = findViewById(R.id.softSpinner);
-        ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
-                R.array.softdrink, android.R.layout.simple_spinner_item);
-        soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        softVal.setAdapter(soft);
-
-        Spinner strongVal = findViewById(R.id.strongSpinner);
-        ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
-                R.array.strongdrink, android.R.layout.simple_spinner_item);
-        strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        strongVal.setAdapter(strong);
-
-        Spinner wineVal = findViewById(R.id.wineSpinner);
-        ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
-                R.array.winedrink, android.R.layout.simple_spinner_item);
-        wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        wineVal.setAdapter(wine);
-
-        Spinner liquorVal = findViewById(R.id.liquorSpinner);
-        ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
-                R.array.liquordrink, android.R.layout.simple_spinner_item);
-        liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        liquorVal.setAdapter(liquor);
 
 
-        smallSoft = findViewById(R.id.smallSoft);
-        bigSoft = findViewById(R.id.bigSoft);
+        SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
+        Log.d(TAG, String.valueOf(sharedPrefs.contains("valuesSet")));
 
-        smallStrong = findViewById(R.id.smallStrong);
-        bigStrong = findViewById(R.id.bigStrong);
+        // Tällä lauseella kattoo onko tiedot jo asetettu eli onko alkujutut tehty jo
+        if (sharedPrefs.getBoolean("valuesSet", false)) {
+            // Printtaa kaikki tiedot
+            Log.d(TAG, sharedPrefs.getAll().toString());
 
-        smallWine = findViewById(R.id.smallWine);
-        bigWine = findViewById(R.id.bigWine);
+            //Intent mainView = new Intent(this, MainView.class);
+            //startActivity(mainView);
 
-        smallLiquor = findViewById(R.id.smallLiquor);
-        bigLiquor = findViewById(R.id.bigLiquor);
-        totalText = findViewById(R.id.totalText);
+            Intent mainView = new Intent(this, MainView.class);
+            startActivity(mainView);
+            setContentView(R.layout.activity_main);
 
-        softPortion = findViewById(R.id.softSpinner);
-        strongPortion = findViewById(R.id.strongSpinner);
-        winePortion = findViewById(R.id.wineSpinner);
-        liquorPortion = findViewById(R.id.liquorSpinner);
+            // Dropdownien alustus
+            Spinner softVal = findViewById(R.id.softSpinner);
+            ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
+                    R.array.softdrink, android.R.layout.simple_spinner_item);
+            soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            softVal.setAdapter(soft);
 
-        total = new Calc("man", 50);
+            Spinner strongVal = findViewById(R.id.strongSpinner);
+            ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
+                    R.array.strongdrink, android.R.layout.simple_spinner_item);
+            strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            strongVal.setAdapter(strong);
+
+            Spinner wineVal = findViewById(R.id.wineSpinner);
+            ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
+                    R.array.winedrink, android.R.layout.simple_spinner_item);
+            wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            wineVal.setAdapter(wine);
+
+            Spinner liquorVal = findViewById(R.id.liquorSpinner);
+            ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
+                    R.array.liquordrink, android.R.layout.simple_spinner_item);
+            liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            liquorVal.setAdapter(liquor);
+
+
+            smallSoft = findViewById(R.id.smallSoft);
+            bigSoft = findViewById(R.id.bigSoft);
+
+            smallStrong = findViewById(R.id.smallStrong);
+            bigStrong = findViewById(R.id.bigStrong);
+
+            smallWine = findViewById(R.id.smallWine);
+            bigWine = findViewById(R.id.bigWine);
+
+            smallLiquor = findViewById(R.id.smallLiquor);
+            bigLiquor = findViewById(R.id.bigLiquor);
+            totalText = findViewById(R.id.totalText);
+
+            softPortion = findViewById(R.id.softSpinner);
+            strongPortion = findViewById(R.id.strongSpinner);
+            winePortion = findViewById(R.id.wineSpinner);
+            liquorPortion = findViewById(R.id.liquorSpinner);
+
+            total = new Calc("man", 50);
+        }
+        // Jos ei ole niin..
+        else {
+            Intent askAge = new Intent(this, AskAge.class);
+            startActivity(askAge);
+        }
+
     }
 
     // Päivitä tekstikenttä annetun idn ja counterin mukaan

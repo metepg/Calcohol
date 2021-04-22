@@ -2,7 +2,6 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,12 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 //First activity
-public class StartActivity1 extends AppCompatActivity {
+public class AskAge extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     private final static String USER = "properties";
     private final static String AGEKEY = "ageValue";
@@ -26,7 +24,7 @@ public class StartActivity1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start1);
+        setContentView(R.layout.activity_age);
 
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
@@ -53,7 +51,7 @@ public class StartActivity1 extends AppCompatActivity {
             editor.putString(AGEKEY, age);
             editor.commit();
 
-            Intent askGender = new Intent(this, Gender.class);
+            Intent askGender = new Intent(this, AskGender.class);
             startActivity(askGender);
         }
     }
