@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class MainActivity extends AppCompatActivity {
     private String TAG = "jes";
     private final static String USER = "properties";
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Counter liquor = new Counter();
     private Calc total;
 
+    TextView portions;
     TextView smallSoft;
     TextView bigSoft;
     TextView smallStrong;
@@ -77,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             liquorVal.setAdapter(liquor);
 
-
+            Intent ase = new Intent(this, AmountChart.class);
+            startActivity(ase);
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
 
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             smallLiquor = findViewById(R.id.smallLiquor);
             bigLiquor = findViewById(R.id.bigLiquor);
             totalText = findViewById(R.id.totalText);
-
+            portions = findViewById(R.id.portions);
             softPortion = findViewById(R.id.softSpinner);
             strongPortion = findViewById(R.id.strongSpinner);
             winePortion = findViewById(R.id.wineSpinner);
@@ -119,13 +124,12 @@ public class MainActivity extends AppCompatActivity {
     public void onPlus(View view) {
         switch (view.getId()) {
             case R.id.softPlus:
+                total.addSoft(getPortion(softPortion.getSelectedItem().toString()));
                 if (softPortion.getSelectedItem().equals("0.33 l")) {
                     soft.setSmall("+");
-                    total.addSoft(330);
                     updateField(findViewById(R.id.smallSoft), soft.getSmall());
                 } else {
                     soft.setBig("+");
-                    total.addSoft(500);
                     updateField(findViewById(R.id.bigSoft), soft.getBig());
                 }
                 break;
@@ -160,76 +164,68 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-
         totalText.setText(total.getAlcoholInBlood());
+        portions.setText(String.valueOf(total.getPortions()));
     }
 
 
     // Katso minus buttoneista mitä painettu
     public void onMinus(View view) {
         switch (view.getId()) {
-
-
             case R.id.softMinus:
                 if (softPortion.getSelectedItem().equals("0.33 l")) {
-                    if(Integer.parseInt(soft.getSmall()) > 0) {
+                    if (Integer.parseInt(soft.getSmall()) > 0) {
                         total.addSoft(-330);
                     }
                     soft.setSmall("-");
                     updateField(findViewById(R.id.smallSoft), soft.getSmall());
                 } else {
-                    if(Integer.parseInt(soft.getBig())> 0){
+                    if (Integer.parseInt(soft.getBig()) > 0) {
                         total.addSoft(-500);
                     }
                     soft.setBig("-");
                     updateField(findViewById(R.id.bigSoft), soft.getBig());
                 }
                 break;
-
-
             case R.id.strongMinus:
                 if (strongPortion.getSelectedItem().equals("0.33 l")) {
-                    if(Integer.parseInt(strong.getSmall())>0) {
+                    if (Integer.parseInt(strong.getSmall()) > 0) {
                         total.addStrong(-330);
                     }
                     strong.setSmall("-");
                     updateField(findViewById(R.id.smallStrong), strong.getSmall());
                 } else {
-                    if(Integer.parseInt(strong.getBig())> 0){
+                    if (Integer.parseInt(strong.getBig()) > 0) {
                         total.addStrong(-500);
                     }
                     strong.setBig("-");
                     updateField(findViewById(R.id.bigStrong), strong.getBig());
                 }
                 break;
-
-
             case R.id.wineMinus:
                 if (winePortion.getSelectedItem().equals("12 cl")) {
-                    if(Integer.parseInt(wine.getSmall())>0) {
+                    if (Integer.parseInt(wine.getSmall()) > 0) {
                         total.addWine(-120);
                     }
                     wine.setSmall("-");
                     updateField(findViewById(R.id.smallWine), wine.getSmall());
                 } else {
-                    if(Integer.parseInt(wine.getBig())> 0){
+                    if (Integer.parseInt(wine.getBig()) > 0) {
                         total.addWine(-375);
                     }
                     wine.setBig("-");
                     updateField(findViewById(R.id.bigWine), wine.getBig());
                 }
                 break;
-
-
             case R.id.liquorMinus:
                 if (liquorPortion.getSelectedItem().equals("4 cl")) {
-                    if(Integer.parseInt(liquor.getSmall())>0) {
+                    if (Integer.parseInt(liquor.getSmall()) > 0) {
                         total.addLiquor(-40);
                     }
                     liquor.setSmall("-");
                     updateField(findViewById(R.id.smallLiquor), liquor.getSmall());
                 } else {
-                    if(Integer.parseInt(liquor.getBig())> 0){
+                    if (Integer.parseInt(liquor.getBig()) > 0) {
                         total.addLiquor(-500);
                     }
                     liquor.setBig("-");
@@ -238,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         totalText.setText(total.getAlcoholInBlood());
+        portions.setText(String.valueOf(total.getPortions()));
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -253,8 +250,42 @@ public class MainActivity extends AppCompatActivity {
                 return 500.0;
             case "0.375 l":
                 return 375.0;
-
         }
         return 0;
+    }
+
+    public void addToCalendar(View view) {
+        if(total.getPortions() == 0) {
+            return;
+        }
+        LocalDate myObj = LocalDate.now();
+        DateTimeFormatter getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String formattedDate = myObj.format(getDate);
+        System.out.println(formattedDate);
+        System.out.println(total.getPortions());
+        resetFields();
+    }
+
+    public void resetFields(){
+        soft.reset();
+        strong.reset();
+        wine.reset();
+        liquor.reset();
+        total.reset();
+
+        updateField(smallSoft, "0");
+        updateField(bigSoft, "0");
+
+        updateField(smallStrong, "0");
+        updateField(bigStrong, "0");
+
+        updateField(bigWine, "0");
+        updateField(smallWine, "0");
+
+        updateField(smallLiquor, "0");
+        updateField(bigLiquor, "0");
+
+        updateField(totalText, "0.0%");
+        updateField(portions, "0");
     }
 }
