@@ -3,21 +3,15 @@ package com.example.projekti;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import android.graphics.Color;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,30 +39,10 @@ public class AmountChart extends AppCompatActivity {
 
 // initializing variable for bar chart.
         barChart = findViewById(R.id.idBarChart);
-        dateView = findViewById(R.id.dateView);
 
-
-        int calendar = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
-
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        c.setFirstDayOfWeek(Calendar.MONDAY);
-        Date startOfWeek = c.getTime();
-        c.add(Calendar.DAY_OF_WEEK, 6);
-        Date endOfWeek = c.getTime();
-
-        SimpleDateFormat formatt = new SimpleDateFormat("dd.MM.yyyy");
-        String firstDate = formatt.format(startOfWeek);
-        String lastDate = formatt.format(endOfWeek);
-
-
-
-
-
-        dateView.setText(firstDate+ " - " + lastDate + "\n"+"Week: " + calendar);
         // calling method to get bar entries.
         getBarEntries();
-
+        testDate(0, 6, 0);
         // creating a new bar data set.
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
@@ -109,4 +83,37 @@ public class AmountChart extends AppCompatActivity {
         barEntriesArrayList.add(new BarEntry(6f, 0));
         barEntriesArrayList.add(new BarEntry(7f, 0));
     }
+    public void testDate(int i, int j, int k){
+        dateView = findViewById(R.id.dateView);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_WEEK, k);
+        int week = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
+
+
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.add(Calendar.DAY_OF_WEEK, i);
+        Date startOfWeek = c.getTime();
+        c.add(Calendar.DAY_OF_WEEK, j);
+        Date endOfWeek = c.getTime();
+
+        SimpleDateFormat formatt = new SimpleDateFormat("dd.MM.yyyy");
+        String firstDate = formatt.format(startOfWeek);
+        String lastDate = formatt.format(endOfWeek);
+
+
+
+
+
+        dateView.setText(firstDate+ " - " + lastDate + "\n"+"Week: " + week);
+    }
+
+    public void next(View view){
+
+        System.out.println("next");
+    }
+    public void prev(View view){
+        System.out.println("prev");
+    }
+
 }
