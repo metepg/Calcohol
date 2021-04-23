@@ -53,7 +53,8 @@ public class Counter {
         return String.valueOf(small);
     }
 
-    public int reset(){
-        return 0;
+    public void reset(){
+        small = 0;
+        big = 0;
     }
 }

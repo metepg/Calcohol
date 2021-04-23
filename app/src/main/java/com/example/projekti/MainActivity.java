@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
+    Singleton days = Singleton.getInstance();
+
     private String TAG = "jes";
     private final static String USER = "properties";
     private Counter soft = new Counter();
@@ -22,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
     private Counter wine = new Counter();
     private Counter liquor = new Counter();
     private Calc total;
+    User testUser;
+
+    LocalDate myObj;
+    DateTimeFormatter getDate;
+    String formattedDate;
 
     TextView portions;
     TextView smallSoft;
@@ -42,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // Tää on se storage mihin tallentuu tietoja
         SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
         Log.d(TAG, String.valueOf(sharedPrefs.contains("valuesSet")));
@@ -51,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
-
-
-
             setContentView(R.layout.activity_main);
+
+            // Alustetaan käyttäjätiedot user olioon
+            int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
+            String gender = sharedPrefs.getString("genderValue", "man");
+            int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
+            testUser = new User(age,gender,weight);
 
             // Dropdownien alustus
             Spinner softVal = findViewById(R.id.softSpinner);
@@ -101,7 +110,11 @@ public class MainActivity extends AppCompatActivity {
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
 
-            total = new Calc("man", 50);
+            myObj = LocalDate.now();
+            getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            formattedDate = myObj.format(getDate);
+
+            total = new Calc(formattedDate);
         }
         // Jos ei ole niin..
         else {
@@ -164,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood());
+        totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
     }
 
@@ -233,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood());
+        totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
     }
 
@@ -258,12 +271,24 @@ public class MainActivity extends AppCompatActivity {
         if(total.getPortions() == 0) {
             return;
         }
-        LocalDate myObj = LocalDate.now();
-        DateTimeFormatter getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String formattedDate = myObj.format(getDate);
-        System.out.println(formattedDate);
-        System.out.println(total.getPortions());
+        days.getAllDays().add(total);
+        if(checkFields()){
+            days.getAllDays().add(total);
+        }
+
+        days = Singleton.getInstance();
         resetFields();
+    }
+
+    // TODO:
+    // Tarkastaa löytyykö päivä jo tallennetuista
+    // (kesken)
+    public boolean checkFields(){
+        Singleton data = Singleton.getInstance();
+        for(Calc day: data.getAllDays()){
+            System.out.println(day.getDate());
+        }
+        return true;
     }
 
     public void resetFields(){
