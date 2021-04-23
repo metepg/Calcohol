@@ -98,7 +98,7 @@ public class Calc {
     }
 
     public String toString() {
-        return "HEPSASSAA";
+        return getDate() + " (" + getPortions() + ") portions";
     }
 }
 
