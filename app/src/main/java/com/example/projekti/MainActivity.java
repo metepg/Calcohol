@@ -271,25 +271,17 @@ public class MainActivity extends AppCompatActivity {
         if(total.getPortions() == 0) {
             return;
         }
-        days.getAllDays().add(total);
-        if(checkFields()){
+        if(true){
             days.getAllDays().add(total);
         }
-
-        days = Singleton.getInstance();
-        resetFields();
-    }
-
-    // TODO:
-    // Tarkastaa löytyykö päivä jo tallennetuista
-    // (kesken)
-    public boolean checkFields(){
-        Singleton data = Singleton.getInstance();
-        for(Calc day: data.getAllDays()){
-            System.out.println(day.getDate());
+        for (int i = 0; i < days.getAllDays().size(); i++) {
+            System.out.println(i + ". kierros");
+            System.out.println(days.getOneDay(i));
         }
-        return true;
+        resetFields();
+        total = new Calc(formattedDate);
     }
+
 
     public void resetFields(){
         soft.reset();
