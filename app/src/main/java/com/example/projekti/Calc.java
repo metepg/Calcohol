@@ -78,12 +78,12 @@ public class Calc {
     // How long until alcohol is gone
     // Return as hours e.g. 2
     public String getBurningTime(User user) {
-        return Math.round(getAlcoholAmountAsGrams() / (user.getWeight()/10))+"";
+        return (int) Math.ceil(getAlcoholAmountAsGrams() / (user.getWeight()/10)) + " hours "+"";
     }
 
     //lasketaan kalorit
     public int getCalories() {
-        return (int) Math.round(getAlcoholAmountAsGrams() * 11);
+        return (int) Math.round(getAlcoholAmountAsGrams() * 7);
     }
 
     public void reset() {
@@ -98,7 +98,7 @@ public class Calc {
     }
 
     public String toString() {
-        return "HEPSASSAA";
+        return getDate() + " (" + getPortions() + ") portions";
     }
 }
 

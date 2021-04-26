@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
-    Singleton days = Singleton.getInstance();
+    Singleton days;
 
     private String TAG = "jes";
     private final static String USER = "properties";
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     TextView smallLiquor;
     TextView bigLiquor;
     TextView totalText;
+    TextView burnaus;
+    TextView energy;
+
 
     Spinner softPortion;
     Spinner strongPortion;
@@ -109,12 +113,16 @@ public class MainActivity extends AppCompatActivity {
             strongPortion = findViewById(R.id.strongSpinner);
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
+            burnaus = findViewById(R.id.burningText);
+            energy = findViewById(R.id.energyText);
+
 
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             formattedDate = myObj.format(getDate);
 
             total = new Calc(formattedDate);
+            days = Singleton.getInstance();
         }
         // Jos ei ole niin..
         else {
@@ -179,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
+        burnaus.setText(total.getBurningTime(testUser));
+        energy.setText((total.getCalories()) + " kcal");
     }
 
 
@@ -248,6 +258,12 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
+        burnaus.setText(total.getBurningTime(testUser));
+        energy.setText(String.valueOf(total.getCalories()) + " kcal");
+    }
+    public void startingTime(){
+        EditText startTime = findViewById(R.id.editTextNumber2);
+        startTime.getText().toString();
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -282,13 +298,11 @@ public class MainActivity extends AppCompatActivity {
         total = new Calc(formattedDate);
     }
 
-
     public void resetFields(){
         soft.reset();
         strong.reset();
         wine.reset();
         liquor.reset();
-        total.reset();
 
         updateField(smallSoft, "0");
         updateField(bigSoft, "0");

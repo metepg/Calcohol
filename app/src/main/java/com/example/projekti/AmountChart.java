@@ -1,9 +1,15 @@
 package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.TypefaceCompat;
+
+import android.graphics.Typeface;
 import android.os.Bundle;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -30,20 +36,31 @@ public class AmountChart extends AppCompatActivity {
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;
-    int startDate = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_chart);
-
-
 // initializing variable for bar chart.
         barChart = findViewById(R.id.idBarChart);
-
         // calling method to get bar entries.
-        getBarEntries();
+        getBarEntries(2, 8);
         testDate(0);
-        // creating a new bar data set.
+
+    }
+    private void getBarEntries(int i, int j) {
+        // creating a new array list
+        barEntriesArrayList = new ArrayList<>();
+
+        // adding new entry to our array list with bar
+        // entry and passing x and y axis value to it.
+        barEntriesArrayList.add(new BarEntry(0, i));
+        barEntriesArrayList.add(new BarEntry(1, j));
+        barEntriesArrayList.add(new BarEntry(2, 0));
+        barEntriesArrayList.add(new BarEntry(3, 0));
+        barEntriesArrayList.add(new BarEntry(4, 0));
+        barEntriesArrayList.add(new BarEntry(5, 0));
+        barEntriesArrayList.add(new BarEntry(6, 0));
+
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
         // creating a new bar data and
@@ -54,34 +71,30 @@ public class AmountChart extends AppCompatActivity {
         // to our bar chart.
         barChart.setData(barData);
 
+        barChart.animateY(1000);
+
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(false);
+        barChart.setDrawBarShadow(false);
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getAxisRight().setDrawGridLines(false);
+        barChart.setDrawValueAboveBar(false);
+
+
+
+
         // setting text size
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
+        barChart.getXAxis().setGridLineWidth(1);
 
         barChart.getAxisRight().setAxisMaximum(50);
         barChart.getAxisLeft().setAxisMaximum(50);
         barChart.getAxisRight().setAxisMinimum(0);
         barChart.getAxisLeft().setAxisMinimum(0);
-        XAxis axel = barChart.getXAxis();
-
-
-        String[] dates = {"", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
-        axel.setValueFormatter(new IndexAxisValueFormatter(dates));
-    }
-
-    private void getBarEntries() {
-        // creating a new array list
-        barEntriesArrayList = new ArrayList<>();
-
-        // adding new entry to our array list with bar
-        // entry and passing x and y axis value to it.
-        barEntriesArrayList.add(new BarEntry(1f, 0));
-        barEntriesArrayList.add(new BarEntry(2f, 0));
-        barEntriesArrayList.add(new BarEntry(3f, 4));
-        barEntriesArrayList.add(new BarEntry(4f, 0));
-        barEntriesArrayList.add(new BarEntry(5f, 0));
-        barEntriesArrayList.add(new BarEntry(6f, 0));
-        barEntriesArrayList.add(new BarEntry(7f, 0));
+        XAxis axelx = barChart.getXAxis();
+        String[] dates = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+        axelx.setValueFormatter(new IndexAxisValueFormatter(dates));
     }
     public void testDate(int i){
         dateView = findViewById(R.id.dateView);
