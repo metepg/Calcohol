@@ -104,13 +104,13 @@ public class DayInfo {
 
     // How long until alcohol is gone
     // Return as hours e.g. 2
-    public String getBurningTime(User user) {
-        return Math.round(getAlcoholAmountAsGrams() / (user.getWeight()/10))+"";
+    public int getBurningTime(User user) {
+        return (int) Math.ceil(getAlcoholAmountAsGrams() / (user.getWeight()/10));
     }
 
     //lasketaan kalorit
     public int getCalories() {
-        return (int) Math.round(getAlcoholAmountAsGrams() * 11);
+        return (int) Math.round(getAlcoholAmountAsGrams() * 7);
     }
 
     /*public String toString() {
