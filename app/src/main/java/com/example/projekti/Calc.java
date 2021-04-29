@@ -77,8 +77,8 @@ public class Calc {
 
     // How long until alcohol is gone
     // Return as hours e.g. 2
-    public String getBurningTime(User user) {
-        return (int) Math.ceil(getAlcoholAmountAsGrams() / (user.getWeight()/10)) + " hours "+"";
+    public int getBurningTime(User user) {
+        return (int) Math.ceil(getAlcoholAmountAsGrams() / (user.getWeight()/10));
     }
 
     //lasketaan kalorit

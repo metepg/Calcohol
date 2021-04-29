@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     TextView totalText;
     TextView burnaus;
     TextView energy;
-
+    EditText timeText;
 
     Spinner softPortion;
     Spinner strongPortion;
@@ -115,8 +117,19 @@ public class MainActivity extends AppCompatActivity {
             liquorPortion = findViewById(R.id.liquorSpinner);
             burnaus = findViewById(R.id.burningText);
             energy = findViewById(R.id.energyText);
-
-
+            timeText = findViewById(R.id.timeText);
+            timeText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    startTime();
+                }
+            });
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             formattedDate = myObj.format(getDate);
@@ -130,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(askAge);
         }
 
+    }
+    public void onChart(View view){
+        Intent chart = new Intent(this, AmountChart.class);
+        startActivity(chart);
     }
     public void onBackPressed() {
         super.onBackPressed();
@@ -187,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
-        burnaus.setText(total.getBurningTime(testUser));
+        startTime();
         energy.setText((total.getCalories()) + " kcal");
     }
 
@@ -258,12 +275,9 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
-        burnaus.setText(total.getBurningTime(testUser));
+        startTime();
         energy.setText(String.valueOf(total.getCalories()) + " kcal");
-    }
-    public void startingTime(){
-        EditText startTime = findViewById(R.id.editTextNumber2);
-        startTime.getText().toString();
+
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -318,5 +332,15 @@ public class MainActivity extends AppCompatActivity {
 
         updateField(totalText, "0.0%");
         updateField(portions, "0");
+    }
+    public void startTime(){
+        String test = timeText.getText().toString();
+        if(test.isEmpty()){
+            test = "0";
+        }
+        int uustest = Integer.parseInt(test);
+        int nouda = total.getBurningTime(testUser) - uustest;
+        System.out.println(uustest);
+        burnaus.setText(Integer.toString(nouda));
     }
 }
