@@ -3,6 +3,7 @@ package com.example.projekti;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.TypefaceCompat;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import com.github.mikephil.charting.charts.BarChart;
@@ -123,6 +124,10 @@ public class AmountChart extends AppCompatActivity {
         startD--;
         testDate(startD);
         System.out.println("prev");
+    }
+    public void onBackP(View view){
+        Intent mainview = new Intent(this, MainActivity.class);
+        startActivity(mainview);
     }
 
 }

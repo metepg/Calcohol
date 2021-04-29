@@ -9,12 +9,14 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="58dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="67dp"
+        android:layout_height="74dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/calcohol" />
 
     <TextView
@@ -143,13 +145,13 @@
 
     <ImageButton
         android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="44dp"
         android:background="#FFFFFF"
         android:onClick="onChart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintHorizontal_bias="0.844"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
@@ -436,5 +438,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.647" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="41dp"
+        android:layout_height="44dp"
+        android:background="#FFFFFF"
+        android:onClick="onUser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/outline_settings_accessibility_20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

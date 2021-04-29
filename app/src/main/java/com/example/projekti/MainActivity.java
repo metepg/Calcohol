@@ -96,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
             liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             liquorVal.setAdapter(liquor);
 
-            Intent ase = new Intent(this, AmountChart.class);
-            startActivity(ase);
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
 
@@ -147,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
     public void onChart(View view){
         Intent chart = new Intent(this, AmountChart.class);
         startActivity(chart);
+    }
+    public void onUser(View view){
+        Intent user = new Intent(this, UserSettings.class);
+        startActivity(user);
     }
     public void onBackPressed() {
         super.onBackPressed();
