@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Alustetaan käyttäjätiedot user olioon
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
-            String gender = sharedPrefs.getString("genderValue", "man");
+            String gender = sharedPrefs.getString("genderValue", "male");
             int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
             testUser = new User(age,gender,weight);
 
@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
             Intent askAge = new Intent(this, AskAge.class);
             startActivity(askAge);
         }
-
     }
     public void onChart(View view){
         Intent chart = new Intent(this, AmountChart.class);
