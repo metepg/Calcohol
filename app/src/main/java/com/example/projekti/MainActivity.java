@@ -14,24 +14,32 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Singleton days;
+    Gson gson = new Gson();
 
     private String TAG = "jes";
     private final static String USER = "properties";
-    private Counter soft = new Counter();
-    private Counter strong = new Counter();
-    private Counter wine = new Counter();
-    private Counter liquor = new Counter();
-    private Calc total;
+    private final Counter soft = new Counter();
+    private final Counter strong = new Counter();
+    private final Counter wine = new Counter();
+    private final Counter liquor = new Counter();
+
+    private DayInfo total;
     User testUser;
 
     LocalDate myObj;
     DateTimeFormatter getDate;
     String formattedDate;
+
+    EditText timeText;
 
     TextView portions;
     TextView smallSoft;
@@ -45,77 +53,77 @@ public class MainActivity extends AppCompatActivity {
     TextView totalText;
     TextView burnaus;
     TextView energy;
-    EditText timeText;
 
     Spinner softPortion;
     Spinner strongPortion;
     Spinner winePortion;
     Spinner liquorPortion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Tää on se storage mihin tallentuu tietoja
         SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
-        Log.d(TAG, String.valueOf(sharedPrefs.contains("valuesSet")));
 
         // Tällä lauseella kattoo onko tiedot jo asetettu eli onko alkujutut tehty jo
         if (sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
             setContentView(R.layout.activity_main);
+            loadData();
 
             // Alustetaan käyttäjätiedot user olioon
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
-            String gender = sharedPrefs.getString("genderValue", "male");
+            String gender = sharedPrefs.getString("genderValue", "man");
             int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
             testUser = new User(age,gender,weight);
 
             // Dropdownien alustus
-            Spinner softVal = findViewById(R.id.softSpinner);
-            ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
-                    R.array.softdrink, android.R.layout.simple_spinner_item);
-            soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            softVal.setAdapter(soft);
-
-            Spinner strongVal = findViewById(R.id.strongSpinner);
-            ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
-                    R.array.strongdrink, android.R.layout.simple_spinner_item);
-            strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            strongVal.setAdapter(strong);
-
-            Spinner wineVal = findViewById(R.id.wineSpinner);
-            ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
-                    R.array.winedrink, android.R.layout.simple_spinner_item);
-            wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            wineVal.setAdapter(wine);
-
-            Spinner liquorVal = findViewById(R.id.liquorSpinner);
-            ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
-                    R.array.liquordrink, android.R.layout.simple_spinner_item);
-            liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            liquorVal.setAdapter(liquor);
-
-            smallSoft = findViewById(R.id.smallSoft);
-            bigSoft = findViewById(R.id.bigSoft);
-
-            smallStrong = findViewById(R.id.smallStrong);
-            bigStrong = findViewById(R.id.bigStrong);
-
-            smallWine = findViewById(R.id.smallWine);
-            bigWine = findViewById(R.id.bigWine);
-
-            smallLiquor = findViewById(R.id.smallLiquor);
-            bigLiquor = findViewById(R.id.bigLiquor);
-            totalText = findViewById(R.id.totalText);
-            portions = findViewById(R.id.portions);
             softPortion = findViewById(R.id.softSpinner);
             strongPortion = findViewById(R.id.strongSpinner);
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
+
+            ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
+                    R.array.softdrink, android.R.layout.simple_spinner_item);
+            soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            softPortion.setAdapter(soft);
+
+            ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
+                    R.array.strongdrink, android.R.layout.simple_spinner_item);
+            strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            strongPortion.setAdapter(strong);
+
+
+            ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
+                    R.array.winedrink, android.R.layout.simple_spinner_item);
+            wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            winePortion.setAdapter(wine);
+
+            ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
+                    R.array.liquordrink, android.R.layout.simple_spinner_item);
+            liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            liquorPortion.setAdapter(liquor);
+
             burnaus = findViewById(R.id.burningText);
             energy = findViewById(R.id.energyText);
             timeText = findViewById(R.id.timeText);
+
+            smallSoft = findViewById(R.id.smallSoft);
+            bigSoft = findViewById(R.id.bigSoft);
+            smallStrong = findViewById(R.id.smallStrong);
+            bigStrong = findViewById(R.id.bigStrong);
+            smallWine = findViewById(R.id.smallWine);
+            bigWine = findViewById(R.id.bigWine);
+            smallLiquor = findViewById(R.id.smallLiquor);
+            bigLiquor = findViewById(R.id.bigLiquor);
+
+            days = Singleton.getInstance();
+
+            totalText = findViewById(R.id.totalText);
+            portions = findViewById(R.id.portions);
+
             timeText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,17 +136,44 @@ public class MainActivity extends AppCompatActivity {
                     startTime();
                 }
             });
+
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             formattedDate = myObj.format(getDate);
 
-            total = new Calc(formattedDate);
-            days = Singleton.getInstance();
+            total = new DayInfo(formattedDate);
+
+            List<DayInfo> data = loadData();
+
+            if(data != null) {
+                // Lisää tallennetut tiedot Singletoniin
+                for(int i = 0; i < data.size(); i++) {
+                    days.getAllDays().add(data.get(i));
+                }
+            }
         }
         // Jos ei ole niin..
         else {
             Intent askAge = new Intent(this, AskAge.class);
             startActivity(askAge);
+        }
+    }
+
+    /**
+     * Hae tiedot "database" tiedostosta
+     * @return päiväkohtaiset tiedot listana
+     */
+    public List<DayInfo> loadData(){
+        SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
+        if(worker.getAll().toString() == "{}") {
+            Log.d(TAG, "2");
+            return null;
+        }
+        else {
+            String arr = worker.getString("KAIKKIDATA", "");
+            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+            List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
+            return dayInfoList;
         }
     }
     public void onChart(View view){
@@ -206,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
-        energy.setText((total.getCalories()) + " kcal");
+        energy.setText(total.getCalories() + " kcal");
     }
 
 
@@ -277,8 +312,7 @@ public class MainActivity extends AppCompatActivity {
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
-        energy.setText(String.valueOf(total.getCalories()) + " kcal");
-
+        energy.setText(total.getCalories() + " kcal");
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -298,21 +332,59 @@ public class MainActivity extends AppCompatActivity {
         return 0;
     }
 
+    /**
+     *
+     * @param view "add calendar" napin onclick
+     */
     public void addToCalendar(View view) {
         if(total.getPortions() == 0) {
             return;
         }
-        if(true){
+
+        int i = getDateIndex(total.getDate());
+
+        // Jos listalta ei löydy samalla pvm olevaa oliota
+        // Lisää olio listalle
+        if(i < 0){
             days.getAllDays().add(total);
         }
-        for (int i = 0; i < days.getAllDays().size(); i++) {
-            System.out.println(i + ". kierros");
-            System.out.println(days.getOneDay(i));
+
+        // Lisää juomat vanhoihin tietoihin
+        else {
+            DayInfo d = days.getOneDay(i);
+
+            d.setSoftAmount(total.getSoftAmount() + d.getSoftAmount());
+            d.setStrongAmount(total.getStrongAmount() + d.getStrongAmount());
+            d.setWineAmount(total.getWineAmount() + d.getWineAmount());
+            d.setLiquorAmount(total.getLiquorAmount() + d.getLiquorAmount());
+            days.getAllDays().set(i, d);
         }
+
+        List<DayInfo> lista = Singleton.getInstance().getAllDays();
+        String json = gson.toJson(lista);
+
+        SharedPreferences userPreferences = getSharedPreferences("database",  MODE_PRIVATE);
+        SharedPreferences.Editor editor = userPreferences.edit();
+        editor.putString("KAIKKIDATA", json);
+        editor.commit();
         resetFields();
-        total = new Calc(formattedDate);
+        total = new DayInfo(formattedDate);
+    }
+    // Tarkastaa onko päivämäärällä jo tietoja
+    // Jos on, niin lisää tiedot edellisen lisäksi
+    public int getDateIndex(String date) {
+        List<DayInfo> data = days.getAllDays();
+
+        for(int i = 0; i < data.size(); i++) {
+            Log.d(TAG, data.get(i).getDate());
+            if(data.get(i).getDate().equals(date)){
+                return i;
+            }
+        }
+        return -1;
     }
 
+    // Tyhjennä kentät
     public void resetFields(){
         soft.reset();
         strong.reset();
@@ -333,6 +405,8 @@ public class MainActivity extends AppCompatActivity {
 
         updateField(totalText, "0.0%");
         updateField(portions, "0");
+        updateField(burnaus, "0");
+        updateField(energy, "0");
     }
     public void startTime(){
         String test = timeText.getText().toString();
@@ -341,7 +415,6 @@ public class MainActivity extends AppCompatActivity {
         }
         int uustest = Integer.parseInt(test);
         int nouda = total.getBurningTime(testUser) - uustest;
-        System.out.println(uustest);
         burnaus.setText(Integer.toString(nouda));
     }
 }
