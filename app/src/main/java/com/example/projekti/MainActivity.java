@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Singleton days = Singleton.getInstance();
+    Singleton days;
     Gson gson = new Gson();
 
     private String TAG = "jes";
@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
             smallLiquor = findViewById(R.id.smallLiquor);
             bigLiquor = findViewById(R.id.bigLiquor);
 
+            days = Singleton.getInstance();
+
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
 
@@ -148,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 0; i < data.size(); i++) {
                     days.getAllDays().add(data.get(i));
                 }
-
             }
         }
         // Jos ei ole niin..
@@ -164,21 +165,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public List<DayInfo> loadData(){
         SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
-
-        if(worker.contains("database")) {
-            String arr = worker.getString("KAIKKIDATA", "");
-
-            if(arr.isEmpty()) {
-                return null;
-            }
-            else {
-                TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
-                List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
-                return dayInfoList;
-            }
+        if(worker.getAll().toString() == "{}") {
+            Log.d(TAG, "2");
+            return null;
         }
         else {
-            return null;
+            String arr = worker.getString("KAIKKIDATA", "");
+            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+            List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
+            return dayInfoList;
         }
     }
     public void onChart(View view){
