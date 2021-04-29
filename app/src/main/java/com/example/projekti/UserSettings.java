@@ -17,14 +17,18 @@ public class UserSettings extends AppCompatActivity {
     private final static String USER = "properties";
     private static final String WEIGHTKEY = "weightValue";
     private static final String GENDERKEY = "genderValue";
+    private final static String AGEKEY = "ageValue";
     RadioGroup radiosexi;
     RadioButton radiofemale;
     RadioButton radiomale;
 
     SharedPreferences sharedPrefs;
+    EditText ageText;
     EditText weightText;
     String gender;
-    String paino;
+    String weighted;
+    String aged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +36,9 @@ public class UserSettings extends AppCompatActivity {
        sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
 
         //Haetaan aikaisemmin syötetyt tiedot
-
-
         getGender();
         getWeight();
+        getAge();
     }
     public void getGender(){
         String gender = sharedPrefs.getString("genderValue", "male");
@@ -46,23 +49,32 @@ public class UserSettings extends AppCompatActivity {
 
         if(gender.equals("male")){
             radiomale.setChecked(true);
-            Log.d("TAG", "paska");
         } else {
             radiofemale.setChecked(true);
         }
-
+    }
+    public void getAge(){
+        String age = sharedPrefs.getString("ageValue", "25");
+        Log.d("TAG", age);
+        ageText = findViewById(R.id.newAge);
+        ageText.setText(age);
     }
     public void getWeight(){
         String weight = sharedPrefs.getString("weightValue", "70");
-        System.out.println("meteg");
         Log.i("TAG", weight);
         weightText = findViewById(R.id.weightStart);
         weightText.setText(weight);
     }
+    public String setAge(){
+        ageText = findViewById(R.id.newAge);
+        aged = ageText.getText().toString();
+        return aged;
+    }
+
 public String setWeight(){
         weightText = findViewById(R.id.weightStart);
-        paino = weightText.getText().toString();
-        return paino;
+        weighted = weightText.getText().toString();
+        return weighted;
 }
 
 public String setGender(){
@@ -87,6 +99,7 @@ public String setGender(){
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("genderValue", setGender());
         editor.putString("weightValue", setWeight());
+        editor.putString("ageValue", setAge());
         editor.commit();
         Intent back = new Intent(this, MainActivity.class);
         startActivity(back);

@@ -13,7 +13,6 @@
         android:ems="10"
         android:hint="Weight"
         android:inputType="textPersonName"
-        android:text="100"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
