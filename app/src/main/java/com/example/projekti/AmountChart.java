@@ -41,9 +41,24 @@ public class AmountChart extends AppCompatActivity {
         barChart = findViewById(R.id.idBarChart);
 
         // calling method to get bar entries.
-        getBarEntries();
+        setBarChart(3,4);
         testDate(0);
-        // creating a new bar data set.
+    }
+
+    private void setBarChart(int i, int j) {
+        // creating a new array list
+        barEntriesArrayList = new ArrayList<>();
+
+        // adding new entry to our array list with bar
+        // entry and passing x and y axis value to it.
+        barEntriesArrayList.add(new BarEntry(0, i));
+        barEntriesArrayList.add(new BarEntry(1, j));
+        barEntriesArrayList.add(new BarEntry(2, 4));
+        barEntriesArrayList.add(new BarEntry(3, 0));
+        barEntriesArrayList.add(new BarEntry(4, 2));
+        barEntriesArrayList.add(new BarEntry(5, 0));
+        barEntriesArrayList.add(new BarEntry(6, 0));
+
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
         // creating a new bar data and
@@ -58,30 +73,18 @@ public class AmountChart extends AppCompatActivity {
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
 
+        barChart.animateY(500);
+
         barChart.getAxisRight().setAxisMaximum(50);
         barChart.getAxisLeft().setAxisMaximum(50);
         barChart.getAxisRight().setAxisMinimum(0);
         barChart.getAxisLeft().setAxisMinimum(0);
         XAxis axel = barChart.getXAxis();
 
-
-        String[] dates = {"", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+        String[] dates = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
         axel.setValueFormatter(new IndexAxisValueFormatter(dates));
-    }
 
-    private void getBarEntries() {
-        // creating a new array list
-        barEntriesArrayList = new ArrayList<>();
-
-        // adding new entry to our array list with bar
-        // entry and passing x and y axis value to it.
-        barEntriesArrayList.add(new BarEntry(1f, 0));
-        barEntriesArrayList.add(new BarEntry(2f, 0));
-        barEntriesArrayList.add(new BarEntry(3f, 4));
-        barEntriesArrayList.add(new BarEntry(4f, 0));
-        barEntriesArrayList.add(new BarEntry(5f, 0));
-        barEntriesArrayList.add(new BarEntry(6f, 0));
-        barEntriesArrayList.add(new BarEntry(7f, 0));
+        System.out.println(barEntriesArrayList.toString());
     }
     public void testDate(int i){
         dateView = findViewById(R.id.dateView);
@@ -102,6 +105,7 @@ public class AmountChart extends AppCompatActivity {
     }
 
     public void nextWeek(View view){
+        setBarChart(6,7);
         startD++;
         testDate(startD);
         System.out.println("next");

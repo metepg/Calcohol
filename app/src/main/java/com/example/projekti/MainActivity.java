@@ -11,11 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Singleton days;
+    Gson gson = new Gson();
 
     private String TAG = "jes";
     private final static String USER = "properties";
@@ -23,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Counter strong = new Counter();
     private Counter wine = new Counter();
     private Counter liquor = new Counter();
-    private Calc total;
+
+    private DayInfo total;
     User testUser;
 
     LocalDate myObj;
@@ -51,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Tää on se storage mihin tallentuu tietoja
         SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
-        Log.d(TAG, String.valueOf(sharedPrefs.contains("valuesSet")));
 
         // Tällä lauseella kattoo onko tiedot jo asetettu eli onko alkujutut tehty jo
         if (sharedPrefs.getBoolean("valuesSet", false)) {
             // Printtaa kaikki tiedot
             Log.d(TAG, sharedPrefs.getAll().toString());
             setContentView(R.layout.activity_main);
+            loadData();
 
             // Alustetaan käyttäjätiedot user olioon
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
@@ -66,56 +73,65 @@ public class MainActivity extends AppCompatActivity {
             testUser = new User(age,gender,weight);
 
             // Dropdownien alustus
-            Spinner softVal = findViewById(R.id.softSpinner);
-            ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
-                    R.array.softdrink, android.R.layout.simple_spinner_item);
-            soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            softVal.setAdapter(soft);
-
-            Spinner strongVal = findViewById(R.id.strongSpinner);
-            ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
-                    R.array.strongdrink, android.R.layout.simple_spinner_item);
-            strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            strongVal.setAdapter(strong);
-
-            Spinner wineVal = findViewById(R.id.wineSpinner);
-            ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
-                    R.array.winedrink, android.R.layout.simple_spinner_item);
-            wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            wineVal.setAdapter(wine);
-
-            Spinner liquorVal = findViewById(R.id.liquorSpinner);
-            ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
-                    R.array.liquordrink, android.R.layout.simple_spinner_item);
-            liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            liquorVal.setAdapter(liquor);
-
-            Intent ase = new Intent(this, AmountChart.class);
-            startActivity(ase);
-            smallSoft = findViewById(R.id.smallSoft);
-            bigSoft = findViewById(R.id.bigSoft);
-
-            smallStrong = findViewById(R.id.smallStrong);
-            bigStrong = findViewById(R.id.bigStrong);
-
-            smallWine = findViewById(R.id.smallWine);
-            bigWine = findViewById(R.id.bigWine);
-
-            smallLiquor = findViewById(R.id.smallLiquor);
-            bigLiquor = findViewById(R.id.bigLiquor);
-            totalText = findViewById(R.id.totalText);
-            portions = findViewById(R.id.portions);
             softPortion = findViewById(R.id.softSpinner);
             strongPortion = findViewById(R.id.strongSpinner);
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
 
+            ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
+                    R.array.softdrink, android.R.layout.simple_spinner_item);
+            soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            softPortion.setAdapter(soft);
+
+            ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
+                    R.array.strongdrink, android.R.layout.simple_spinner_item);
+            strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            strongPortion.setAdapter(strong);
+
+
+            ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
+                    R.array.winedrink, android.R.layout.simple_spinner_item);
+            wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            winePortion.setAdapter(wine);
+
+            ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
+                    R.array.liquordrink, android.R.layout.simple_spinner_item);
+            liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            liquorPortion.setAdapter(liquor);
+
+            Intent ase = new Intent(this, AmountChart.class);
+            startActivity(ase);
+
+            smallSoft = findViewById(R.id.smallSoft);
+            bigSoft = findViewById(R.id.bigSoft);
+            smallStrong = findViewById(R.id.smallStrong);
+            bigStrong = findViewById(R.id.bigStrong);
+            smallWine = findViewById(R.id.smallWine);
+            bigWine = findViewById(R.id.bigWine);
+            smallLiquor = findViewById(R.id.smallLiquor);
+            bigLiquor = findViewById(R.id.bigLiquor);
+
+            totalText = findViewById(R.id.totalText);
+            portions = findViewById(R.id.portions);
+
+
+
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             formattedDate = myObj.format(getDate);
 
-            total = new Calc(formattedDate);
+            total = new DayInfo(formattedDate);
             days = Singleton.getInstance();
+
+            List<DayInfo> data = loadData();
+            Log.d(TAG, data.toString());
+
+            if(data != null) {
+                // Lisää tallennetut tiedot Singletoniin
+                for(int i = 0; i < data.size(); i++) {
+                    days.getAllDays().add(data.get(i));
+                }
+            }
         }
         // Jos ei ole niin..
         else {
@@ -123,6 +139,20 @@ public class MainActivity extends AppCompatActivity {
             startActivity(askAge);
         }
 
+    }
+
+    public List<DayInfo> loadData(){
+        SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
+        String arr = worker.getString("KAIKKIDATA", "");
+
+        if(arr.isEmpty()) {
+            return null;
+        }
+        else {
+            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+            List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
+            return dayInfoList;
+        }
     }
     public void onBackPressed() {
         super.onBackPressed();
@@ -275,12 +305,16 @@ public class MainActivity extends AppCompatActivity {
         if(true){
             days.getAllDays().add(total);
         }
-        for (int i = 0; i < days.getAllDays().size(); i++) {
-            System.out.println(i + ". kierros");
-            System.out.println(days.getOneDay(i));
-        }
+
+        List lista = Singleton.getInstance().getAllDays();
+        String json = gson.toJson(lista);
+
+        SharedPreferences userPreferences = getSharedPreferences("database",  MODE_PRIVATE);
+        SharedPreferences.Editor editor = userPreferences.edit();
+        editor.putString("KAIKKIDATA", json);
+        editor.commit();
         resetFields();
-        total = new Calc(formattedDate);
+        total = new DayInfo(formattedDate);
     }
 
     public void resetFields(){
@@ -288,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
         strong.reset();
         wine.reset();
         liquor.reset();
-        total.reset();
 
         updateField(smallSoft, "0");
         updateField(bigSoft, "0");

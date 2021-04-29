@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Singleton {
-    private List<Calc> days;
+    private List<DayInfo> days;
     private static final Singleton instance = new Singleton();
 
     public static Singleton getInstance(){
@@ -15,11 +15,11 @@ public class Singleton {
         days = new ArrayList<>();
     }
 
-    public List<Calc> getAllDays(){
+    public List<DayInfo> getAllDays(){
         return days;
     }
 
-    public Calc getOneDay(int i) {
+    public DayInfo getOneDay(int i) {
         return days.get(i);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.projekti;
 
-public class Calc {
+public class DayInfo {
     private int softAmount;
     private int strongAmount;
     private int wineAmount;
@@ -9,7 +9,7 @@ public class Calc {
 
     // Constructor
     // amount = alcohol amount as ml
-    public Calc(String date){
+    public DayInfo(String date){
         this.softAmount = 0;
         this.strongAmount = 0;
         this.wineAmount = 0;
@@ -43,6 +43,33 @@ public class Calc {
         if(liquorAmount < 0){
             liquorAmount = 0;
         }
+    }
+
+    public void reset() {
+        softAmount = 0;
+        strongAmount = 0;
+        wineAmount = 0;
+        liquorAmount = 0;
+    }
+
+    public String getDate(){
+        return date;
+    }
+
+    public int getSoftAmount() {
+        return softAmount;
+    }
+
+    public int getStrongAmount() {
+        return strongAmount;
+    }
+
+    public int getWineAmount() {
+        return wineAmount;
+    }
+
+    public int getLiquorAmount() {
+        return liquorAmount;
     }
 
     // Calculate alcohol level in blood
@@ -86,19 +113,8 @@ public class Calc {
         return (int) Math.round(getAlcoholAmountAsGrams() * 11);
     }
 
-    public void reset() {
-        softAmount = 0;
-        strongAmount = 0;
-        wineAmount = 0;
-        liquorAmount = 0;
-    }
-
-    public String getDate(){
-        return date;
-    }
-
-    public String toString() {
+    /*public String toString() {
         return getDate() + " (" + getPortions() + ") portions";
-    }
+    }*/
 }
 
