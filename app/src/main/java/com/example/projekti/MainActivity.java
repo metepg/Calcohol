@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,19 +19,18 @@ import com.google.gson.reflect.TypeToken;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Singleton days;
+    Singleton days = Singleton.getInstance();
     Gson gson = new Gson();
 
     private String TAG = "jes";
     private final static String USER = "properties";
-    private Counter soft = new Counter();
-    private Counter strong = new Counter();
-    private Counter wine = new Counter();
-    private Counter liquor = new Counter();
+    private final Counter soft = new Counter();
+    private final Counter strong = new Counter();
+    private final Counter wine = new Counter();
+    private final Counter liquor = new Counter();
 
     private DayInfo total;
     User testUser;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     LocalDate myObj;
     DateTimeFormatter getDate;
     String formattedDate;
+
+    EditText timeText;
 
     TextView portions;
     TextView smallSoft;
@@ -47,11 +51,14 @@ public class MainActivity extends AppCompatActivity {
     TextView smallLiquor;
     TextView bigLiquor;
     TextView totalText;
+    TextView burnaus;
+    TextView energy;
 
     Spinner softPortion;
     Spinner strongPortion;
     Spinner winePortion;
     Spinner liquorPortion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
             liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             liquorPortion.setAdapter(liquor);
 
-            Intent ase = new Intent(this, AmountChart.class);
-            startActivity(ase);
+            burnaus = findViewById(R.id.burningText);
+            energy = findViewById(R.id.energyText);
+            timeText = findViewById(R.id.timeText);
 
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
@@ -114,23 +122,33 @@ public class MainActivity extends AppCompatActivity {
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
 
-
+            timeText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    startTime();
+                }
+            });
 
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             formattedDate = myObj.format(getDate);
 
             total = new DayInfo(formattedDate);
-            days = Singleton.getInstance();
 
             List<DayInfo> data = loadData();
-            Log.d(TAG, data.toString());
 
             if(data != null) {
                 // Lisää tallennetut tiedot Singletoniin
                 for(int i = 0; i < data.size(); i++) {
                     days.getAllDays().add(data.get(i));
                 }
+
             }
         }
         // Jos ei ole niin..
@@ -138,21 +156,38 @@ public class MainActivity extends AppCompatActivity {
             Intent askAge = new Intent(this, AskAge.class);
             startActivity(askAge);
         }
-
     }
 
+    /**
+     * Hae tiedot "database" tiedostosta
+     * @return päiväkohtaiset tiedot listana
+     */
     public List<DayInfo> loadData(){
         SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
-        String arr = worker.getString("KAIKKIDATA", "");
 
-        if(arr.isEmpty()) {
-            return null;
+        if(worker.contains("database")) {
+            String arr = worker.getString("KAIKKIDATA", "");
+
+            if(arr.isEmpty()) {
+                return null;
+            }
+            else {
+                TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+                List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
+                return dayInfoList;
+            }
         }
         else {
-            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
-            List<DayInfo> dayInfoList = gson.fromJson(arr, token.getType());
-            return dayInfoList;
+            return null;
         }
+    }
+    public void onChart(View view){
+        Intent chart = new Intent(this, AmountChart.class);
+        startActivity(chart);
+    }
+    public void onUser(View view){
+        Intent user = new Intent(this, UserSettings.class);
+        startActivity(user);
     }
     public void onBackPressed() {
         super.onBackPressed();
@@ -210,6 +245,8 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
+        startTime();
+        energy.setText(total.getCalories() + " kcal");
     }
 
 
@@ -279,6 +316,8 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
+        startTime();
+        energy.setText(total.getCalories() + " kcal");
     }
 
     // Palauttaa numeroarvon spinnereiden valintakentästä
@@ -298,15 +337,35 @@ public class MainActivity extends AppCompatActivity {
         return 0;
     }
 
+    /**
+     *
+     * @param view "add calendar" napin onclick
+     */
     public void addToCalendar(View view) {
         if(total.getPortions() == 0) {
             return;
         }
-        if(true){
+
+        int i = getDateIndex(total.getDate());
+
+        // Jos listalta ei löydy samalla pvm olevaa oliota
+        // Lisää olio listalle
+        if(i < 0){
             days.getAllDays().add(total);
         }
 
-        List lista = Singleton.getInstance().getAllDays();
+        // Lisää juomat vanhoihin tietoihin
+        else {
+            DayInfo d = days.getOneDay(i);
+
+            d.setSoftAmount(total.getSoftAmount() + d.getSoftAmount());
+            d.setStrongAmount(total.getStrongAmount() + d.getStrongAmount());
+            d.setWineAmount(total.getWineAmount() + d.getWineAmount());
+            d.setLiquorAmount(total.getLiquorAmount() + d.getLiquorAmount());
+            days.getAllDays().set(i, d);
+        }
+
+        List<DayInfo> lista = Singleton.getInstance().getAllDays();
         String json = gson.toJson(lista);
 
         SharedPreferences userPreferences = getSharedPreferences("database",  MODE_PRIVATE);
@@ -316,7 +375,21 @@ public class MainActivity extends AppCompatActivity {
         resetFields();
         total = new DayInfo(formattedDate);
     }
+    // Tarkastaa onko päivämäärällä jo tietoja
+    // Jos on, niin lisää tiedot edellisen lisäksi
+    public int getDateIndex(String date) {
+        List<DayInfo> data = days.getAllDays();
 
+        for(int i = 0; i < data.size(); i++) {
+            Log.d(TAG, data.get(i).getDate());
+            if(data.get(i).getDate().equals(date)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Tyhjennä kentät
     public void resetFields(){
         soft.reset();
         strong.reset();
@@ -337,5 +410,16 @@ public class MainActivity extends AppCompatActivity {
 
         updateField(totalText, "0.0%");
         updateField(portions, "0");
+        updateField(burnaus, "0");
+        updateField(energy, "0");
+    }
+    public void startTime(){
+        String test = timeText.getText().toString();
+        if(test.isEmpty()){
+            test = "0";
+        }
+        int uustest = Integer.parseInt(test);
+        int nouda = total.getBurningTime(testUser) - uustest;
+        burnaus.setText(Integer.toString(nouda));
     }
 }

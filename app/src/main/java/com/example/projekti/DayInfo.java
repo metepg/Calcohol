@@ -72,6 +72,22 @@ public class DayInfo {
         return liquorAmount;
     }
 
+    public void setSoftAmount(int softAmount) {
+        this.softAmount = softAmount;
+    }
+
+    public void setStrongAmount(int strongAmount) {
+        this.strongAmount = strongAmount;
+    }
+
+    public void setWineAmount(int wineAmount) {
+        this.wineAmount = wineAmount;
+    }
+
+    public void setLiquorAmount(int liquorAmount) {
+        this.liquorAmount = liquorAmount;
+    }
+
     // Calculate alcohol level in blood
     // multiplier = ratio of body water to total weight (%)
     // Return level as ‰ e.g. 2.5
