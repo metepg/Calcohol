@@ -92,7 +92,7 @@ public class DayInfo {
     // multiplier = ratio of body water to total weight (%)
     // Return level as ‰ e.g. 2.5
     public String getAlcoholInBlood(User user) {
-        double multiplier = (user.getGender() == "man" ? 66 : 75 ) * user.getWeight();
+        double multiplier = (user.getGender() == "male" ? 75 : 66 ) * user.getWeight();
         double alcoholLevel = (double) Math.round((getAlcoholAmountAsGrams() / multiplier*10) *1000) /100;
         return alcoholLevel + "%";
     }
@@ -129,7 +129,7 @@ public class DayInfo {
         return (int) Math.round(getAlcoholAmountAsGrams() * 7);
     }
 
-    /*public String toString() {
+   /* public String toString() {
         return getDate() + " (" + getPortions() + ") portions";
     }*/
 }

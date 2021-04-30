@@ -96,16 +96,16 @@ public String setGender(){
 }
 
     public void saveNewValues(View view){
+        super.onBackPressed();
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("genderValue", setGender());
         editor.putString("weightValue", setWeight());
         editor.putString("ageValue", setAge());
         editor.commit();
-        Intent back = new Intent(this, MainActivity.class);
-        startActivity(back);
+        finish();
     }
     public void backToMain(View view){
-        Intent back = new Intent(this, MainActivity.class);
-        startActivity(back);
+        super.onBackPressed();
+        finish();
     }
 }

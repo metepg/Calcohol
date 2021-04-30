@@ -47,6 +47,7 @@ public class AskGender extends AppCompatActivity {
             editor.commit();
             Intent askWeight = new Intent(this, AskWeight.class);
             startActivity(askWeight);
+            finish();
 
         }
     }

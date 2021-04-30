@@ -53,6 +53,7 @@ public class AskAge extends AppCompatActivity {
 
             Intent askGender = new Intent(this, AskGender.class);
             startActivity(askGender);
+            finish();
         }
     }
 }

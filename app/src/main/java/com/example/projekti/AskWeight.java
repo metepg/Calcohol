@@ -52,7 +52,7 @@ public class AskWeight extends AppCompatActivity {
             editor.commit();
             Intent returnToMain = new Intent(this, MainActivity.class);
             startActivity(returnToMain);
-
+            finish();
         }
     }
 }
