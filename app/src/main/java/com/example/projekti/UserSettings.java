@@ -18,6 +18,7 @@ public class UserSettings extends AppCompatActivity {
     private static final String WEIGHTKEY = "weightValue";
     private static final String GENDERKEY = "genderValue";
     private final static String AGEKEY = "ageValue";
+
     RadioGroup radiosexi;
     RadioButton radiofemale;
     RadioButton radiomale;
@@ -57,7 +58,7 @@ public class UserSettings extends AppCompatActivity {
         String age = sharedPrefs.getString("ageValue", "25");
         Log.d("TAG", age);
         ageText = findViewById(R.id.newAge);
-        ageText.setText(age);
+            ageText.setText(age);
     }
     public void getWeight(){
         String weight = sharedPrefs.getString("weightValue", "70");
@@ -101,11 +102,11 @@ public String setGender(){
         editor.putString("weightValue", setWeight());
         editor.putString("ageValue", setAge());
         editor.commit();
-        Intent back = new Intent(this, MainActivity.class);
-        startActivity(back);
+        super.onBackPressed();
+        finish();
     }
     public void backToMain(View view){
-        Intent back = new Intent(this, MainActivity.class);
-        startActivity(back);
+        super.onBackPressed();
+        finish();
     }
 }

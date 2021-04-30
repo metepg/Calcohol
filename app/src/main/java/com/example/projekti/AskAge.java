@@ -41,7 +41,7 @@ public class AskAge extends AppCompatActivity {
         Log.d("moi", ageElement.getText().toString());
         String age = ageElement.getText().toString();
         if(age.isEmpty()){
-            ageElement.setError("Text required");
+            ageElement.setError("Age required");
         } else if (Integer.parseInt(age) < 18){
             ageElement.setError("Only +18 year old allowed to continue");
         }
@@ -53,6 +53,7 @@ public class AskAge extends AppCompatActivity {
 
             Intent askGender = new Intent(this, AskGender.class);
             startActivity(askGender);
+            finish();
         }
     }
 }

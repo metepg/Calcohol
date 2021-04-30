@@ -1,39 +1,35 @@
 package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.TypefaceCompat;
 
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.List;
 
 
 public class AmountChart extends AppCompatActivity {
     // variable for our bar chart
     BarChart barChart;
-    TextView dateView;
+    TextView dateViewFirst;
+    TextView dateViewSecond;
     // variable for our bar data.
     BarData barData;
     int startD = 0;
     // variable for our bar data set.
     BarDataSet barDataSet;
+    Singleton savedData;
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;
@@ -98,7 +94,8 @@ public class AmountChart extends AppCompatActivity {
         axelx.setValueFormatter(new IndexAxisValueFormatter(dates));
     }
     public void testDate(int i){
-        dateView = findViewById(R.id.dateView);
+        dateViewFirst = findViewById(R.id.dateViewF);
+        dateViewSecond = findViewById(R.id.dateViewF2);
 
         Calendar c = Calendar.getInstance();
         c.add(Calendar.WEEK_OF_YEAR, i);
@@ -112,13 +109,16 @@ public class AmountChart extends AppCompatActivity {
         SimpleDateFormat formatt = new SimpleDateFormat("dd.MM.yyyy");
         String firstDate = formatt.format(startOfWeek);
         String lastDate = formatt.format(endOfWeek);
-        dateView.setText(firstDate + " - " + lastDate);
+        dateViewFirst.setText(firstDate);
+        dateViewSecond.setText(lastDate);
+
     }
 
     public void nextWeek(View view){
         startD++;
         testDate(startD);
         System.out.println("next");
+        getDays("1");
     }
     public void prevWeek(View view){
         startD--;
@@ -126,8 +126,16 @@ public class AmountChart extends AppCompatActivity {
         System.out.println("prev");
     }
     public void onBackP(View view){
-        Intent mainview = new Intent(this, MainActivity.class);
-        startActivity(mainview);
+        super.onBackPressed();
+        finish();
     }
-
+    // Hae oikeat päivät listasta
+    public void getDays(String date){
+        savedData = Singleton.getInstance();
+        List<DayInfo> days = savedData.getAllDays();
+        System.out.println(days.size());
+        for (int i = 0; i < days.size(); i++) {
+            System.out.println(savedData.getOneDay(i).toString());
+        }
+    }
 }

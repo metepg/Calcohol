@@ -186,8 +186,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onBackPressed() {
         super.onBackPressed();
-        Intent mainView = new Intent(this, MainActivity.class);
-        startActivity(mainView);
+        finish();
     }
     // Päivitä tekstikenttä annetun idn ja counterin mukaan
     public void updateField(TextView id, String text) {
