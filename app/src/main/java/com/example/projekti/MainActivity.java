@@ -85,22 +85,25 @@ public class MainActivity extends AppCompatActivity {
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
 
+            // 0.33l & 0.5l
             ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
                     R.array.softdrink, android.R.layout.simple_spinner_item);
             soft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             softPortion.setAdapter(soft);
 
+            // 0.33l & 0.5l
             ArrayAdapter<CharSequence> strong = ArrayAdapter.createFromResource(this,
                     R.array.strongdrink, android.R.layout.simple_spinner_item);
             strong.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             strongPortion.setAdapter(strong);
 
-
+            // 12cl & 0.375l
             ArrayAdapter<CharSequence> wine = ArrayAdapter.createFromResource(this,
                     R.array.winedrink, android.R.layout.simple_spinner_item);
             wine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             winePortion.setAdapter(wine);
 
+            // 4cl % 0.5l
             ArrayAdapter<CharSequence> liquor = ArrayAdapter.createFromResource(this,
                     R.array.liquordrink, android.R.layout.simple_spinner_item);
             liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -138,13 +141,12 @@ public class MainActivity extends AppCompatActivity {
             });
 
             myObj = LocalDate.now();
-            getDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            getDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             formattedDate = myObj.format(getDate);
 
             total = new DayInfo(formattedDate);
 
             List<DayInfo> data = loadData();
-
             if(data != null) {
                 // Lisää tallennetut tiedot Singletoniin
                 for(int i = 0; i < data.size(); i++) {
@@ -166,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
     public List<DayInfo> loadData(){
         SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
         if(worker.getAll().toString() == "{}") {
-            Log.d(TAG, "2");
             return null;
         }
         else {
@@ -343,11 +344,11 @@ public class MainActivity extends AppCompatActivity {
         int i = getDateIndex(total.getDate());
 
         // Jos listalta ei löydy samalla pvm olevaa oliota
-        // Lisää olio listalle
+        // Lisää tiedot listalle
         if(i < 0){
             days.getAllDays().add(total);
         }
-
+        // Jos löytyy
         // Lisää juomat vanhoihin tietoihin
         else {
             DayInfo d = days.getOneDay(i);
