@@ -129,8 +129,8 @@ public class DayInfo {
         return (int) Math.round(getAlcoholAmountAsGrams() * 7);
     }
 
-   /* public String toString() {
-        return getDate() + " (" + getPortions() + ") portions";
-    }*/
+   public String toString() {
+        return getDate() + " (" + getDate() + ") portions";
+    }
 }
 

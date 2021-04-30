@@ -89,6 +89,7 @@ public class AmountChart extends AppCompatActivity {
         int saturday = checkValue(days.get(5));
         int sunday = checkValue(days.get(6));
 
+
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
         barEntriesArrayList.add(new BarEntry(0, monday));
@@ -170,7 +171,7 @@ public class AmountChart extends AppCompatActivity {
         List<DayInfo> days = savedData.getAllDays();
         List<DayInfo> pvt = new ArrayList();
         for (int i = 0; i <= 6; i++) {
-            String matchDate = LocalDate.parse(firstDate).plusDays(i+1).toString(); // Current date to match
+            String matchDate = LocalDate.parse(firstDate).plusDays(i).toString(); // Current date to match
 
             // Loop through saved info
             for(int j = 0; j < days.size(); j++) {
@@ -182,10 +183,12 @@ public class AmountChart extends AppCompatActivity {
                 try {
                     pvt.get( i );
                 } catch ( IndexOutOfBoundsException e ) {
+                    System.out.println(i);
                     pvt.add( i, null );
                 }
             }
         }
+        System.out.println(pvt.toString());
         return pvt;
     }
 
