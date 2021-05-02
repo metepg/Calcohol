@@ -99,10 +99,6 @@ public class AmountChart extends AppCompatActivity {
         dayOfWeek = findViewById(R.id.weekDay);
         weekPortions = findViewById(R.id.weekPortions);
 
-        System.out.println(date);
-        date.plusDays(3);
-        System.out.println(date.plusDays(3));
-
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
@@ -118,7 +114,6 @@ public class AmountChart extends AppCompatActivity {
         weekDays.add("Sunday");
 
         int total = 0;
-        System.out.println(days.size());
         for(int i = 0; i < days.size(); i++) {
             total += checkValue(days.get(i));
         }
@@ -169,12 +164,6 @@ public class AmountChart extends AppCompatActivity {
                     String liquorAmount = convertToLiters(data.getLiquorAmount());
                     String date = formatDate(data.getDate());
                     String caloriesAmount = String.valueOf(data.getCalories());
-
-
-                    System.out.println(data.getSoftPortions());
-                    System.out.println(data.getStrongPortions());
-                    System.out.println(data.getWinePortions());
-                    System.out.println(data.getLiquorPortions());
 
 
                     soft.setText(data.getSoftPortions());
@@ -290,7 +279,6 @@ public class AmountChart extends AppCompatActivity {
                 pvt.add(i, null);
             }
         }
-        System.out.println(pvt.toString());
         return pvt;
     }
 }
