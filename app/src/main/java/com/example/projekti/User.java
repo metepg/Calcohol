@@ -4,14 +4,12 @@ public class User {
     private int age;
     private String gender;
     private int weight;
-    private int height;
 
     // Constructor
-    public User(int age, String gender, int weight, int height){
+    public User(int age, String gender, int weight){
         this.age = age;
         this.gender = gender;
         this.weight = weight;
-        this.height = height;
     }
     public int getAge(){
         return age;
@@ -22,9 +20,6 @@ public class User {
     public int getWeight(){
         return weight;
     }
-    public int getHeight(){
-        return height;
-    }
 
     public void setAge(int age) {
         this.age = age;
@@ -34,9 +29,6 @@ public class User {
         this.gender = gender;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public void setWeight(int weight) {
         this.weight = weight;
