@@ -9,7 +9,9 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 
 import android.view.View;
 import android.widget.TextView;
@@ -46,9 +48,11 @@ public class AmountChart extends AppCompatActivity {
 
         // calling method to get bar entries.
         Calendar startDay = getStartDay(0);
+        System.out.println(startDay.getTime());
         getBarEntries(startDay.getTime());
         setDays(startDay);
     }
+
 
     public Calendar getStartDay(int i) {
         Calendar c = Calendar.getInstance();
@@ -62,6 +66,7 @@ public class AmountChart extends AppCompatActivity {
 
         dateView = findViewById(R.id.dateView);
         Date firstDayOfWeek = c.getTime();
+
         c.setFirstDayOfWeek(Calendar.MONDAY);
         c.add(Calendar.DAY_OF_WEEK, 6);
         Date lastDayOfWeek = c.getTime();
@@ -74,6 +79,7 @@ public class AmountChart extends AppCompatActivity {
 
     private void getBarEntries(Date date) {
         // Barchart array
+
         barEntriesArrayList = new ArrayList<>();
 
         // Päivien tiedot arrayna
@@ -169,21 +175,23 @@ public class AmountChart extends AppCompatActivity {
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
         List<DayInfo> pvt = new ArrayList();
+        //Loop through, week days
         for (int i = 0; i <= 6; i++) {
-            String matchDate = LocalDate.parse(firstDate).plusDays(i+1).toString(); // Current date to match
+            String matchDate = LocalDate.parse(firstDate).plusDays(i).toString(); // Current date to match
 
-            // Loop through saved info
+            // Loop through saved info and compare date
             for(int j = 0; j < days.size(); j++) {
                 String pv = days.get(j).getDate();
                 if(pv.equals(matchDate)) {
                     pvt.add(days.get(j));
                 }
                 // If no match add null instead of DayInfo to List
-                try {
-                    pvt.get( i );
-                } catch ( IndexOutOfBoundsException e ) {
-                    pvt.add( i, null );
-                }
+
+            }
+            try {
+                pvt.get( i );
+            } catch ( IndexOutOfBoundsException e ) {
+                pvt.add( i, null );
             }
         }
         return pvt;

@@ -8,8 +8,9 @@
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/idBarChart"
-        android:layout_width="345dp"
-        android:layout_height="460dp"
+        android:layout_width="347dp"
+        android:layout_height="477dp"
+        android:layout_marginBottom="136dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -26,7 +27,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintVertical_bias="0.076" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="44dp"
+        android:layout_height="41dp"
+        android:background="#FFFFFF"
+        android:onClick="nextWeek"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.831"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066"
+        app:srcCompat="@drawable/outline_navigate_next_24" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -40,21 +55,7 @@
         app:layout_constraintHorizontal_bias="0.174"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.265"
-        app:srcCompat="@drawable/outline_navigate_next_24" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="44dp"
-        android:layout_height="41dp"
-        android:background="#FFFFFF"
-        android:onClick="nextWeek"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.831"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.265"
+        app:layout_constraintVertical_bias="0.066"
         app:srcCompat="@drawable/outline_navigate_next_24" />
 
     <ImageButton
