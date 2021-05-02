@@ -6,17 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".AskAge">
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/angry_btn"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:background="@drawable/buttonshape"
         android:onClick="checkAge"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Check"
-        app:layout_constraintBottom_toTopOf="@+id/your_state_progress_bar_id"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.739" />
 
     <EditText
         android:id="@+id/age"
@@ -25,7 +34,6 @@
         android:ems="10"
         android:hint="Age"
         android:inputType="textPersonName"
-        android:text="30"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
