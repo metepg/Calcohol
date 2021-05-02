@@ -6,43 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AskGender">
 
-    <EditText
-        android:id="@+id/gender"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Gender"
-        android:inputType="textPersonName"
-        android:text="female"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/angry_btn"
+        android:layout_marginBottom="100dp"
+        android:onClick="saveValues"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/your_state_progress_bar_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.473" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/angry_btn"
-
-        android:layout_width="162dp"
-        android:layout_height="43dp"
-        android:background="@drawable/buttonshape"
-
-        android:onClick="getGender"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Check"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.739" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.kofigyan.stateprogressbar.StateProgressBar
         android:id="@+id/your_state_progress_bar_id"
@@ -72,5 +45,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/calcohol" />
+
+    <RadioGroup
+        android:id="@+id/groupradio"
+        android:layout_width="211dp"
+        android:layout_height="82dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/groupfemale"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/groupmale"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Male" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
