@@ -62,7 +62,6 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
-
     }
 
     // First date of week as LocalDate object
@@ -100,8 +99,23 @@ public class AmountChart extends AppCompatActivity {
         dayOfWeek = findViewById(R.id.weekDay);
         weekPortions = findViewById(R.id.weekPortions);
 
+        System.out.println(date);
+        date.plusDays(3);
+        System.out.println(date.plusDays(3));
+
+
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
+
+        // Viikonpäivät
+        ArrayList<String> weekDays = new ArrayList<>();
+        weekDays.add("Monday");
+        weekDays.add("Tuesday");
+        weekDays.add("Wednesday");
+        weekDays.add("Thursday");
+        weekDays.add("Friday");
+        weekDays.add("Saturday");
+        weekDays.add("Sunday");
 
         int total = 0;
         System.out.println(days.size());
@@ -141,20 +155,13 @@ public class AmountChart extends AppCompatActivity {
                     strong.setText("0");
                     wine.setText("0");
                     liquor.setText("0");
-                    dateInfo.setText("");
-                    dayOfWeek.setText("No saved data");
+                    dateInfo.setText(formatDate(date.plusDays(i).toString()));
+                    dayOfWeek.setText(weekDays.get(i));
                     calories.setText("0");
                     return;
                 } else {
                     DayInfo data = days.get(i);
-                    ArrayList<String> weekDays = new ArrayList<>();
-                    weekDays.add("Monday");
-                    weekDays.add("Tuesday");
-                    weekDays.add("Wednesday");
-                    weekDays.add("Thursday");
-                    weekDays.add("Friday");
-                    weekDays.add("Saturday");
-                    weekDays.add("Sunday");
+
                     String weekDay = weekDays.get(i);
                     String softAmount = convertToLiters(data.getSoftAmount());
                     String strongAmount = convertToLiters(data.getStrongAmount());
