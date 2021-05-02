@@ -32,7 +32,7 @@ public class AskGender extends AppCompatActivity {
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
         sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
-        button = findViewById(R.id.btn);
+        button = findViewById(R.id.angry_btn);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
 
     }

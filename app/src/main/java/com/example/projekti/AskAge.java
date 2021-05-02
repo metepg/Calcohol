@@ -37,7 +37,7 @@ public class AskAge extends AppCompatActivity {
         if(age.isEmpty()){
             ageElement.setError("Age required");
         } else if (Integer.parseInt(age) < 18){
-            ageElement.setError("Only +18 year old allowed to continue");
+            ageElement.setError("Only 18+ year old allowed to continue");
         }
         else {
             SharedPreferences userPreferences = getSharedPreferences(USER,  MODE_PRIVATE);

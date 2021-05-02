@@ -9,11 +9,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/angry_btn"
-
         android:layout_width="162dp"
         android:layout_height="43dp"
         android:background="@drawable/buttonshape"
-
         android:onClick="checkAge"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
