@@ -31,12 +31,12 @@ public class AskWeight extends AppCompatActivity {
     }
     public void getWeight (View view) {
 
-        EditText weightElement = findViewById(R.id.weight);
+        EditText weightElement = findViewById(R.id.editWeight);
         String weight = (weightElement.getText().toString());
 
 
         if(weight.isEmpty()) {
-            weightElement.setError("painosi on liian vähän");
+            weightElement.setError("Please, enter weight");
             Log.d("paino", "liian vähän painoa");
         }
         else {
