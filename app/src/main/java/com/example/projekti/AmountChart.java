@@ -240,6 +240,8 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        dateInfo.setText("");
+        dayOfWeek.setText("");
     }
 
     // Previous button actions
@@ -248,6 +250,8 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        dateInfo.setText("");
+        dayOfWeek.setText("");
     }
 
     // Back button action
