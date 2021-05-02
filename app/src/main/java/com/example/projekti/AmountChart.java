@@ -129,13 +129,11 @@ public class AmountChart extends AppCompatActivity {
                     strong.setText("0");
                     wine.setText("0");
                     liquor.setText("0");
-                    dateInfo.setText("");
-                    calories.setText("0 calories");
+                    dateInfo.setText("No data");
+                    calories.setText("0");
                     return;
                 }
                 else {
-
-
                 String softAmount = String.valueOf(days.get(i).getSoftAmount());
                 String strongAmount = String.valueOf(days.get(i).getStrongAmount());
                 String wineAmount = String.valueOf(days.get(i).getWineAmount());
