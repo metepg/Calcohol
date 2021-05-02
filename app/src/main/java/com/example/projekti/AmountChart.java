@@ -1,6 +1,8 @@
 package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -10,6 +12,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import android.view.View;
 import android.widget.TextView;
@@ -55,7 +58,6 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
-
     }
 
     // First date of week as LocalDate object
@@ -77,6 +79,7 @@ public class AmountChart extends AppCompatActivity {
     }
 
     private void getBarEntries(LocalDate date) {
+
         // Barchart array
         barEntriesArrayList = new ArrayList<>();
 
@@ -109,19 +112,19 @@ public class AmountChart extends AppCompatActivity {
         // creating a new bar data and
         // passing our bar data set.
         barData = new BarData(barDataSet);
-
-        // below line is to set data
-        // to our bar chart.
         barChart.setData(barData);
 
-        barChart.animateY(1000);
-
+        //Animate BAR Increase speed
+        barChart.animateY(1500);
+        //Removes description of barchart
         Legend legend = barChart.getLegend();
         legend.setEnabled(false);
-        barChart.setDrawBarShadow(false);
+
+        barChart.setDrawBarShadow(true);
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getAxisRight().setDrawGridLines(false);
-        barChart.setDrawValueAboveBar(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.getAxisLeft().setDrawZeroLine(true);
 
 
         // setting text size
@@ -129,13 +132,24 @@ public class AmountChart extends AppCompatActivity {
         barChart.getDescription().setEnabled(false);
         barChart.getXAxis().setGridLineWidth(1);
 
-        barChart.getAxisRight().setAxisMaximum(50);
-        barChart.getAxisLeft().setAxisMaximum(50);
+        barChart.getAxisRight().setAxisMaximum(27);
+        barChart.getAxisLeft().setAxisMaximum(27);
         barChart.getAxisRight().setAxisMinimum(0);
         barChart.getAxisLeft().setAxisMinimum(0);
         XAxis axelx = barChart.getXAxis();
         String[] dates = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
         axelx.setValueFormatter(new IndexAxisValueFormatter(dates));
+        barData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value > 0){
+                    return String.valueOf(Math.round(value));
+                }else{
+                    return "";
+                }
+            }
+
+        });
     }
 
     public int checkValue(DayInfo value){
