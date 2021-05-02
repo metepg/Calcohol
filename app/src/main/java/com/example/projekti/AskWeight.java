@@ -26,7 +26,7 @@ public class AskWeight extends AppCompatActivity {
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
 
-        button = findViewById(R.id.btn);
+        button = findViewById(R.id.angry_btn);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
     }
     public void getWeight (View view) {

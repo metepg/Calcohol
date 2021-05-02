@@ -18,21 +18,15 @@ public class AskAge extends AppCompatActivity {
     private final static String USER = "properties";
     private final static String AGEKEY = "ageValue";
 
-
-
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_age);
-
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
-
-        button = findViewById(R.id.btn);
+        button = findViewById(R.id.angry_btn);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
-
-
     }
     //check age
     public void checkAge(View view) {
