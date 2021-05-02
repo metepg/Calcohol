@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-public class Weight extends AppCompatActivity {
+public class AskWeight extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     Button button;
     private final static String USER = "properties";
@@ -52,6 +52,7 @@ public class Weight extends AppCompatActivity {
             editor.commit();
             Intent returnToMain = new Intent(this, MainActivity.class);
             startActivity(returnToMain);
+            finish();
         }
     }
 }

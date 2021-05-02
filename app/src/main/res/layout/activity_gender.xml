@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Gender">
+    tools:context=".AskGender">
 
     <EditText
         android:id="@+id/gender"
@@ -13,7 +13,7 @@
         android:ems="10"
         android:hint="Gender"
         android:inputType="textPersonName"
-        android:text="mies"
+        android:text="female"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"

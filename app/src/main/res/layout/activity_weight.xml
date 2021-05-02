@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Weight">
+    tools:context=".AskWeight">
 
     <EditText
         android:id="@+id/weight"
@@ -13,7 +13,6 @@
         android:ems="10"
         android:hint="Weight"
         android:inputType="textPersonName"
-        android:text="100"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
