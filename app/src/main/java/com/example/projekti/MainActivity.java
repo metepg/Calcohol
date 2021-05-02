@@ -376,7 +376,6 @@ public class MainActivity extends AppCompatActivity {
         List<DayInfo> data = days.getAllDays();
 
         for(int i = 0; i < data.size(); i++) {
-            Log.d(TAG, data.get(i).getDate());
             if(data.get(i).getDate().equals(date)){
                 return i;
             }
