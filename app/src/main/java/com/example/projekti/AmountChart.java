@@ -2,40 +2,35 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 public class AmountChart extends AppCompatActivity {
     // variable for our bar chart
     BarChart barChart;
     TextView dateView;
+    TextView year;
     // variable for our bar data.
     BarData barData;
     int startD = 0;
@@ -45,6 +40,12 @@ public class AmountChart extends AppCompatActivity {
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;
+    TextView soft;
+    TextView strong;
+    TextView wine;
+    TextView liquor;
+    TextView dateInfo;
+    TextView calories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
+
     }
 
     // First date of week as LocalDate object
@@ -70,18 +72,28 @@ public class AmountChart extends AppCompatActivity {
     // Laittaa oikeat pvm näkyville
     public void setDays(LocalDate c) {
 
-        String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        int currentYear = c.getYear();
+        String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM"));
+        String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM"));
 
         dateView = findViewById(R.id.dateView);
+        year = findViewById(R.id.year);
+        year.setText(String.valueOf(currentYear));
 
         dateView.setText(firstDayOfWeek + " - " + lastDayOfWeek);
     }
 
+    // Initialize barchart with data
     private void getBarEntries(LocalDate date) {
-
         // Barchart array
         barEntriesArrayList = new ArrayList<>();
+
+        soft = findViewById(R.id.soft);
+        strong = findViewById(R.id.strong);
+        wine = findViewById(R.id.wine);
+        liquor = findViewById(R.id.liquor);
+        dateInfo = findViewById(R.id.date);
+        calories = findViewById(R.id.calories);
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
@@ -90,12 +102,11 @@ public class AmountChart extends AppCompatActivity {
         // Jos tietoja ei ole lisätty arvoksi tulee 0
         int monday = checkValue(days.get(0));
         int tuesday = checkValue(days.get(1));
-        int wednesday =  checkValue(days.get(2));
+        int wednesday = checkValue(days.get(2));
         int thursday = checkValue(days.get(3));
         int friday = checkValue(days.get(4));
         int saturday = checkValue(days.get(5));
         int sunday = checkValue(days.get(6));
-
 
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
@@ -109,50 +120,80 @@ public class AmountChart extends AppCompatActivity {
 
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                int i = Math.round(e.getX());
+                if(days.get(i) == null) {
+                    soft.setText("0");
+                    strong.setText("0");
+                    wine.setText("0");
+                    liquor.setText("0");
+                    dateInfo.setText("");
+                    calories.setText("0 calories");
+                    return;
+                }
+                else {
+
+
+                String softAmount = String.valueOf(days.get(i).getSoftAmount());
+                String strongAmount = String.valueOf(days.get(i).getStrongAmount());
+                String wineAmount = String.valueOf(days.get(i).getWineAmount());
+                String liquorAmount = String.valueOf(days.get(i).getLiquorAmount());
+                String date = days.get(i).getDate();
+                String caloriesAmount = String.valueOf(days.get(i).getCalories());
+
+                soft.setText(softAmount);
+                strong.setText(strongAmount);
+                wine.setText(wineAmount);
+                liquor.setText(liquorAmount);
+                dateInfo.setText(date);
+                calories.setText(caloriesAmount + " calories");
+                }
+            }
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
         // creating a new bar data and
         // passing our bar data set.
         barData = new BarData(barDataSet);
         barChart.setData(barData);
 
-        //Animate BAR Increase speed
+        // Initialize bar chart
         barChart.animateY(1500);
-        //Removes description of barchart
-        Legend legend = barChart.getLegend();
-        legend.setEnabled(false);
-
         barChart.setDrawBarShadow(true);
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getAxisRight().setDrawGridLines(false);
         barChart.setDrawValueAboveBar(true);
         barChart.getAxisLeft().setDrawZeroLine(true);
-
-
-        // setting text size
+        barChart.setScaleEnabled(false);
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
         barChart.getXAxis().setGridLineWidth(1);
-
         barChart.getAxisRight().setAxisMaximum(27);
         barChart.getAxisLeft().setAxisMaximum(27);
         barChart.getAxisRight().setAxisMinimum(0);
         barChart.getAxisLeft().setAxisMinimum(0);
+
         XAxis axelx = barChart.getXAxis();
         String[] dates = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
         axelx.setValueFormatter(new IndexAxisValueFormatter(dates));
         barData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if (value > 0){
+                if (value > 0) {
                     return String.valueOf(Math.round(value));
-                }else{
+                } else {
                     return "";
                 }
             }
-
         });
     }
 
-    public int checkValue(DayInfo value){
+    public int checkValue(DayInfo value) {
         return value == null ? 0 : value.getPortions();
     }
 
@@ -162,7 +203,6 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
-        System.out.println("next");
     }
 
     // Previous button actions
@@ -171,7 +211,6 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
-        System.out.println("prev");
     }
 
     // Back button action
@@ -190,20 +229,19 @@ public class AmountChart extends AppCompatActivity {
             String matchDate = date.plusDays(i).toString(); // Current date to match
 
             // Loop through saved info
-            for(int j = 0; j < days.size(); j++) {
+            for (int j = 0; j < days.size(); j++) {
                 String pv = days.get(j).getDate();
-                if(pv.equals(matchDate)) {
+                if (pv.equals(matchDate)) {
                     pvt.add(days.get(j));
                 }
             }
             // If no match add null instead of DayInfo to List
             try {
-                pvt.get( i );
-            } catch ( IndexOutOfBoundsException e ) {
-                pvt.add( i, null );
+                pvt.get(i);
+            } catch (IndexOutOfBoundsException e) {
+                pvt.add(i, null);
             }
         }
         return pvt;
     }
-
 }
