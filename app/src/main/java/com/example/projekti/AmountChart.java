@@ -9,30 +9,27 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 public class AmountChart extends AppCompatActivity {
     // variable for our bar chart
     BarChart barChart;
     TextView dateView;
+    TextView year;
     // variable for our bar data.
     BarData barData;
     int startD = 0;
@@ -68,10 +65,13 @@ public class AmountChart extends AppCompatActivity {
     // Laittaa oikeat pvm näkyville
     public void setDays(LocalDate c) {
 
-        String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        int currentYear = c.getYear();
+        String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM"));
+        String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM"));
 
         dateView = findViewById(R.id.dateView);
+        year = findViewById(R.id.year);
+        year.setText(String.valueOf(currentYear));
 
         dateView.setText(firstDayOfWeek + " - " + lastDayOfWeek);
     }
@@ -93,7 +93,6 @@ public class AmountChart extends AppCompatActivity {
         int saturday = checkValue(days.get(5));
         int sunday = checkValue(days.get(6));
 
-
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
         barEntriesArrayList.add(new BarEntry(0, monday));
@@ -105,6 +104,25 @@ public class AmountChart extends AppCompatActivity {
         barEntriesArrayList.add(new BarEntry(6, sunday));
 
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
+
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener()
+        {
+            @Override
+            public void onValueSelected(Entry e, Highlight h)
+            {
+                int i = Math.round(e.getX());
+
+                System.out.println(e.getX());
+                System.out.println(Math.round(e.getX()));
+                //System.out.println(days.get(Math.round(x)).getPortions() + " annosta Teemu joi vappuna");
+            }
+
+            @Override
+            public void onNothingSelected()
+            {
+
+            }
+        });
 
         // creating a new bar data and
         // passing our bar data set.
@@ -121,13 +139,17 @@ public class AmountChart extends AppCompatActivity {
         barChart.setDrawBarShadow(false);
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getAxisRight().setDrawGridLines(false);
-        barChart.setDrawValueAboveBar(false);
+        barChart.setDrawValueAboveBar(true);
 
+        barChart.setScaleEnabled(false);
 
         // setting text size
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
         barChart.getXAxis().setGridLineWidth(1);
+
+        barChart.getAxisLeft().setDrawZeroLine(true);
+        barChart.getAxisLeft().setSpaceBottom(20);
 
         barChart.getAxisRight().setAxisMaximum(50);
         barChart.getAxisLeft().setAxisMaximum(50);
