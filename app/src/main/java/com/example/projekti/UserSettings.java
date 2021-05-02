@@ -33,69 +33,70 @@ public class UserSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
-       sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
+        sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
 
         //Haetaan aikaisemmin syötetyt tiedot
         getGender();
         getWeight();
         getAge();
     }
-    public void getGender(){
+
+    public void getGender() {
         String gender = sharedPrefs.getString("genderValue", "male");
-        Log.d("TAG", gender);
         radiosexi = findViewById(R.id.radioSex);
         radiofemale = findViewById(R.id.radioFemale);
         radiomale = findViewById(R.id.radioMale);
 
-        if(gender.equals("male")){
+        if (gender.equals("male")) {
             radiomale.setChecked(true);
         } else {
             radiofemale.setChecked(true);
         }
     }
-    public void getAge(){
+
+    public void getAge() {
         String age = sharedPrefs.getString("ageValue", "25");
         Log.d("TAG", age);
         ageText = findViewById(R.id.newAge);
         ageText.setText(age);
     }
-    public void getWeight(){
+
+    public void getWeight() {
         String weight = sharedPrefs.getString("weightValue", "70");
         Log.i("TAG", weight);
         weightText = findViewById(R.id.weightStart);
         weightText.setText(weight);
     }
-    public String setAge(){
+
+    public String setAge() {
         ageText = findViewById(R.id.newAge);
         aged = ageText.getText().toString();
         return aged;
     }
 
-public String setWeight(){
+    public String setWeight() {
         weightText = findViewById(R.id.weightStart);
         weighted = weightText.getText().toString();
         return weighted;
-}
-
-public String setGender(){
-    radiosexi = findViewById(R.id.radioSex);
-    radiofemale = findViewById(R.id.radioFemale);
-    radiomale = findViewById(R.id.radioMale);
-
-    if(radiomale.isChecked()){
-        gender = "male";
-        radiomale.setChecked(true);
-    } else {
-        gender = "female";
-        radiofemale.setChecked(true);
     }
-    System.out.println(radiomale.isChecked());
-    System.out.println(radiofemale.isChecked());
-    return gender;
 
-}
+    public String setGender() {
+        radiosexi = findViewById(R.id.radioSex);
+        radiofemale = findViewById(R.id.radioFemale);
+        radiomale = findViewById(R.id.radioMale);
 
-    public void saveNewValues(View view){
+        if (radiomale.isChecked()) {
+            gender = "male";
+            radiomale.setChecked(true);
+        } else {
+            gender = "female";
+            radiofemale.setChecked(true);
+        }
+        return gender;
+
+    }
+
+    public void saveNewValues(View view) {
         super.onBackPressed();
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("genderValue", setGender());
@@ -104,7 +105,8 @@ public String setGender(){
         editor.commit();
         finish();
     }
-    public void backToMain(View view){
+
+    public void backToMain(View view) {
         super.onBackPressed();
         finish();
     }

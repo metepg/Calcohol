@@ -9,19 +9,24 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 
 import android.view.View;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AmountChart extends AppCompatActivity {
@@ -47,39 +52,32 @@ public class AmountChart extends AppCompatActivity {
         barChart = findViewById(R.id.idBarChart);
 
         // calling method to get bar entries.
-        Calendar startDay = getStartDay(0);
-        System.out.println(startDay.getTime());
-        getBarEntries(startDay.getTime());
+        LocalDate startDay = getStartDay(0);
+        getBarEntries(startDay);
         setDays(startDay);
+
     }
 
-
-    public Calendar getStartDay(int i) {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.WEEK_OF_YEAR, i);
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        return c;
+    // First date of week as LocalDate object
+    public LocalDate getStartDay(int i) {
+        LocalDate date = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        date = date.plusWeeks(i);
+        return date;
     }
 
     // Laittaa oikeat pvm näkyville
-    public void setDays(Calendar c) {
+    public void setDays(LocalDate c) {
+
+        String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         dateView = findViewById(R.id.dateView);
-        Date firstDayOfWeek = c.getTime();
 
-        c.setFirstDayOfWeek(Calendar.MONDAY);
-        c.add(Calendar.DAY_OF_WEEK, 6);
-        Date lastDayOfWeek = c.getTime();
-
-        SimpleDateFormat formatt = new SimpleDateFormat("dd.MM.yyyy");
-        String firstDate = formatt.format(firstDayOfWeek);
-        String lastDate = formatt.format(lastDayOfWeek);
-        dateView.setText(firstDate + " - " + lastDate);
+        dateView.setText(firstDayOfWeek + " - " + lastDayOfWeek);
     }
 
-    private void getBarEntries(Date date) {
+    private void getBarEntries(LocalDate date) {
         // Barchart array
-
         barEntriesArrayList = new ArrayList<>();
 
         // Päivien tiedot arrayna
@@ -94,6 +92,7 @@ public class AmountChart extends AppCompatActivity {
         int friday = checkValue(days.get(4));
         int saturday = checkValue(days.get(5));
         int sunday = checkValue(days.get(6));
+
 
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
@@ -146,8 +145,8 @@ public class AmountChart extends AppCompatActivity {
     // Next button actions
     public void nextWeek(View view) {
         startD++;
-        Calendar startDay = getStartDay(startD);
-        getBarEntries(startDay.getTime());
+        LocalDate startDay = getStartDay(startD);
+        getBarEntries(startDay);
         setDays(startDay);
         System.out.println("next");
     }
@@ -155,8 +154,8 @@ public class AmountChart extends AppCompatActivity {
     // Previous button actions
     public void prevWeek(View view) {
         startD--;
-        Calendar startDay = getStartDay(startD);
-        getBarEntries(startDay.getTime());
+        LocalDate startDay = getStartDay(startD);
+        getBarEntries(startDay);
         setDays(startDay);
         System.out.println("prev");
     }
@@ -168,26 +167,22 @@ public class AmountChart extends AppCompatActivity {
     }
 
     // Hae oikeat päivät listasta
-    public List<DayInfo> getDays(Date date) {
-        SimpleDateFormat formatt = new SimpleDateFormat("yyyy-MM-dd");
-        String firstDate = formatt.format(date);
+    public List<DayInfo> getDays(LocalDate date) {
 
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
         List<DayInfo> pvt = new ArrayList();
-        //Loop through, week days
         for (int i = 0; i <= 6; i++) {
-            String matchDate = LocalDate.parse(firstDate).plusDays(i).toString(); // Current date to match
+            String matchDate = date.plusDays(i).toString(); // Current date to match
 
-            // Loop through saved info and compare date
+            // Loop through saved info
             for(int j = 0; j < days.size(); j++) {
                 String pv = days.get(j).getDate();
                 if(pv.equals(matchDate)) {
                     pvt.add(days.get(j));
                 }
-                // If no match add null instead of DayInfo to List
-
             }
+            // If no match add null instead of DayInfo to List
             try {
                 pvt.get( i );
             } catch ( IndexOutOfBoundsException e ) {
