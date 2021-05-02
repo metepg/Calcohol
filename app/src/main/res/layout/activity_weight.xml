@@ -49,14 +49,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
-        app:spb_currentStateDescriptionColor="#009688"
         app:spb_currentStateNumber="three"
         app:spb_maxStateNumber="three"
-        app:spb_stateBackgroundColor="#BDBDBD"
-        app:spb_stateDescriptionColor="#808080"
-        app:spb_stateForegroundColor="#009688"
-        app:spb_stateNumberBackgroundColor="#808080"
-        app:spb_stateNumberForegroundColor="#eeeeee" />
+        app:spb_currentStateDescriptionColor="#2BB8FF"
+        app:spb_stateBackgroundColor="#AE80CAEF"
+        app:spb_stateDescriptionColor="#2BB8FF"
+        app:spb_stateForegroundColor="#2BB8FF"
+        app:spb_stateNumberBackgroundColor="#9A808080"
+        app:spb_stateNumberForegroundColor="#ffffff" />
 
     <EditText
         android:id="@+id/editWeight"

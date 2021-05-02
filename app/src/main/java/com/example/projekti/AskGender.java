@@ -37,28 +37,36 @@ public class AskGender extends AppCompatActivity {
 
     }
 
-    public String setGender() {
+    public void setGender(View view) {
         groupradio = findViewById(R.id.groupradio);
         groupfemale = findViewById(R.id.groupfemale);
         groupmale = findViewById(R.id.groupmale);
-
+        if (groupradio.getCheckedRadioButtonId() == -1) {
+            groupmale.setError("Choose one of these");
+            return;
+        }
         if (groupmale.isChecked()) {
             gender = "male";
             groupmale.setChecked(true);
-        } else {
+        } else if (groupfemale.isChecked()) {
             gender = "female";
             groupfemale.setChecked(true);
         }
-        return gender;
-    }
-
-
-    public void saveValues(View view) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString(GENDERKEY, setGender());
+        editor.putString(GENDERKEY, gender);
         editor.commit();
         Intent askGender = new Intent(this, AskWeight.class);
         startActivity(askGender);
         finish();
     }
 }
+
+
+    /*public void saveValues(View view) {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(GENDERKEY, setGender());
+        editor.commit();
+        Intent askGender = new Intent(this, AskWeight.class);
+        startActivity(askGender);
+        finish();
+    }*/
