@@ -72,6 +72,22 @@ public class DayInfo {
         return liquorAmount;
     }
 
+    public String getSoftPortions(){
+        return String.valueOf(softAmount/330);
+    }
+
+    public String getStrongPortions(){
+        return String.valueOf(strongAmount/220);
+    }
+
+    public String getWinePortions(){
+        return String.valueOf(wineAmount/120);
+    }
+
+    public String getLiquorPortions(){
+        return String.valueOf(liquorAmount/40);
+    }
+
     public void setSoftAmount(int softAmount) {
         this.softAmount = softAmount;
     }
@@ -110,11 +126,11 @@ public class DayInfo {
 
     // Return total amount of portions as a number
     public int getPortions() {
-        double soft = softAmount / 330.0 ;
-        double strong = strongAmount / 330.0;
-        double wine = wineAmount / 120.0;
-        double liquor = liquorAmount / 40.0;
-        int total = (int) Math.round(soft + strong + wine + liquor);
+        int soft = softAmount / 330;
+        int strong = strongAmount / 220;
+        int wine = wineAmount / 120;
+        int liquor = liquorAmount / 40;
+        int total = Math.round(soft + strong + wine + liquor);
         return total;
     }
 
