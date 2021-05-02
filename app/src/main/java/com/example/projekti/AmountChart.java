@@ -18,6 +18,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -46,6 +47,8 @@ public class AmountChart extends AppCompatActivity {
     TextView liquor;
     TextView dateInfo;
     TextView calories;
+    TextView dayOfWeek;
+    TextView weekPortions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +97,18 @@ public class AmountChart extends AppCompatActivity {
         liquor = findViewById(R.id.liquor);
         dateInfo = findViewById(R.id.date);
         calories = findViewById(R.id.calories);
+        dayOfWeek = findViewById(R.id.weekDay);
+        weekPortions = findViewById(R.id.weekPortions);
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
+
+        int total = 0;
+        System.out.println(days.size());
+        for(int i = 0; i < days.size(); i++) {
+            total += checkValue(days.get(i));
+        }
+        weekPortions.setText(String.valueOf(total));
 
         // Aseta juotujen annosten määrä viikonpäiville
         // Jos tietoja ei ole lisätty arvoksi tulee 0
@@ -124,31 +136,50 @@ public class AmountChart extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int i = Math.round(e.getX());
-                if(days.get(i) == null) {
+                if (days.get(i) == null) {
                     soft.setText("0");
                     strong.setText("0");
                     wine.setText("0");
                     liquor.setText("0");
-                    dateInfo.setText("No data");
+                    dateInfo.setText("");
+                    dayOfWeek.setText("No saved data");
                     calories.setText("0");
                     return;
-                }
-                else {
-                String softAmount = String.valueOf(days.get(i).getSoftAmount());
-                String strongAmount = String.valueOf(days.get(i).getStrongAmount());
-                String wineAmount = String.valueOf(days.get(i).getWineAmount());
-                String liquorAmount = String.valueOf(days.get(i).getLiquorAmount());
-                String date = days.get(i).getDate();
-                String caloriesAmount = String.valueOf(days.get(i).getCalories());
+                } else {
+                    DayInfo data = days.get(i);
+                    ArrayList<String> weekDays = new ArrayList<>();
+                    weekDays.add("Monday");
+                    weekDays.add("Tuesday");
+                    weekDays.add("Wednesday");
+                    weekDays.add("Thursday");
+                    weekDays.add("Friday");
+                    weekDays.add("Saturday");
+                    weekDays.add("Sunday");
+                    String weekDay = weekDays.get(i);
+                    String softAmount = convertToLiters(data.getSoftAmount());
+                    String strongAmount = convertToLiters(data.getStrongAmount());
+                    String wineAmount = convertToLiters(data.getWineAmount());
+                    String liquorAmount = convertToLiters(data.getLiquorAmount());
+                    String date = formatDate(data.getDate());
+                    String caloriesAmount = String.valueOf(data.getCalories());
 
-                soft.setText(softAmount);
-                strong.setText(strongAmount);
-                wine.setText(wineAmount);
-                liquor.setText(liquorAmount);
-                dateInfo.setText(date);
-                calories.setText(caloriesAmount + " calories");
+
+                    System.out.println(data.getSoftPortions());
+                    System.out.println(data.getStrongPortions());
+                    System.out.println(data.getWinePortions());
+                    System.out.println(data.getLiquorPortions());
+
+
+                    soft.setText(data.getSoftPortions());
+                    strong.setText(data.getStrongPortions());
+                    wine.setText(data.getWinePortions());
+                    liquor.setText(data.getLiquorPortions());
+                    dateInfo.setText(date);
+                    calories.setText(caloriesAmount);
+                    dayOfWeek.setText(weekDay);
                 }
             }
+
             @Override
             public void onNothingSelected() {
 
@@ -189,6 +220,18 @@ public class AmountChart extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String convertToLiters(int amount) {
+        double liters = amount / 1000.00;
+        return String.valueOf(liters);
+    }
+
+    public String formatDate(String date) {
+        String month = date.substring(5, 7);
+        String day = date.substring(8, 10);
+        String formattedDate = day + "." + month;
+        return formattedDate;
     }
 
     public int checkValue(DayInfo value) {
@@ -240,6 +283,7 @@ public class AmountChart extends AppCompatActivity {
                 pvt.add(i, null);
             }
         }
+        System.out.println(pvt.toString());
         return pvt;
     }
 }
