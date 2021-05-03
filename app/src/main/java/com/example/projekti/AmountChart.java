@@ -129,7 +129,7 @@ public class AmountChart extends AppCompatActivity {
                     strong.setText("0");
                     wine.setText("0");
                     liquor.setText("0");
-                    dateInfo.setText("");
+                    dateInfo.setText("No data");
                     calories.setText("0 calories");
                     return;
                 }
