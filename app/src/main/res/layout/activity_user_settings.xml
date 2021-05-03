@@ -69,12 +69,20 @@
             android:text="Male" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/angry_btn"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:background="@drawable/buttonshape"
         android:onClick="saveNewValues"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
