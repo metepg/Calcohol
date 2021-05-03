@@ -97,7 +97,6 @@ public class AmountChart extends AppCompatActivity {
         dayOfWeek = findViewById(R.id.weekDay);
         weekPortions = findViewById(R.id.weekPortions);
 
-
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
 

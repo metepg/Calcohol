@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Tällä lauseella kattoo onko tiedot jo asetettu eli onko alkujutut tehty jo
         if (sharedPrefs.getBoolean("valuesSet", false)) {
-            // Printtaa kaikki tiedot
-            Log.d(TAG, sharedPrefs.getAll().toString());
             setContentView(R.layout.activity_main);
             loadData();
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
             String gender = sharedPrefs.getString("genderValue", "man");
             int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
-            testUser = new User(age,gender,weight);
+            testUser = new User(age, gender, weight);
 
             // Dropdownien alustus
             softPortion = findViewById(R.id.softSpinner);
@@ -122,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
             smallLiquor = findViewById(R.id.smallLiquor);
             bigLiquor = findViewById(R.id.bigLiquor);
 
-            days = Singleton.getInstance();
-
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
 
@@ -131,9 +127,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
                     startTime();
@@ -143,52 +141,56 @@ public class MainActivity extends AppCompatActivity {
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             formattedDate = myObj.format(getDate);
-
             total = new DayInfo(formattedDate);
 
             List<DayInfo> data = loadData();
-            if(data != null) {
+            days = Singleton.getInstance();
+            if (data != null && days.getAllDays().size() < 1) {
                 // Lisää tallennetut tiedot Singletoniin
-                for(int i = 0; i < data.size(); i++) {
+                for (int i = 0; i < data.size(); i++) {
                     days.getAllDays().add(data.get(i));
                 }
             }
         }
-        // Jos ei ole niin..
+        // Jos ei ole, niin käynnistä login aktiviteetti
         else {
             Intent askAge = new Intent(this, AskAge.class);
             startActivity(askAge);
         }
     }
 
-
     /**
      * Hae tiedot "database" tiedostosta
+     *
      * @return päiväkohtaiset tiedot listana
      */
-    public List<DayInfo> loadData(){
+    public List<DayInfo> loadData() {
         SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
-        if(worker.getAll().toString().equals("{}")) {
+        if (worker.getAll().toString().equals("{}")) {
             return null;
-        }
-        else {
+        } else {
             String arr = worker.getString("KAIKKIDATA", "");
-            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>() {
+            };
             return gson.fromJson(arr, token.getType());
         }
     }
-    public void onChart(View view){
+
+    public void onChart(View view) {
         Intent chart = new Intent(this, AmountChart.class);
         startActivity(chart);
     }
-    public void onUser(View view){
+
+    public void onUser(View view) {
         Intent user = new Intent(this, UserSettings.class);
         startActivity(user);
     }
+
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
+
     // Päivitä tekstikenttä annetun idn ja counterin mukaan
     public void updateField(TextView id, String text) {
         id.setText(text);
@@ -333,11 +335,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @param view "add calendar" napin onclick
      */
     public void addToCalendar(View view) {
-        if(total.getPortions() == 0) {
+        if (total.getPortions() == 0) {
             return;
         }
 
@@ -345,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Jos listalta ei löydy samalla pvm olevaa oliota
         // Lisää tiedot listalle
-        if(i < 0){
+        if (i < 0) {
             days.getAllDays().add(total);
         }
         // Jos löytyy
@@ -363,20 +364,21 @@ public class MainActivity extends AppCompatActivity {
         List<DayInfo> lista = Singleton.getInstance().getAllDays();
         String json = gson.toJson(lista);
 
-        SharedPreferences userPreferences = getSharedPreferences("database",  MODE_PRIVATE);
+        SharedPreferences userPreferences = getSharedPreferences("database", MODE_PRIVATE);
         SharedPreferences.Editor editor = userPreferences.edit();
         editor.putString("KAIKKIDATA", json);
         editor.apply();
         resetFields();
         total = new DayInfo(formattedDate);
     }
+
     // Tarkastaa onko päivämäärällä jo tietoja
     // Jos on, niin lisää tiedot edellisen lisäksi
     public int getDateIndex(String date) {
         List<DayInfo> data = days.getAllDays();
 
-        for(int i = 0; i < data.size(); i++) {
-            if(data.get(i).getDate().equals(date)){
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getDate().equals(date)) {
                 return i;
             }
         }
@@ -384,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Tyhjennä kentät
-    public void resetFields(){
+    public void resetFields() {
         soft.reset();
         strong.reset();
         wine.reset();
@@ -407,9 +409,10 @@ public class MainActivity extends AppCompatActivity {
         updateField(burnaus, "0");
         updateField(energy, "0");
     }
-    public void startTime(){
+
+    public void startTime() {
         String test = timeText.getText().toString();
-        if(test.isEmpty()){
+        if (test.isEmpty()) {
             test = "0";
         }
         int newTest = Integer.parseInt(test);
