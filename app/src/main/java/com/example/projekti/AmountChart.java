@@ -17,7 +17,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import android.view.View;
 import android.widget.TextView;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -46,6 +45,8 @@ public class AmountChart extends AppCompatActivity {
     TextView liquor;
     TextView dateInfo;
     TextView calories;
+    TextView dayOfWeek;
+    TextView weekPortions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
-
     }
 
     // First date of week as LocalDate object
@@ -94,9 +94,28 @@ public class AmountChart extends AppCompatActivity {
         liquor = findViewById(R.id.liquor);
         dateInfo = findViewById(R.id.date);
         calories = findViewById(R.id.calories);
+        dayOfWeek = findViewById(R.id.weekDay);
+        weekPortions = findViewById(R.id.weekPortions);
+
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
+
+        // Viikonpäivät
+        ArrayList<String> weekDays = new ArrayList<>();
+        weekDays.add("Monday");
+        weekDays.add("Tuesday");
+        weekDays.add("Wednesday");
+        weekDays.add("Thursday");
+        weekDays.add("Friday");
+        weekDays.add("Saturday");
+        weekDays.add("Sunday");
+
+        int total = 0;
+        for (int i = 0; i < days.size(); i++) {
+            total += checkValue(days.get(i));
+        }
+        weekPortions.setText(String.valueOf(total));
 
         // Aseta juotujen annosten määrä viikonpäiville
         // Jos tietoja ei ole lisätty arvoksi tulee 0
@@ -124,31 +143,32 @@ public class AmountChart extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int i = Math.round(e.getX());
-                if(days.get(i) == null) {
-                    soft.setText("0");
-                    strong.setText("0");
-                    wine.setText("0");
-                    liquor.setText("0");
-                    dateInfo.setText("No data");
-                    calories.setText("0");
-                    return;
-                }
-                else {
-                String softAmount = String.valueOf(days.get(i).getSoftAmount());
-                String strongAmount = String.valueOf(days.get(i).getStrongAmount());
-                String wineAmount = String.valueOf(days.get(i).getWineAmount());
-                String liquorAmount = String.valueOf(days.get(i).getLiquorAmount());
-                String date = days.get(i).getDate();
-                String caloriesAmount = String.valueOf(days.get(i).getCalories());
+                if (days.get(i) == null) {
+                    dateInfo.setText(formatDate(date.plusDays(i).toString()));
+                    dayOfWeek.setText(weekDays.get(i));
+                    resetFields();
+                } else {
+                    DayInfo data = days.get(i);
 
-                soft.setText(softAmount);
-                strong.setText(strongAmount);
-                wine.setText(wineAmount);
-                liquor.setText(liquorAmount);
-                dateInfo.setText(date);
-                calories.setText(caloriesAmount + " calories");
+                    String weekDay = weekDays.get(i);
+                    String softAmount = convertToLiters(data.getSoftAmount());
+                    String strongAmount = convertToLiters(data.getStrongAmount());
+                    String wineAmount = convertToLiters(data.getWineAmount());
+                    String liquorAmount = convertToLiters(data.getLiquorAmount());
+                    String date = formatDate(data.getDate());
+                    String caloriesAmount = String.valueOf(data.getCalories());
+
+
+                    soft.setText(data.getSoftPortions());
+                    strong.setText(data.getStrongPortions());
+                    wine.setText(data.getWinePortions());
+                    liquor.setText(data.getLiquorPortions());
+                    dateInfo.setText(date);
+                    calories.setText(caloriesAmount);
+                    dayOfWeek.setText(weekDay);
                 }
             }
+
             @Override
             public void onNothingSelected() {
 
@@ -191,8 +211,27 @@ public class AmountChart extends AppCompatActivity {
         });
     }
 
+    public String convertToLiters(int amount) {
+        double liters = amount / 1000.00;
+        return String.valueOf(liters);
+    }
+
+    public String formatDate(String date) {
+        String month = date.substring(5, 7);
+        String day = date.substring(8, 10);
+        return day + "." + month;
+    }
+
     public int checkValue(DayInfo value) {
         return value == null ? 0 : value.getPortions();
+    }
+
+    public void resetFields() {
+        soft.setText("0");
+        strong.setText("0");
+        wine.setText("0");
+        liquor.setText("0");
+        calories.setText("0");
     }
 
     // Next button actions
@@ -201,6 +240,9 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
+        dateInfo.setText("");
+        dayOfWeek.setText("");
     }
 
     // Previous button actions
@@ -209,6 +251,9 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
+        dateInfo.setText("");
+        dayOfWeek.setText("");
     }
 
     // Back button action
@@ -222,7 +267,7 @@ public class AmountChart extends AppCompatActivity {
 
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
-        List<DayInfo> pvt = new ArrayList();
+        List<DayInfo> pvt = new ArrayList<>();
         for (int i = 0; i <= 6; i++) {
             String matchDate = date.plusDays(i).toString(); // Current date to match
 

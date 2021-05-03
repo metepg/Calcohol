@@ -1,55 +1,75 @@
 package com.example.projekti;
 
+/**
+ * Luokka joka laskee lisättävien juomien määrää
+ *
+ * @author Mete Güneysel
+ * @version 1.0 5/2021
+ */
 public class Counter {
-    private int counter = 0;
-    private int min;
     private int big;
     private int small;
 
-    public Counter(){
-        this.min = 0;
+    /**
+     * Luokan konstruktori
+     */
+    public Counter() {
         this.big = 0;
         this.small = 0;
     }
-    public String getCounter(){
-        return Integer.toString(counter);
-    }
 
-    // Jos kutsutaan + merkillä lisää 1
-    // Muuten vähennä 1
+    /**
+     * Kasvattaa tai vähentää muuttujan <strong>big</strong> arvoa yhdellä.
+     * Muuttujan arvo ei voi mennä alle 0
+     *
+     * @param prefix, määrittelee laskutoimituksen (+ tai -)
+     */
     public void setBig(String prefix) {
-        if(prefix == "+") {
+        if (prefix.equals("+")) {
             big++;
             return;
         }
         big--;
-        if(big < min){
-            big=0;
+        if (big < 0) {
+            big = 0;
         }
     }
 
-    // Jos kutsutaan + merkillä lisää 1
-    // Muuten vähennä 1
+    /**
+     * Kasvattaa tai vähentää muuttujan <strong>small</strong> arvoa yhdellä.
+     * Muuttujan arvo ei voi mennä alle 0
+     *
+     * @param prefix, määrittelee laskutoimituksen (+ tai -)
+     */
     public void setSmall(String prefix) {
-        if(prefix == "+"){
+        if (prefix.equals("+")) {
             small++;
             return;
         }
         small--;
-        if(small < 0){
-            small=0;
+        if (small < 0) {
+            small = 0;
         }
     }
 
+    /**
+     * @return palauttaa muuttujan <strong>big</strong> senhetkisen arvon tekstinä
+     */
     public String getBig() {
         return String.valueOf(big);
     }
 
+    /**
+     * @return palauttaa muuttujan <strong>small</strong> senhetkisen arvon tekstinä
+     */
     public String getSmall() {
         return String.valueOf(small);
     }
 
-    public void reset(){
+    /**
+     * Nollaa laskurin arvot
+     */
+    public void reset() {
         small = 0;
         big = 0;
     }
