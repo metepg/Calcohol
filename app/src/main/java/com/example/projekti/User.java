@@ -32,7 +32,7 @@ public class User {
     }
 
     /**
-     * @return palauttaa painon2
+     * @return palauttaa painon
      */
     public int getWeight() {
         return weight;

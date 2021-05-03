@@ -92,7 +92,8 @@ public class UserSettings extends AppCompatActivity {
     }
 
     /**
-     * @return Palautetaan ikä Stringinä
+     * Palauttaa iän tekstinä
+     * @return ikä esim. 33
      */
     public String setAge() {
         ageText = findViewById(R.id.newAge);
@@ -107,7 +108,8 @@ public class UserSettings extends AppCompatActivity {
     }
 
     /**
-     * @return Palautetaan paino Stringinä
+     * Hakee painon tekstikentästä ja palauttaa sen tekstinä
+     * @return paino, esim. 55
      */
     public String setWeight() {
         weightText = findViewById(R.id.weightStart);
