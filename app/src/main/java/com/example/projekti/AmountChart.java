@@ -26,16 +26,19 @@ import java.util.List;
 
 
 public class AmountChart extends AppCompatActivity {
-    // variable for our bar chart
+    Singleton savedData;
+
+    // Barchart muuttujat
     BarChart barChart;
+    BarData barData;
+    BarDataSet barDataSet;
+
     TextView dateView;
     TextView year;
-    // variable for our bar data.
-    BarData barData;
+
+    // Tätä lukua kasvatetaan 1 jos halutaan nähdä seuraava viikko
+    // 0 näyttää nykyisen viikon
     int startD = 0;
-    // variable for our bar data set.
-    BarDataSet barDataSet;
-    Singleton savedData;
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;

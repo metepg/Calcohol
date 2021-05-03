@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Singleton days;
     Gson gson = new Gson();
 
-    private String TAG = "jes";
     private final static String USER = "properties";
     private final Counter soft = new Counter();
     private final Counter strong = new Counter();
@@ -33,13 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private final Counter liquor = new Counter();
 
     private DayInfo total;
-    User testUser;
+    User user;
 
     LocalDate myObj;
     DateTimeFormatter getDate;
     String formattedDate;
-
-    EditText timeText;
 
     TextView portions;
     TextView smallSoft;
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
             String gender = sharedPrefs.getString("genderValue", "man");
             int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
-            testUser = new User(age, gender, weight);
+            user = new User(age, gender, weight);
 
             // Dropdownien alustus
             softPortion = findViewById(R.id.softSpinner);
@@ -109,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
             burnaus = findViewById(R.id.burningText);
             energy = findViewById(R.id.energyText);
-            timeText = findViewById(R.id.timeText);
 
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
@@ -122,21 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
-
-            timeText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    startTime();
-                }
-            });
 
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -176,19 +157,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Siirtyy datanäkymään
+     * @param view, nappi elementti
+     */
     public void onChart(View view) {
         Intent chart = new Intent(this, AmountChart.class);
         startActivity(chart);
     }
 
+    /**
+     * Siirtyy käyttäjätietojen päivitys aktiviteettiin
+     * @param view, nappi elementti
+     */
     public void onUser(View view) {
         Intent user = new Intent(this, UserSettings.class);
         startActivity(user);
-    }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 
     // Päivitä tekstikenttä annetun idn ja counterin mukaan
@@ -196,7 +180,12 @@ public class MainActivity extends AppCompatActivity {
         id.setText(text);
     }
 
-    // Katso plus buttoneista mitä painettu
+    /**
+     * Katsoo mitä näkymän plusnapeista on painettu
+     * Päivittää kenttiä saadun napin idn mukaan
+     *
+     * @param view, näkymän elementti
+     */
     public void onPlus(View view) {
         switch (view.getId()) {
             case R.id.softPlus:
@@ -240,14 +229,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood(testUser));
+        totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
         energy.setText(total.getCalories() + " kcal");
     }
 
 
-    // Katso minus buttoneista mitä painettu
+    /**
+     * Katsoo mitä näkymän minusnapeista on painettu
+     * Päivittää kenttiä saadun napin idn mukaan
+     *
+     * @param view, näkymän elementti
+     */
     public void onMinus(View view) {
         switch (view.getId()) {
             case R.id.softMinus:
@@ -311,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood(testUser));
+        totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
         energy.setText(total.getCalories() + " kcal");
@@ -335,25 +329,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Tallentaa syötetyt tiedot listaan objektina
+     * Jos saman päivän tietoja on olemassa jo, tallentaa niiden tietojen lisäksi
+     * Lopuksi kääntää listan JSON-muotoon ja tallentaa sen tiedostoon
+     *
      * @param view "add calendar" napin onclick
      */
     public void addToCalendar(View view) {
+        // Katso onko annoksia lisätty yhtään kun nappia painetaan
         if (total.getPortions() == 0) {
             return;
         }
 
+        // Hae pvm avulla olion indeksi listalta
         int i = getDateIndex(total.getDate());
 
         // Jos listalta ei löydy samalla pvm olevaa oliota
         // Lisää tiedot listalle
-        if (i < 0) {
+        if (i == -1) {
             days.getAllDays().add(total);
         }
+
         // Jos löytyy
         // Lisää juomat vanhoihin tietoihin
         else {
             DayInfo d = days.getOneDay(i);
-
             d.setSoftAmount(total.getSoftAmount() + d.getSoftAmount());
             d.setStrongAmount(total.getStrongAmount() + d.getStrongAmount());
             d.setWineAmount(total.getWineAmount() + d.getWineAmount());
@@ -361,22 +361,28 @@ public class MainActivity extends AppCompatActivity {
             days.getAllDays().set(i, d);
         }
 
+        // Muuttaa datan JSON-muotoon
         List<DayInfo> lista = Singleton.getInstance().getAllDays();
         String json = gson.toJson(lista);
 
+        // Tallenna tiedot tiedostoon "database"
+        // Avain = "KAIKKIDATA"
         SharedPreferences userPreferences = getSharedPreferences("database", MODE_PRIVATE);
         SharedPreferences.Editor editor = userPreferences.edit();
         editor.putString("KAIKKIDATA", json);
         editor.apply();
         resetFields();
-        total = new DayInfo(formattedDate);
+        total = new DayInfo(formattedDate); // Alusta uusi instanssi kun vanhan tiedot ovat tallennettu
     }
 
-    // Tarkastaa onko päivämäärällä jo tietoja
-    // Jos on, niin lisää tiedot edellisen lisäksi
-    public int getDateIndex(String date) {
+    /**
+     * Tarkastaa löytyykö tallennetuista tiedoista jo saman päivän tietoja.
+     *
+     * @param date, päivämäärä millä oliota haetaan listasta. Formaatti ("yyyy,MM,dd") esim. 2021-05-28
+     * @return, palauttaa etsittävän olion indeksin. Jos oliota ei löydy palauttaa (-1)
+     */
+    private int getDateIndex(String date) {
         List<DayInfo> data = days.getAllDays();
-
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getDate().equals(date)) {
                 return i;
@@ -385,7 +391,19 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
-    // Tyhjennä kentät
+    /**
+     * Laskee kuinka kauan kestää että alkoholi poistuu elimistöstä
+     * Näyttää tuloksen tekstikentässä
+     */
+    public void startTime() {
+        String set = String.valueOf(total.getBurningTime(user));
+        burnaus.setText(String.format("%s h", set));
+    }
+
+    /**
+     * Nollaa kaikki kentät
+     * Tätä metodia kutsutaan tallennuksen jälkeen
+     */
     public void resetFields() {
         soft.reset();
         strong.reset();
@@ -410,13 +428,4 @@ public class MainActivity extends AppCompatActivity {
         updateField(energy, "0");
     }
 
-    public void startTime() {
-        String test = timeText.getText().toString();
-        if (test.isEmpty()) {
-            test = "0";
-        }
-        int newTest = Integer.parseInt(test);
-        int set = total.getBurningTime(testUser) - newTest;
-        burnaus.setText(Integer.toString(set));
-    }
 }
