@@ -19,6 +19,7 @@ public class AskWeight extends AppCompatActivity {
     private final static String USER = "properties";
     private static final String WEIGHTKEY = "weightValue";
     private static final String INITKEY = "valuesSet";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,19 +30,21 @@ public class AskWeight extends AppCompatActivity {
         button = findViewById(R.id.angry_btn);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
     }
-    public void getWeight (View view) {
+
+    public void getWeight(View view) {
 
         EditText weightElement = findViewById(R.id.editWeight);
         String weight = (weightElement.getText().toString());
 
 
-        if(weight.isEmpty()) {
+        if (weight.isEmpty()) {
             weightElement.setError("Please, enter weight");
             Log.d("paino", "liian vähän painoa");
-        }
-        else {
+        } else if (Integer.parseInt(weight) < 50) {
+            weightElement.setError("weight below the required limit");
+        } else {
             Log.d("paino", "tarpeeksi painoa");
-            SharedPreferences userPreferences = getSharedPreferences(USER,  MODE_PRIVATE);
+            SharedPreferences userPreferences = getSharedPreferences(USER, MODE_PRIVATE);
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(WEIGHTKEY, weight);
 
