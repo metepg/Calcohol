@@ -9,19 +9,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekti">
-        <activity android:name=".UserSettings"></activity>
-        <activity android:name=".AmountChart" />
-        <activity android:name=".MainView" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".UserSettings"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AmountChart"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AskAge" />
-        <activity android:name=".AskWeight" />
-        <activity android:name=".AskGender" />
+        <activity
+            android:name=".AskAge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AskWeight"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AskGender"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

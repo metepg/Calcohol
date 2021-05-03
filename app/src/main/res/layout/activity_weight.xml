@@ -6,29 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".AskWeight">
 
-    <EditText
-        android:id="@+id/weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Weight"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/angry_btn"
+
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:background="@drawable/buttonshape"
+
+        android:onClick="getWeight"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Check"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:onClick="getWeight"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/your_state_progress_bar_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.739" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -51,13 +49,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
-        app:spb_currentStateDescriptionColor="#009688"
         app:spb_currentStateNumber="three"
         app:spb_maxStateNumber="three"
-        app:spb_stateBackgroundColor="#BDBDBD"
-        app:spb_stateDescriptionColor="#808080"
-        app:spb_stateForegroundColor="#009688"
-        app:spb_stateNumberBackgroundColor="#808080"
-        app:spb_stateNumberForegroundColor="#eeeeee" />
+        app:spb_currentStateDescriptionColor="#2BB8FF"
+        app:spb_stateBackgroundColor="#AE80CAEF"
+        app:spb_stateDescriptionColor="#2BB8FF"
+        app:spb_stateForegroundColor="#2BB8FF"
+        app:spb_stateNumberBackgroundColor="#9A808080"
+        app:spb_stateNumberForegroundColor="#ffffff" />
+
+    <EditText
+        android:id="@+id/editWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Weight"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

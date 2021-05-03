@@ -32,33 +32,41 @@ public class AskGender extends AppCompatActivity {
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
         sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
-        button = findViewById(R.id.btn);
+        button = findViewById(R.id.angry_btn);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
 
     }
 
-    public String setGender() {
+    public void setGender(View view) {
         groupradio = findViewById(R.id.groupradio);
         groupfemale = findViewById(R.id.groupfemale);
         groupmale = findViewById(R.id.groupmale);
-
+        if (groupradio.getCheckedRadioButtonId() == -1) {
+            groupmale.setError("Choose one of these");
+            return;
+        }
         if (groupmale.isChecked()) {
             gender = "male";
             groupmale.setChecked(true);
-        } else {
+        } else if (groupfemale.isChecked()) {
             gender = "female";
             groupfemale.setChecked(true);
         }
-        return gender;
-    }
-
-
-    public void saveValues(View view) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString(GENDERKEY, setGender());
+        editor.putString(GENDERKEY, gender);
         editor.commit();
         Intent askGender = new Intent(this, AskWeight.class);
         startActivity(askGender);
         finish();
     }
 }
+
+
+    /*public void saveValues(View view) {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(GENDERKEY, setGender());
+        editor.commit();
+        Intent askGender = new Intent(this, AskWeight.class);
+        startActivity(askGender);
+        finish();
+    }*/

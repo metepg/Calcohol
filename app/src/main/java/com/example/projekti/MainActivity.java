@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Hae tiedot "database" tiedostosta
      * @return päiväkohtaiset tiedot listana
@@ -412,8 +413,8 @@ public class MainActivity extends AppCompatActivity {
         if(test.isEmpty()){
             test = "0";
         }
-        int uustest = Integer.parseInt(test);
-        int nouda = total.getBurningTime(testUser) - uustest;
-        burnaus.setText(Integer.toString(nouda));
+        int newTest = Integer.parseInt(test);
+        int set = total.getBurningTime(testUser) - newTest;
+        burnaus.setText(Integer.toString(set));
     }
 }
