@@ -18,16 +18,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Ohjelman pääaktiviteetti
+ * <h1>Ohjelman pääaktiviteetti</h1>
  * <p>
- * Täältä käyttäjä pystyy:
- * - lisäämään juotuja juomia sovellukseen
- * - tarkastamaan alkoholin määrän veressä
- * - näkemään juotujen juomien kalorimäärän
- * <p>
- * Tästä aktiviteestia pääsee myös:
- * - muuttamaan tietoja (userSettings)
- * - tarkastelemaan lisättyjä tietoja graafisessa muodossa (AmountChart)
+ * <h2>Täältä käyttäjä pystyy:</h2>
+ * <ul>
+ *     <li>lisäämään juotuja juomia sovellukseen</li>
+ *     <li>tarkastamaan alkoholin määrän veressä</li>
+ *     <li>näkemään juotujen juomien kalorimäärän</li>
+ * </ul>
+ * <h2>Tästä aktiviteestia pääsee myös:</h2>
+ * <ul>
+ *     <li>muuttamaan tietoja (userSettings)</li>
+ *     <li>tarkastelemaan lisättyjä tietoja graafisessa muodossa (AmountChart)</li>
+ * </ul>
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private final Counter strong = new Counter();
     private final Counter wine = new Counter();
     private final Counter liquor = new Counter();
+
+    public final static String AGEKEY = "age";
+    public final static String GENDERKEY = "gender";
+    public final static String WEIGHTKEY = "weight";
 
     private DayInfo total;
     User user;
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Siirtyy datanäkymään
      *
-     * @param view, nappi elementti
+     * @param view nappi elementti
      */
     public void onChart(View view) {
         Intent chart = new Intent(this, AmountChart.class);
@@ -187,28 +194,35 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Siirtyy käyttäjätietojen päivitys aktiviteettiin
      *
-     * @param view, nappi elementti
+     * @param view nappi elementti
      */
     public void onUser(View view) {
+
+        String age = user.getAge();
+        String gender = user.getGender();
+        String weight = String.valueOf(user.getWeight());
         Intent user = new Intent(this, UserSettings.class);
+        user.putExtra(AGEKEY, age);
+        user.putExtra(GENDERKEY, gender);
+        user.putExtra(WEIGHTKEY, weight);
         startActivity(user);
     }
 
     /**
      * Päivitä tekstikenttä annetun idn ja counterin mukaan
      *
-     * @param id,   päivitettävän tekstikentän id
-     * @param text, sinne syötettävä teksti
+     * @param id   päivitettävän tekstikentän id
+     * @param text sinne syötettävä teksti
      */
     public void updateField(TextView id, String text) {
         id.setText(text);
     }
 
     /**
-     * Katsoo mitä näkymän plusnapeista on painettu
-     * Päivittää kenttiä saadun napin idn mukaan
+     * <p>Katsoo mitä näkymän plusnapeista on painettu</p>
+     * <p>Päivittää kenttiä saadun napin idn mukaan</p>
      *
-     * @param view, näkymän elementti
+     * @param view näkymän elementti
      */
     public void onPlus(View view) {
         switch (view.getId()) {
@@ -261,10 +275,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Katsoo mitä näkymän minusnapeista on painettu
-     * Päivittää kenttiä saadun napin idn mukaan
+     * <p>Katsoo mitä näkymän minusnapeista on painettu</p>
+     * <p>Päivittää kenttiä saadun napin idn mukaan</p>
      *
-     * @param view, näkymän elementti
+     * @param view näkymän elementti
      */
     public void onMinus(View view) {
         switch (view.getId()) {
@@ -358,9 +372,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Tallentaa syötetyt tiedot listaan objektina
-     * Jos saman päivän tietoja on olemassa jo, tallentaa niiden tietojen lisäksi
-     * Lopuksi kääntää listan JSON-muotoon ja tallentaa sen tiedostoon
+     * <p>Tallentaa syötetyt tiedot listaan objektina</p>
+     * <p>Jos saman päivän tietoja on olemassa jo, tallentaa niiden tietojen lisäksi</p>
+     * <p>Lopuksi kääntää listan JSON-muotoon ja tallentaa sen tiedostoon</p>
      *
      * @param view "add calendar" napin onclick
      */
@@ -420,8 +434,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Laskee kuinka kauan kestää että alkoholi poistuu elimistöstä
-     * Näyttää tuloksen tekstikentässä
+     * <p>Laskee kuinka kauan kestää että alkoholi poistuu elimistöstä</p>
+     * <p>Näyttää tuloksen tekstikentässä</p>
      */
     public void startTime() {
         String set = String.valueOf(total.getBurningTime(user));
@@ -429,8 +443,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Nollaa kaikki kentät
-     * Tätä metodia kutsutaan tallennuksen jälkeen
+     * <p>Nollaa kaikki kentät</p>
+     * <p>Tätä metodia kutsutaan tallennuksen jälkeen</p>
      */
     public void resetFields() {
         soft.reset();

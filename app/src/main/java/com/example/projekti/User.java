@@ -25,14 +25,24 @@ public class User {
     }
 
     /**
-     * @return palauttaa sukupuolen
+     * Palauttaa iän tekstinä
+     * @return ikä esim. 55
+     */
+    public String getAge() {
+        return String.valueOf(age);
+    }
+
+    /**
+     * Palauttaa sukupuolen
+     * @return sukupuoli esim. "male"
      */
     public String getGender() {
         return gender;
     }
 
     /**
-     * @return palauttaa painon
+     * Palauttaa painon numerona
+     * @return paino esim 55
      */
     public int getWeight() {
         return weight;

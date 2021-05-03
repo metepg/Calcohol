@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
  * Käyttäjän asetusten aktiviteetin luokka
  *
  * @author teme
- * @version 1.0 5/2021
+ * @version 1.1 5/2021
  */
 
 public class UserSettings extends AppCompatActivity {
@@ -40,31 +40,37 @@ public class UserSettings extends AppCompatActivity {
     String weighted;
     String aged;
 
-    /**
-     * Haetaan aplikaatioon aikaisemmin syötetyt tiedot
-     *
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
         sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
 
-        //Haetaan aikaisemmin syötetyt tiedot
-        getGender();
-        getWeight();
-        getAge();
-    }
+        Intent intent = getIntent();
+        String age = intent.getStringExtra(MainActivity.AGEKEY);
+        String weight = intent.getStringExtra(MainActivity.WEIGHTKEY);
+        String gender = intent.getStringExtra(MainActivity.GENDERKEY);
 
-    /**
-     * Haetaan aikaisemmin valittu sukupuoli muistista
-     */
-    public void getGender() {
-        String gender = sharedPrefs.getString(GENDERKEY, "male");
         radiosexi = findViewById(R.id.radioSex);
         radiofemale = findViewById(R.id.radioFemale);
         radiomale = findViewById(R.id.radioMale);
+        weightText = findViewById(R.id.weightStart);
+        ageText = findViewById(R.id.newAge);
+
+        // Haetaan aikaisemmin syötetyt tiedot
+        setDefaults(age, weight, gender);
+    }
+
+    /**
+     * Aseta default arvot tallennettujen tietojen mukaisesti
+     *
+     * @param age    ikä
+     * @param weight paino
+     * @param gender sukupuoli
+     */
+    public void setDefaults(String age, String weight, String gender) {
+        ageText.setText(age);
+        weightText.setText(weight);
 
         if (gender.equals("male")) {
             radiomale.setChecked(true);
@@ -74,25 +80,8 @@ public class UserSettings extends AppCompatActivity {
     }
 
     /**
-     * Haetaan aikaisemmin syötetty ikä muistista
-     */
-    public void getAge() {
-        String age = sharedPrefs.getString(AGEKEY, "25");
-        ageText = findViewById(R.id.newAge);
-        ageText.setText(age);
-    }
-
-    /**
-     * Haetaaan aikaisemmin syötetty paino muistista
-     */
-    public void getWeight() {
-        String weight = sharedPrefs.getString(WEIGHTKEY, "70");
-        weightText = findViewById(R.id.weightStart);
-        weightText.setText(weight);
-    }
-
-    /**
      * Palauttaa iän tekstinä
+     *
      * @return ikä esim. 33
      */
     public String setAge() {
@@ -109,7 +98,8 @@ public class UserSettings extends AppCompatActivity {
 
     /**
      * Hakee painon tekstikentästä ja palauttaa sen tekstinä
-     * @return paino, esim. 55
+     *
+     * @return paino esim. 55
      */
     public String setWeight() {
         weightText = findViewById(R.id.weightStart);
@@ -117,20 +107,18 @@ public class UserSettings extends AppCompatActivity {
         if (weighted.isEmpty()) {
             weightText.setError("Weight required");
         } else if (Integer.parseInt(weighted) < 50) {
-            weightText.setError("weight below the required limit");
+            weightText.setError("Weight below the required limit");
             return "";
         }
         return weighted;
     }
 
     /**
-     * @return palautetaan sukupuoli Stringinä
+     * Palauttaa sukupuolen Stringinä
+     *
+     * @return sukupuoli (male / female)
      */
     public String setGender() {
-        radiosexi = findViewById(R.id.radioSex);
-        radiofemale = findViewById(R.id.radioFemale);
-        radiomale = findViewById(R.id.radioMale);
-
         if (radiomale.isChecked()) {
             gender = "male";
             radiomale.setChecked(true);
@@ -139,11 +127,12 @@ public class UserSettings extends AppCompatActivity {
             radiofemale.setChecked(true);
         }
         return gender;
-
     }
 
     /**
-     * @param view tallentaa uudet arvot ja syöttää ne jaettuuntiedostoon
+     * Tallentaa uudet arvot
+     *
+     * @param view nappi elementti
      */
     public void saveNewValues(View view) {
         if (setAge().isEmpty() || setWeight().isEmpty()) {
@@ -153,12 +142,16 @@ public class UserSettings extends AppCompatActivity {
         editor.putString(GENDERKEY, setGender());
         editor.putString(WEIGHTKEY, setWeight());
         editor.putString(AGEKEY, setAge());
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
         editor.commit();
         finish();
     }
 
     /**
-     * @param view Palaa pää aktiviteettiin
+     * Takaisin mainactivityyn
+     *
+     * @param view nappi elementti
      */
     public void backToMain(View view) {
         super.onBackPressed();
