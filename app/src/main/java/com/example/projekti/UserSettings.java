@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
 public class UserSettings extends AppCompatActivity {
@@ -102,6 +103,7 @@ public class UserSettings extends AppCompatActivity {
         editor.putString("genderValue", setGender());
         editor.putString("weightValue", setWeight());
         editor.putString("ageValue", setAge());
+        Toast.makeText(this,"New values saved",Toast.LENGTH_SHORT).show();
         editor.commit();
         finish();
     }
