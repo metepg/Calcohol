@@ -7,7 +7,6 @@ package com.example.projekti;
  * @version 1.0 5/2021
  */
 public class Counter {
-    private int min;
     private int big;
     private int small;
 
@@ -15,7 +14,6 @@ public class Counter {
      * Luokan konstruktori
      */
     public Counter() {
-        this.min = 0;
         this.big = 0;
         this.small = 0;
     }
@@ -27,12 +25,12 @@ public class Counter {
      * @param prefix, määrittelee laskutoimituksen (+ tai -)
      */
     public void setBig(String prefix) {
-        if (prefix == "+") {
+        if (prefix.equals("+")) {
             big++;
             return;
         }
         big--;
-        if (big < min) {
+        if (big < 0) {
             big = 0;
         }
     }
@@ -44,7 +42,7 @@ public class Counter {
      * @param prefix, määrittelee laskutoimituksen (+ tai -)
      */
     public void setSmall(String prefix) {
-        if (prefix == "+") {
+        if (prefix.equals("+")) {
             small++;
             return;
         }

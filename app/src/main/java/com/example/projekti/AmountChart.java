@@ -17,8 +17,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import android.view.View;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -114,7 +112,7 @@ public class AmountChart extends AppCompatActivity {
         weekDays.add("Sunday");
 
         int total = 0;
-        for(int i = 0; i < days.size(); i++) {
+        for (int i = 0; i < days.size(); i++) {
             total += checkValue(days.get(i));
         }
         weekPortions.setText(String.valueOf(total));
@@ -146,14 +144,9 @@ public class AmountChart extends AppCompatActivity {
             public void onValueSelected(Entry e, Highlight h) {
                 int i = Math.round(e.getX());
                 if (days.get(i) == null) {
-                    soft.setText("0");
-                    strong.setText("0");
-                    wine.setText("0");
-                    liquor.setText("0");
                     dateInfo.setText(formatDate(date.plusDays(i).toString()));
                     dayOfWeek.setText(weekDays.get(i));
-                    calories.setText("0");
-                    return;
+                    resetFields();
                 } else {
                     DayInfo data = days.get(i);
 
@@ -226,12 +219,19 @@ public class AmountChart extends AppCompatActivity {
     public String formatDate(String date) {
         String month = date.substring(5, 7);
         String day = date.substring(8, 10);
-        String formattedDate = day + "." + month;
-        return formattedDate;
+        return day + "." + month;
     }
 
     public int checkValue(DayInfo value) {
         return value == null ? 0 : value.getPortions();
+    }
+
+    public void resetFields() {
+        soft.setText("0");
+        strong.setText("0");
+        wine.setText("0");
+        liquor.setText("0");
+        calories.setText("0");
     }
 
     // Next button actions
@@ -240,6 +240,7 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
         dateInfo.setText("");
         dayOfWeek.setText("");
     }
@@ -250,6 +251,7 @@ public class AmountChart extends AppCompatActivity {
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
         dateInfo.setText("");
         dayOfWeek.setText("");
     }
@@ -265,7 +267,7 @@ public class AmountChart extends AppCompatActivity {
 
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
-        List<DayInfo> pvt = new ArrayList();
+        List<DayInfo> pvt = new ArrayList<>();
         for (int i = 0; i <= 6; i++) {
             String matchDate = date.plusDays(i).toString(); // Current date to match
 
