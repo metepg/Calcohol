@@ -2,10 +2,10 @@
     <string name="app_name">projekti</string>
     <string name="kcal">kcal</string>
     <string name="portions">portions</string>
-    <string name="strong_6_5">Strong (6.5%):</string>
-    <string name="wine_12_5">Wine (12.5%):</string>
-    <string name="soft_4_7">Soft (4.7%):</string>
-    <string name="liquor_40">Liquor (40%):</string>
+    <string name="strong_6_5">Strong (6.5%)</string>
+    <string name="wine_12_5">Wine (12.5%)</string>
+    <string name="soft_4_7">Soft (4.7%)</string>
+    <string name="liquor_40">Liquor (40%)</string>
     <string name="_0">0</string>
     <string name="this_week_total">This week total:</string>
     <string name="calories">Calories:</string>

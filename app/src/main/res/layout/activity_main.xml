@@ -152,20 +152,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
+
     <ImageButton
         android:id="@+id/chartBtn"
         android:layout_width="40dp"
         android:layout_height="44dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/ripple_effect"
         android:onClick="onChart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/outline_bar_chart_24" />
-
 
     <View
         android:layout_width="220dp"
@@ -194,8 +194,6 @@
         android:layout_width="128dp"
         android:layout_height="42dp"
         android:textAlignment="textEnd"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -322,8 +320,6 @@
         android:layout_width="128dp"
         android:layout_height="42dp"
         android:textAlignment="textEnd"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -465,8 +461,6 @@
         android:layout_width="128dp"
         android:layout_height="42dp"
         android:textAlignment="textEnd"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -491,8 +485,6 @@
         android:layout_width="128dp"
         android:layout_height="42dp"
         android:textAlignment="textEnd"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
@@ -619,21 +611,21 @@
         android:id="@+id/userBtn"
         android:layout_width="41dp"
         android:layout_height="44dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/ripple_effect"
         android:onClick="onUser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/outline_settings_accessibility_20" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Beer(4.7%)"
+        android:text="@string/soft_4_7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
@@ -645,22 +637,22 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Liquor(40%)"
+        android:text="@string/liquor_40"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582" />
+        app:layout_constraintVertical_bias="0.581" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wine(10-15%)"
+        android:text="@string/wine_12_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.419" />
@@ -669,13 +661,13 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sider(4.5%)"
+        android:text="@string/strong_6_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.248" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
