@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     DateTimeFormatter getDate;
     String formattedDate;
 
-    EditText timeText;
+
 
     TextView portions;
     TextView smallSoft;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
             burnaus = findViewById(R.id.burningText);
             energy = findViewById(R.id.energyText);
-            timeText = findViewById(R.id.timeText);
+
 
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
@@ -127,18 +127,7 @@ public class MainActivity extends AppCompatActivity {
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
 
-            timeText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-                @Override
-                public void afterTextChanged(Editable s) {
-                    startTime();
-                }
-            });
+
 
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -241,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
-        startTime();
+
         energy.setText(total.getCalories() + " kcal");
     }
 
@@ -312,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
         }
         totalText.setText(total.getAlcoholInBlood(testUser));
         portions.setText(String.valueOf(total.getPortions()));
-        startTime();
         energy.setText(total.getCalories() + " kcal");
     }
 
@@ -407,14 +395,5 @@ public class MainActivity extends AppCompatActivity {
         updateField(portions, "0");
         updateField(burnaus, "0");
         updateField(energy, "0");
-    }
-    public void startTime(){
-        String test = timeText.getText().toString();
-        if(test.isEmpty()){
-            test = "0";
-        }
-        int newTest = Integer.parseInt(test);
-        int set = total.getBurningTime(testUser) - newTest;
-        burnaus.setText(Integer.toString(set));
     }
 }
