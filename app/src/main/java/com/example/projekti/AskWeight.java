@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
@@ -52,7 +51,7 @@ public class AskWeight extends AppCompatActivity {
             // Mainactivityssä verrataan siihen onko tiedot lisätty jo
             // Laita false jos haluat pyörittää login valikkoa aina uusiks
             editor.putBoolean(INITKEY, true);
-            editor.commit();
+            editor.apply();
             Intent returnToMain = new Intent(this, MainActivity.class);
             startActivity(returnToMain);
             finish();
