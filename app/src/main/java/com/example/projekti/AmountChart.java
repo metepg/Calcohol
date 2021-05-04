@@ -17,6 +17,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import android.view.View;
 import android.widget.TextView;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,16 +27,19 @@ import java.util.List;
 
 
 public class AmountChart extends AppCompatActivity {
-    // variable for our bar chart
+    Singleton savedData;
+
+    // Barchart muuttujat
     BarChart barChart;
+    BarData barData;
+    BarDataSet barDataSet;
+
     TextView dateView;
     TextView year;
-    // variable for our bar data.
-    BarData barData;
+
+    // Tätä lukua kasvatetaan 1 jos halutaan nähdä seuraava viikko
+    // 0 näyttää nykyisen viikon
     int startD = 0;
-    // variable for our bar data set.
-    BarDataSet barDataSet;
-    Singleton savedData;
 
     // array list for storing entries.
     ArrayList<BarEntry> barEntriesArrayList;
@@ -79,8 +83,9 @@ public class AmountChart extends AppCompatActivity {
         dateView = findViewById(R.id.dateView);
         year = findViewById(R.id.year);
         year.setText(String.valueOf(currentYear));
+        String weekDates = firstDayOfWeek + " - " + lastDayOfWeek;
 
-        dateView.setText(firstDayOfWeek + " - " + lastDayOfWeek);
+        dateView.setText(weekDates);
     }
 
     // Initialize barchart with data
@@ -96,7 +101,6 @@ public class AmountChart extends AppCompatActivity {
         calories = findViewById(R.id.calories);
         dayOfWeek = findViewById(R.id.weekDay);
         weekPortions = findViewById(R.id.weekPortions);
-
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
@@ -151,10 +155,6 @@ public class AmountChart extends AppCompatActivity {
                     DayInfo data = days.get(i);
 
                     String weekDay = weekDays.get(i);
-                    String softAmount = convertToLiters(data.getSoftAmount());
-                    String strongAmount = convertToLiters(data.getStrongAmount());
-                    String wineAmount = convertToLiters(data.getWineAmount());
-                    String liquorAmount = convertToLiters(data.getLiquorAmount());
                     String date = formatDate(data.getDate());
                     String caloriesAmount = String.valueOf(data.getCalories());
 
@@ -262,26 +262,28 @@ public class AmountChart extends AppCompatActivity {
         finish();
     }
 
-    // Hae oikeat päivät listasta
+    // Hae listalta pvm mukaan viikolle dataa
     public List<DayInfo> getDays(LocalDate date) {
 
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
         List<DayInfo> pvt = new ArrayList<>();
         for (int i = 0; i <= 6; i++) {
-            String matchDate = date.plusDays(i).toString(); // Current date to match
 
-            // Loop through saved info
+            // Pvm millä haetaan oliota
+            // Kasvatetaan joka loopin jälkeen yhdellä
+            String matchDate = date.plusDays(i).toString();
+
+            // Käy tallennetut tiedot läpi ja etsi pvm mukaan oliota
             for (int j = 0; j < days.size(); j++) {
                 String pv = days.get(j).getDate();
                 if (pv.equals(matchDate)) {
                     pvt.add(days.get(j));
                 }
             }
-            // If no match add null instead of DayInfo to List
-            try {
-                pvt.get(i);
-            } catch (IndexOutOfBoundsException e) {
+            // Jos listalta ei löydy tietoja pvm mukaan
+            // Lisää indeksin kohdalle null
+            if (i >= pvt.size()) {
                 pvt.add(i, null);
             }
         }

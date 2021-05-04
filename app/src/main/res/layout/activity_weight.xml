@@ -18,7 +18,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Check"
+        android:text="@string/check"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.03"
-        app:srcCompat="@drawable/calcohol" />
+        app:srcCompat="@drawable/calcohol"
+        android:contentDescription="@string/logo" />
 
     <com.kofigyan.stateprogressbar.StateProgressBar
         android:id="@+id/your_state_progress_bar_id"
@@ -63,12 +64,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Weight"
+        android:hint="@string/weight"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

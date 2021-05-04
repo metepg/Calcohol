@@ -5,12 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,26 +17,45 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * <h1>Ohjelman pääaktiviteetti</h1>
+ * <p>
+ * <h2>Täältä käyttäjä pystyy:</h2>
+ * <ul>
+ *     <li>lisäämään juotuja juomia sovellukseen</li>
+ *     <li>tarkastamaan alkoholin määrän veressä</li>
+ *     <li>näkemään juotujen juomien kalorimäärän</li>
+ * </ul>
+ * <h2>Tästä aktiviteestia pääsee myös:</h2>
+ * <ul>
+ *     <li>muuttamaan tietoja (userSettings)</li>
+ *     <li>tarkastelemaan lisättyjä tietoja graafisessa muodossa (AmountChart)</li>
+ * </ul>
+ */
+
 public class MainActivity extends AppCompatActivity {
     Singleton days;
     Gson gson = new Gson();
 
-    private String TAG = "jes";
     private final static String USER = "properties";
     private final Counter soft = new Counter();
     private final Counter strong = new Counter();
     private final Counter wine = new Counter();
     private final Counter liquor = new Counter();
 
-    private DayInfo total;
-    User testUser;
+    public final static String AGEKEY = "age";
+    public final static String GENDERKEY = "gender";
+    public final static String WEIGHTKEY = "weight";
 
+    private DayInfo total;
+    User user;
+
+    // Pvm muuttujia
     LocalDate myObj;
     DateTimeFormatter getDate;
     String formattedDate;
 
-
-
+    // Tekstikenttämuuttujat
     TextView portions;
     TextView smallSoft;
     TextView bigSoft;
@@ -54,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     TextView burnaus;
     TextView energy;
 
+    // Alasvetovalikkomuuttujat
     Spinner softPortion;
     Spinner strongPortion;
     Spinner winePortion;
@@ -63,13 +79,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Tää on se storage mihin tallentuu tietoja
+        // Tiedosto mistä löytyy käyttäjän tiedot (paino, sukupuoli, ikä)
         SharedPreferences sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
 
-        // Tällä lauseella kattoo onko tiedot jo asetettu eli onko alkujutut tehty jo
+        // Tällä lauseella tarkistetaan onko käyttäjätiedot syötetty
+        // Jos on niin käynnistä aktiviteetin tapahtumat
         if (sharedPrefs.getBoolean("valuesSet", false)) {
-            // Printtaa kaikki tiedot
-            Log.d(TAG, sharedPrefs.getAll().toString());
             setContentView(R.layout.activity_main);
             loadData();
 
@@ -77,13 +92,15 @@ public class MainActivity extends AppCompatActivity {
             int weight = Integer.parseInt(sharedPrefs.getString("weightValue", "0"));
             String gender = sharedPrefs.getString("genderValue", "man");
             int age = Integer.parseInt(sharedPrefs.getString("ageValue", "18"));
-            testUser = new User(age,gender,weight);
+            user = new User(age, gender, weight);
 
-            // Dropdownien alustus
+            // Dropdownien hakeminen muuttujiksi
             softPortion = findViewById(R.id.softSpinner);
             strongPortion = findViewById(R.id.strongSpinner);
             winePortion = findViewById(R.id.wineSpinner);
             liquorPortion = findViewById(R.id.liquorSpinner);
+
+            // Dropdownien tekstit
 
             // 0.33l & 0.5l
             ArrayAdapter<CharSequence> soft = ArrayAdapter.createFromResource(this,
@@ -109,10 +126,7 @@ public class MainActivity extends AppCompatActivity {
             liquor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             liquorPortion.setAdapter(liquor);
 
-            burnaus = findViewById(R.id.burningText);
-            energy = findViewById(R.id.energyText);
-
-
+            // Tekstikentät muuttujiksi
             smallSoft = findViewById(R.id.smallSoft);
             bigSoft = findViewById(R.id.bigSoft);
             smallStrong = findViewById(R.id.smallStrong);
@@ -122,68 +136,94 @@ public class MainActivity extends AppCompatActivity {
             smallLiquor = findViewById(R.id.smallLiquor);
             bigLiquor = findViewById(R.id.bigLiquor);
 
-            days = Singleton.getInstance();
-
             totalText = findViewById(R.id.totalText);
             portions = findViewById(R.id.portions);
+            burnaus = findViewById(R.id.burningText);
+            energy = findViewById(R.id.energyText);
 
-
-
+            // Haetaan tämän päivän tiedot
             myObj = LocalDate.now();
             getDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             formattedDate = myObj.format(getDate);
-
             total = new DayInfo(formattedDate);
 
+            // Käyttäjän syöttämät juomat
             List<DayInfo> data = loadData();
-            if(data != null) {
+            days = Singleton.getInstance();
+            if (data != null && days.getAllDays().size() < 1) {
                 // Lisää tallennetut tiedot Singletoniin
-                for(int i = 0; i < data.size(); i++) {
+                for (int i = 0; i < data.size(); i++) {
                     days.getAllDays().add(data.get(i));
                 }
             }
         }
-        // Jos ei ole niin..
+        // Jos ei ole, niin käynnistä login aktiviteetti
         else {
             Intent askAge = new Intent(this, AskAge.class);
             startActivity(askAge);
         }
     }
 
-
     /**
      * Hae tiedot "database" tiedostosta
+     *
      * @return päiväkohtaiset tiedot listana
      */
-    public List<DayInfo> loadData(){
+    public List<DayInfo> loadData() {
         SharedPreferences worker = getSharedPreferences("database", MODE_PRIVATE);
-        if(worker.getAll().toString().equals("{}")) {
+        if (worker.getAll().toString().equals("{}")) {
             return null;
-        }
-        else {
+        } else {
             String arr = worker.getString("KAIKKIDATA", "");
-            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>(){};
+            TypeToken<List<DayInfo>> token = new TypeToken<List<DayInfo>>() {
+            };
             return gson.fromJson(arr, token.getType());
         }
     }
-    public void onChart(View view){
+
+    /**
+     * Siirtyy datanäkymään
+     *
+     * @param view nappi elementti
+     */
+    public void onChart(View view) {
         Intent chart = new Intent(this, AmountChart.class);
         startActivity(chart);
     }
-    public void onUser(View view){
+
+    /**
+     * Siirtyy käyttäjätietojen päivitys aktiviteettiin
+     *
+     * @param view nappi elementti
+     */
+    public void onUser(View view) {
+
+        String age = user.getAge();
+        String gender = user.getGender();
+        String weight = String.valueOf(user.getWeight());
         Intent user = new Intent(this, UserSettings.class);
+        user.putExtra(AGEKEY, age);
+        user.putExtra(GENDERKEY, gender);
+        user.putExtra(WEIGHTKEY, weight);
         startActivity(user);
     }
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-    // Päivitä tekstikenttä annetun idn ja counterin mukaan
+
+    /**
+     * Päivitä tekstikenttä annetun idn ja counterin mukaan
+     *
+     * @param id   päivitettävän tekstikentän id
+     * @param text sinne syötettävä teksti
+     */
     public void updateField(TextView id, String text) {
         id.setText(text);
     }
 
-    // Katso plus buttoneista mitä painettu
+    /**
+     * <p>Katsoo mitä näkymän plusnapeista on painettu</p>
+     * <p>Päivittää kenttiä saadun napin idn mukaan</p>
+     *
+     * @param view näkymän elementti
+     */
     public void onPlus(View view) {
         switch (view.getId()) {
             case R.id.softPlus:
@@ -227,14 +267,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood(testUser));
+        totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
-
+        startTime();
         energy.setText(total.getCalories() + " kcal");
     }
 
 
-    // Katso minus buttoneista mitä painettu
+    /**
+     * <p>Katsoo mitä näkymän minusnapeista on painettu</p>
+     * <p>Päivittää kenttiä saadun napin idn mukaan</p>
+     *
+     * @param view näkymän elementti
+     */
     public void onMinus(View view) {
         switch (view.getId()) {
             case R.id.softMinus:
@@ -298,12 +343,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        totalText.setText(total.getAlcoholInBlood(testUser));
+        totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
+        startTime();
         energy.setText(total.getCalories() + " kcal");
     }
 
-    // Palauttaa numeroarvon spinnereiden valintakentästä
+    /**
+     * Palauttaa numeroarvon spinnereiden valintakentästä liukulukuna
+     *
+     * @param portion tekstiarvo esim "4 cl"
+     * @return muuntaa syötetyn tekstiarvon millilitroiksi esim. "4 cl" -> 40.00
+     */
     public double getPortion(String portion) {
         switch (portion) {
             case "4 cl":
@@ -321,26 +372,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * <p>Tallentaa syötetyt tiedot listaan objektina</p>
+     * <p>Jos saman päivän tietoja on olemassa jo, tallentaa niiden tietojen lisäksi</p>
+     * <p>Lopuksi kääntää listan JSON-muotoon ja tallentaa sen tiedostoon</p>
      *
      * @param view "add calendar" napin onclick
      */
     public void addToCalendar(View view) {
-        if(total.getPortions() == 0) {
+        // Katso onko annoksia lisätty yhtään kun nappia painetaan
+        if (total.getPortions() == 0) {
             return;
         }
 
+        // Hae pvm avulla olion indeksi listalta
         int i = getDateIndex(total.getDate());
 
         // Jos listalta ei löydy samalla pvm olevaa oliota
         // Lisää tiedot listalle
-        if(i < 0){
+        if (i == -1) {
             days.getAllDays().add(total);
         }
-        // Jos löytyy
-        // Lisää juomat vanhoihin tietoihin
+
+        // Jos löytyy niin lisää juomat vanhoihin tietoihin
         else {
             DayInfo d = days.getOneDay(i);
-
             d.setSoftAmount(total.getSoftAmount() + d.getSoftAmount());
             d.setStrongAmount(total.getStrongAmount() + d.getStrongAmount());
             d.setWineAmount(total.getWineAmount() + d.getWineAmount());
@@ -348,31 +403,50 @@ public class MainActivity extends AppCompatActivity {
             days.getAllDays().set(i, d);
         }
 
+        // Muuttaa datan JSON-muotoon
         List<DayInfo> lista = Singleton.getInstance().getAllDays();
         String json = gson.toJson(lista);
 
-        SharedPreferences userPreferences = getSharedPreferences("database",  MODE_PRIVATE);
+        // Tallenna tiedot tiedostoon "database"
+        // Avain = "KAIKKIDATA"
+        SharedPreferences userPreferences = getSharedPreferences("database", MODE_PRIVATE);
         SharedPreferences.Editor editor = userPreferences.edit();
         editor.putString("KAIKKIDATA", json);
         editor.apply();
         resetFields();
-        total = new DayInfo(formattedDate);
+        total = new DayInfo(formattedDate); // Alusta uusi instanssi kun vanhan tiedot ovat tallennettu
     }
-    // Tarkastaa onko päivämäärällä jo tietoja
-    // Jos on, niin lisää tiedot edellisen lisäksi
-    public int getDateIndex(String date) {
-        List<DayInfo> data = days.getAllDays();
 
-        for(int i = 0; i < data.size(); i++) {
-            if(data.get(i).getDate().equals(date)){
+    /**
+     * Tarkastaa löytyykö tallennetuista tiedoista jo saman päivän tietoja.
+     *
+     * @param date, päivämäärä millä oliota haetaan listasta. Formaatti ("yyyy,MM,dd") esim. 2021-05-28
+     * @return, palauttaa etsittävän olion indeksin. Jos oliota ei löydy palauttaa (-1)
+     */
+    private int getDateIndex(String date) {
+        List<DayInfo> data = days.getAllDays();
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getDate().equals(date)) {
                 return i;
             }
         }
         return -1;
     }
 
-    // Tyhjennä kentät
-    public void resetFields(){
+    /**
+     * <p>Laskee kuinka kauan kestää että alkoholi poistuu elimistöstä</p>
+     * <p>Näyttää tuloksen tekstikentässä</p>
+     */
+    public void startTime() {
+        String set = String.valueOf(total.getBurningTime(user));
+        burnaus.setText(String.format("%s h", set));
+    }
+
+    /**
+     * <p>Nollaa kaikki kentät</p>
+     * <p>Tätä metodia kutsutaan tallennuksen jälkeen</p>
+     */
+    public void resetFields() {
         soft.reset();
         strong.reset();
         wine.reset();
@@ -395,4 +469,5 @@ public class MainActivity extends AppCompatActivity {
         updateField(burnaus, "0");
         updateField(energy, "0");
     }
+
 }
