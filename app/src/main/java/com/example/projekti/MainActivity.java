@@ -31,6 +31,9 @@ import java.util.List;
  *     <li>muuttamaan tietoja (userSettings)</li>
  *     <li>tarkastelemaan lisättyjä tietoja graafisessa muodossa (AmountChart)</li>
  * </ul>
+ *
+ * @author Mete Güneysel
+ * @version 1.0 5/2021
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -270,7 +273,8 @@ public class MainActivity extends AppCompatActivity {
         totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
-        energy.setText(total.getCalories() + " kcal");
+        String calories = total.getCalories() + " kcal";
+        energy.setText(calories);
     }
 
 
@@ -346,7 +350,8 @@ public class MainActivity extends AppCompatActivity {
         totalText.setText(total.getAlcoholInBlood(user));
         portions.setText(String.valueOf(total.getPortions()));
         startTime();
-        energy.setText(total.getCalories() + " kcal");
+        String calories = total.getCalories() + " kcal";
+        energy.setText(calories);
     }
 
     /**
@@ -421,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
      * Tarkastaa löytyykö tallennetuista tiedoista jo saman päivän tietoja.
      *
      * @param date, päivämäärä millä oliota haetaan listasta. Formaatti ("yyyy,MM,dd") esim. 2021-05-28
-     * @return, palauttaa etsittävän olion indeksin. Jos oliota ei löydy palauttaa (-1)
+     * @return palauttaa etsittävän olion indeksin. Jos oliota ei löydy palauttaa (-1)
      */
     private int getDateIndex(String date) {
         List<DayInfo> data = days.getAllDays();

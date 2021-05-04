@@ -179,7 +179,6 @@ public class AmountChart extends AppCompatActivity {
         // passing our bar data set.
         barData = new BarData(barDataSet);
         barChart.setData(barData);
-
         // Initialize bar chart
         barChart.animateY(1500);
         barChart.setDrawBarShadow(true);
@@ -209,11 +208,6 @@ public class AmountChart extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public String convertToLiters(int amount) {
-        double liters = amount / 1000.00;
-        return String.valueOf(liters);
     }
 
     public String formatDate(String date) {
