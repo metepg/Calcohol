@@ -1,9 +1,9 @@
 package com.example.projekti;
 
 /**
- * Käyttäjän luokka
+ * <h1>Käyttäjän luokka</h1>
  *
- * @author teme
+ * @author TeemuT
  * @version 1.0 5/2021
  */
 public class User {
@@ -26,6 +26,7 @@ public class User {
 
     /**
      * Palauttaa iän tekstinä
+     *
      * @return ikä esim. 55
      */
     public String getAge() {
@@ -34,6 +35,7 @@ public class User {
 
     /**
      * Palauttaa sukupuolen
+     *
      * @return sukupuoli esim. "male"
      */
     public String getGender() {
@@ -42,6 +44,7 @@ public class User {
 
     /**
      * Palauttaa painon numerona
+     *
      * @return paino esim 55
      */
     public int getWeight() {
