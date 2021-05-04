@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 /**
- * Luokka jossa kysytään sukupuolta
+ * <h1>Luokka jossa kysytään alussa sukupuoli</h1>
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021
@@ -23,9 +23,7 @@ public class AskGender extends AppCompatActivity {
     private final static String USER = "properties";
     private static final String GENDERKEY = "genderValue";
 
-    /**
-     * Luokan <strong>muuttujat</strong>
-     */
+    //Tässä määritellään luokan muuttujat
     Button button;
     RadioGroup groupradio;
     RadioButton groupfemale;
@@ -33,23 +31,22 @@ public class AskGender extends AppCompatActivity {
     SharedPreferences sharedPrefs;
     String gender;
 
-    /**
-     * Haetaan aplikaatioon aikaisemmin syötetyt tiedot
-     *
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gender);
+        //Ulkoisesta kirjastosta haettu käyttäjän etenemisen seuraamis palkki
         StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
         sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
         button = findViewById(R.id.angry_btn);
-        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
 
+        //Tässä määritellään sukupuoli toisena vaiheena
+        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
     }
+
     public void setGender(View view) {
+        //Radiogroup toiminnot määritelty sukupuoli kohtaan
         groupradio = findViewById(R.id.groupradio);
         groupfemale = findViewById(R.id.groupfemale);
         groupmale = findViewById(R.id.groupmale);
@@ -64,6 +61,7 @@ public class AskGender extends AppCompatActivity {
             gender = "female";
             groupfemale.setChecked(true);
         }
+        //Tallennetaan valittu arvo muistiin
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString(GENDERKEY, gender);
         editor.commit();
