@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 /**
- * <h1>Luokka jossa kysytään alussa sukupuoli</h1>
+ * <h1>Aktiviteetti jossa kysytään alussa sukupuoli</h1>
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021
@@ -44,6 +44,12 @@ public class AskGender extends AppCompatActivity {
         //Tässä määritellään sukupuoli toisena vaiheena
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
     }
+
+    /**
+     * Tarkistaa onko käyttäjä mies vai naispuolinen
+     *
+     * @param view Painettu nappi
+     */
 
     public void setGender(View view) {
         //Radiogroup toiminnot määritelty sukupuoli kohtaan

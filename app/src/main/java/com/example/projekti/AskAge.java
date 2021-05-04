@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
+
 /**
- * <h1>Luokka jossa kysytään ikä</h1>
+ * <h1>Aktiviteetti jossa kysytään ikä</h1>
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021
@@ -37,15 +37,18 @@ public class AskAge extends AppCompatActivity {
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
     }
 
-
+    /**
+     * Tarkistaa ja tallentaa käyttäjän syötteen
+     *
+     * @param view painettu nappi
+     */
     public void checkAge(View view) {
         EditText ageElement = findViewById(R.id.age);
-        Log.d("moi", ageElement.getText().toString());
         String age = ageElement.getText().toString();
         //Tarkistetaan onko käyttäjä syöttänyt tietoja
         if (age.isEmpty()) {
             ageElement.setError("Age required");
-        } else if (Integer.parseInt(age) < 18||Integer.parseInt(age) > 99) {
+        } else if (Integer.parseInt(age) < 18 || Integer.parseInt(age) > 99) {
             ageElement.setError("Insert age between 18 - 99");
         } else {
             //Tallennetaan arvot muistiin
