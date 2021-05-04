@@ -18,7 +18,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,20 +25,28 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * <h1>Käyttäjä tarkastelee lisättyä dataa</h1>
+ * <p>määritellään toiminnot barchart aktiviteettiin</p>
+ *
+ * @author TeemuT
+ * @version 1.0
+ */
 public class AmountChart extends AppCompatActivity {
-    // variable for our bar chart
-    BarChart barChart;
-    TextView dateView;
-    TextView year;
-    // variable for our bar data.
-    BarData barData;
-    int startD = 0;
-    // variable for our bar data set.
-    BarDataSet barDataSet;
     Singleton savedData;
 
-    // array list for storing entries.
+    // Muuttujat
+    BarChart barChart;
+    BarData barData;
+    BarDataSet barDataSet;
+    TextView dateView;
+    TextView year;
+
+    // Tätä lukua kasvatetaan 1 jos halutaan nähdä seuraava viikko
+    // 0 näyttää nykyisen viikon
+    int startD = 0;
+
+    // Arraylista johon tallentaan pylväiden aloitukset
     ArrayList<BarEntry> barEntriesArrayList;
     TextView soft;
     TextView strong;
@@ -54,16 +61,17 @@ public class AmountChart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_chart);
-
-        // initializing variable for bar chart.
         barChart = findViewById(R.id.idBarChart);
-
-        // calling method to get bar entries.
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
     }
 
+    /**
+     * <p>Hakee aloitus päivän</p>
+     * @param i muuttuja
+     * @return Palauttaa alkavan viikon ensimmäisen päivän
+     */
     // First date of week as LocalDate object
     public LocalDate getStartDay(int i) {
         LocalDate date = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
@@ -71,23 +79,30 @@ public class AmountChart extends AppCompatActivity {
         return date;
     }
 
-    // Laittaa oikeat pvm näkyville
+    /**
+     * <p>Laittaa oikeat pvm näkyville</p>
+     * @param c muuttuva muuttuja käyttäjän valitseman viikon mukaan
+     */
     public void setDays(LocalDate c) {
 
         int currentYear = c.getYear();
+        //formatoidaan päivät esim 30.02
         String firstDayOfWeek = c.format(DateTimeFormatter.ofPattern("dd.MM"));
         String lastDayOfWeek = c.plusDays(6).format(DateTimeFormatter.ofPattern("dd.MM"));
 
         dateView = findViewById(R.id.dateView);
         year = findViewById(R.id.year);
         year.setText(String.valueOf(currentYear));
-
-        dateView.setText(firstDayOfWeek + " - " + lastDayOfWeek);
+        String weekDates = firstDayOfWeek + " - " + lastDayOfWeek;
+        //asetettaa dateview tekstielementin arvoksi ensimmäisen ja viimeisen päivän
+        dateView.setText(weekDates);
     }
 
-    // Initialize barchart with data
+    /**
+     *<p>Alustaa pylvästaulukon ja päivittää sitä</p>
+     * @param date Päivämuuttuja
+     */
     private void getBarEntries(LocalDate date) {
-        // Barchart array
         barEntriesArrayList = new ArrayList<>();
 
         soft = findViewById(R.id.soft);
@@ -98,7 +113,6 @@ public class AmountChart extends AppCompatActivity {
         calories = findViewById(R.id.calories);
         dayOfWeek = findViewById(R.id.weekDay);
         weekPortions = findViewById(R.id.weekPortions);
-
 
         // Päivien tiedot arrayna
         List<DayInfo> days = getDays(date);
@@ -113,8 +127,9 @@ public class AmountChart extends AppCompatActivity {
         weekDays.add("Saturday");
         weekDays.add("Sunday");
 
+        //Loopataan saatujen arvojen läpi ja lisätään juomat total muuttujalle
         int total = 0;
-        for(int i = 0; i < days.size(); i++) {
+        for (int i = 0; i < days.size(); i++) {
             total += checkValue(days.get(i));
         }
         weekPortions.setText(String.valueOf(total));
@@ -129,8 +144,8 @@ public class AmountChart extends AppCompatActivity {
         int saturday = checkValue(days.get(5));
         int sunday = checkValue(days.get(6));
 
-        // adding new entry to our array list with bar
-        // entry and passing x and y axis value to it.
+        // Lisätään uudet tolpat jokaiselle viikon päivälle
+        // X arvo määrittelee ensimmäisen tolpan
         barEntriesArrayList.add(new BarEntry(0, monday));
         barEntriesArrayList.add(new BarEntry(1, tuesday));
         barEntriesArrayList.add(new BarEntry(2, wednesday));
@@ -138,30 +153,26 @@ public class AmountChart extends AppCompatActivity {
         barEntriesArrayList.add(new BarEntry(4, friday));
         barEntriesArrayList.add(new BarEntry(5, saturday));
         barEntriesArrayList.add(new BarEntry(6, sunday));
-
+        //Teksti pylväskaavion alla
         barDataSet = new BarDataSet(barEntriesArrayList, "Servings of alcohol per day");
 
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            /**
+             * <p>Tarkistaa onko pylvästä painettu, jos painettu pylväs korostetaan eri värillä</p>
+             * @param e Haetaan määrät päiviltä ja annetaan arvot tekstikentille
+             * @param h Painalluksella korostetaan painettua pylvästä
+             */
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int i = Math.round(e.getX());
                 if (days.get(i) == null) {
-                    soft.setText("0");
-                    strong.setText("0");
-                    wine.setText("0");
-                    liquor.setText("0");
                     dateInfo.setText(formatDate(date.plusDays(i).toString()));
                     dayOfWeek.setText(weekDays.get(i));
-                    calories.setText("0");
-                    return;
+                    resetFields();
                 } else {
                     DayInfo data = days.get(i);
 
                     String weekDay = weekDays.get(i);
-                    String softAmount = convertToLiters(data.getSoftAmount());
-                    String strongAmount = convertToLiters(data.getStrongAmount());
-                    String wineAmount = convertToLiters(data.getWineAmount());
-                    String liquorAmount = convertToLiters(data.getLiquorAmount());
                     String date = formatDate(data.getDate());
                     String caloriesAmount = String.valueOf(data.getCalories());
 
@@ -176,18 +187,17 @@ public class AmountChart extends AppCompatActivity {
                 }
             }
 
+            /**
+             * <p>Jos ei valittuna, ei tapahdu mitään</p>
+             */
             @Override
             public void onNothingSelected() {
 
             }
         });
-
-        // creating a new bar data and
-        // passing our bar data set.
+        //Luodaan uusi pylväs ja määritellään sen ulkoasu ja muuttujat
         barData = new BarData(barDataSet);
         barChart.setData(barData);
-
-        // Initialize bar chart
         barChart.animateY(1500);
         barChart.setDrawBarShadow(true);
         barChart.getAxisLeft().setDrawGridLines(false);
@@ -207,6 +217,11 @@ public class AmountChart extends AppCompatActivity {
         String[] dates = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
         axelx.setValueFormatter(new IndexAxisValueFormatter(dates));
         barData.setValueFormatter(new ValueFormatter() {
+            /**
+             * <p>Muuttaa pylväskaavio numerot tekstiksi, ilman desimaalia.</p>
+             * @param value Muuttuja
+             * @return palauttaa pylväiden arvot tekstiksi, ilman desimaalia. Jos arvoa ei ole saatu niin palauttaa tyhjän tekstin
+             */
             @Override
             public String getFormattedValue(float value) {
                 if (value > 0) {
@@ -218,68 +233,101 @@ public class AmountChart extends AppCompatActivity {
         });
     }
 
-    public String convertToLiters(int amount) {
-        double liters = amount / 1000.00;
-        return String.valueOf(liters);
-    }
-
+    /**
+     * <p>Palauttaa päivän ja kuukauden</p>
+     * @param date pvm esim. 2021-05-20
+     * @return Palauttaa päivän ja kuukauden esim. 20.05
+     */
     public String formatDate(String date) {
         String month = date.substring(5, 7);
         String day = date.substring(8, 10);
-        String formattedDate = day + "." + month;
-        return formattedDate;
+        return day + "." + month;
     }
 
+    /**
+     * <p>Katsoo onko annoksia enemmän kuin nolla</p>
+     * @param value Muuttuja
+     * @return Palauttaa arvon nolla jos päivälle ei ole lisättty annoksia
+     */
     public int checkValue(DayInfo value) {
         return value == null ? 0 : value.getPortions();
     }
 
+    /**
+     * <p>Asettaaa teksti kenttien alkuarvoksi "0" tekstinä</p>
+     */
+    public void resetFields() {
+        soft.setText("0");
+        strong.setText("0");
+        wine.setText("0");
+        liquor.setText("0");
+        calories.setText("0");
+    }
+
+    /**
+     * <p>Viikon eteenpäin painalluksella</p>
+     * @param view nappi
+     */
     // Next button actions
     public void nextWeek(View view) {
         startD++;
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
         dateInfo.setText("");
         dayOfWeek.setText("");
     }
 
-    // Previous button actions
+    /**
+     * <p>Palaa viikon taaksepäin painalluksella</p>
+     * @param view nappi
+     */
     public void prevWeek(View view) {
         startD--;
         LocalDate startDay = getStartDay(startD);
         getBarEntries(startDay);
         setDays(startDay);
+        resetFields();
         dateInfo.setText("");
         dayOfWeek.setText("");
     }
 
-    // Back button action
+    /**
+     *<p>Palaa takaisin päänäkymään</p>
+     * @param view nappi pääaktiviteettiin
+     */
     public void onBackP(View view) {
         super.onBackPressed();
         finish();
     }
 
-    // Hae oikeat päivät listasta
+    /**
+     * <p>Haetaan listalta pvm mukaan viikolle dataa</p>
+     * @param date Verrataan tämän hetkistä viikkoa nykyiseen viikkoon
+     * @return palautetaan muuttuja pvt saadut arvot
+     */
     public List<DayInfo> getDays(LocalDate date) {
-
+        //loopataan kokonainen viikko
         savedData = Singleton.getInstance();
         List<DayInfo> days = savedData.getAllDays();
-        List<DayInfo> pvt = new ArrayList();
+        List<DayInfo> pvt = new ArrayList<>();
         for (int i = 0; i <= 6; i++) {
-            String matchDate = date.plusDays(i).toString(); // Current date to match
 
-            // Loop through saved info
+            // Pvm millä haetaan oliota
+            // Kasvatetaan joka loopin jälkeen yhdellä
+            String matchDate = date.plusDays(i).toString();
+
+            // Käy tallennetut tiedot läpi ja etsi pvm mukaan oliota
             for (int j = 0; j < days.size(); j++) {
                 String pv = days.get(j).getDate();
                 if (pv.equals(matchDate)) {
                     pvt.add(days.get(j));
                 }
             }
-            // If no match add null instead of DayInfo to List
-            try {
-                pvt.get(i);
-            } catch (IndexOutOfBoundsException e) {
+            // Jos listalta ei löydy tietoja pvm mukaan
+            // Lisää indeksin kohdalle null
+            if (i >= pvt.size()) {
                 pvt.add(i, null);
             }
         }

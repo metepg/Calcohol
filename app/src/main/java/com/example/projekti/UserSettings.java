@@ -5,24 +5,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+/**
+ * <h1>Käyttäjän asetusten aktiviteetin luokka</h1>
+ * <p>Käyttäjä pääsee muokkamaan aikaisemmin syötettyjä arvoja</p>
+ *
+ * @author TeemuT
+ * @version 1.1 5/2021
+ */
 
 public class UserSettings extends AppCompatActivity {
+    /**
+     * Applikaation <strong>avaimet</strong> tiedoille
+     */
+    SharedPreferences sharedPrefs;
     private final static String USER = "properties";
     private static final String WEIGHTKEY = "weightValue";
     private static final String GENDERKEY = "genderValue";
     private final static String AGEKEY = "ageValue";
+    /**
+     * Luokan yleiset <strong>muuttujat</strong>
+     */
     RadioGroup radiosexi;
     RadioButton radiofemale;
     RadioButton radiomale;
-
-    SharedPreferences sharedPrefs;
     EditText ageText;
     EditText weightText;
     String gender;
@@ -35,17 +45,31 @@ public class UserSettings extends AppCompatActivity {
         setContentView(R.layout.activity_user_settings);
         sharedPrefs = getSharedPreferences(USER, MODE_PRIVATE);
 
-        //Haetaan aikaisemmin syötetyt tiedot
-        getGender();
-        getWeight();
-        getAge();
-    }
+        Intent intent = getIntent();
+        String age = intent.getStringExtra(MainActivity.AGEKEY);
+        String weight = intent.getStringExtra(MainActivity.WEIGHTKEY);
+        String gender = intent.getStringExtra(MainActivity.GENDERKEY);
 
-    public void getGender() {
-        String gender = sharedPrefs.getString("genderValue", "male");
         radiosexi = findViewById(R.id.radioSex);
         radiofemale = findViewById(R.id.radioFemale);
         radiomale = findViewById(R.id.radioMale);
+        weightText = findViewById(R.id.weightStart);
+        ageText = findViewById(R.id.newAge);
+
+        // Haetaan aikaisemmin syötetyt tiedot
+        setDefaults(age, weight, gender);
+    }
+
+    /**
+     * Aseta default arvot tallennettujen tietojen mukaisesti
+     *
+     * @param age    ikä
+     * @param weight paino
+     * @param gender sukupuoli
+     */
+    public void setDefaults(String age, String weight, String gender) {
+        ageText.setText(age);
+        weightText.setText(weight);
 
         if (gender.equals("male")) {
             radiomale.setChecked(true);
@@ -54,37 +78,46 @@ public class UserSettings extends AppCompatActivity {
         }
     }
 
-    public void getAge() {
-        String age = sharedPrefs.getString("ageValue", "25");
-        Log.d("TAG", age);
-        ageText = findViewById(R.id.newAge);
-        ageText.setText(age);
-    }
-
-    public void getWeight() {
-        String weight = sharedPrefs.getString("weightValue", "70");
-        Log.i("TAG", weight);
-        weightText = findViewById(R.id.weightStart);
-        weightText.setText(weight);
-    }
-
+    /**
+     * Palauttaa iän tekstinä
+     *
+     * @return ikä esim. 33
+     */
     public String setAge() {
         ageText = findViewById(R.id.newAge);
         aged = ageText.getText().toString();
+        if (aged.isEmpty()) {
+            ageText.setError("Age required");
+        } else if (Integer.parseInt(aged) < 18 || Integer.parseInt(aged) > 99) {
+            ageText.setError("Insert age between 18 - 99");
+            return "";
+        }
         return aged;
     }
 
+    /**
+     * Hakee painon tekstikentästä ja palauttaa sen tekstinä
+     *
+     * @return paino esim. 55
+     */
     public String setWeight() {
         weightText = findViewById(R.id.weightStart);
         weighted = weightText.getText().toString();
+        if (weighted.isEmpty()) {
+            weightText.setError("Weight required");
+        } else if (Integer.parseInt(weighted) < 50 || Integer.parseInt(weighted) > 150) {
+            weightText.setError("Insert weight between 50 - 150 kg");
+            return "";
+        }
         return weighted;
     }
 
+    /**
+     * Palauttaa sukupuolen Stringinä
+     *
+     * @return sukupuoli (male / female)
+     */
     public String setGender() {
-        radiosexi = findViewById(R.id.radioSex);
-        radiofemale = findViewById(R.id.radioFemale);
-        radiomale = findViewById(R.id.radioMale);
-
         if (radiomale.isChecked()) {
             gender = "male";
             radiomale.setChecked(true);
@@ -93,19 +126,32 @@ public class UserSettings extends AppCompatActivity {
             radiofemale.setChecked(true);
         }
         return gender;
-
     }
 
+    /**
+     * Tallentaa uudet arvot
+     *
+     * @param view nappi elementti
+     */
     public void saveNewValues(View view) {
-        super.onBackPressed();
+        if (setAge().isEmpty() || setWeight().isEmpty()) {
+            return;
+        }
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString("genderValue", setGender());
-        editor.putString("weightValue", setWeight());
-        editor.putString("ageValue", setAge());
-        editor.commit();
+        editor.putString(GENDERKEY, setGender());
+        editor.putString(WEIGHTKEY, setWeight());
+        editor.putString(AGEKEY, setAge());
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
+        editor.apply();
         finish();
     }
 
+    /**
+     * Takaisin mainactivityyn
+     *
+     * @param view nappi elementti
+     */
     public void backToMain(View view) {
         super.onBackPressed();
         finish();

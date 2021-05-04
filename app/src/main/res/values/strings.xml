@@ -1,5 +1,40 @@
 <resources>
     <string name="app_name">projekti</string>
+    <string name="kcal">kcal</string>
+    <string name="portions">portions</string>
+    <string name="strong_6_5">Strong (6.5%)</string>
+    <string name="wine_12_5">Wine (12.5%)</string>
+    <string name="soft_4_7">Soft (4.7%)</string>
+    <string name="liquor_40">Liquor (40%)</string>
+    <string name="_0">0</string>
+    <string name="this_week_total">This week total:</string>
+    <string name="calories">Calories</string>
+    <string name="check">Check</string>
+    <string name="age">Age</string>
+    <string name="logo">logo</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="_0_h">0 h</string>
+    <string name="energy">Energy:</string>
+    <string name="alcohol_in_blood">Alcohol in blood:</string>
+    <string name="time_to_sober">Time to sober:</string>
+    <string name="_0_0">0.0%</string>
+    <string name="save_data">Save data</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="dataimage">dataImage</string>
+    <string name="bigportion">bigPortion</string>
+    <string name="smallportion">smallPortion</string>
+    <string name="portionsMain">Portions:</string>
+    <string name="settingslogo">settingsLogo</string>
+    <string name="prevarrow">prevArrow</string>
+    <string name="nextarrow">nextArrow</string>
+    <string name="exitarrow">exitArrow</string>
+    <string name="weight">Weight</string>
+    <string name="edit_values">Edit values</string>
+    <string name="save">Save</string>
+    <string name="kg">kg</string>
+    <string name="gender">Gender</string>
     <string-array name="softdrink">
         <item>0.33 l</item>
         <item>0.5 l</item>

@@ -19,7 +19,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Check"
+        android:text="@string/check"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/calcohol" />
+        app:srcCompat="@drawable/calcohol"
+        android:contentDescription="@string/logo" />
 
     <RadioGroup
         android:id="@+id/groupradio"
@@ -74,14 +75,14 @@
             android:id="@+id/groupfemale"
             android:layout_width="137dp"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="@string/female" />
 
         <RadioButton
             android:id="@+id/groupmale"
             android:layout_width="126dp"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="Male" />
+            android:checked="true"
+            android:text="@string/male" />
 
     </RadioGroup>
 

@@ -1,36 +1,54 @@
 package com.example.projekti;
 
+/**
+ * <h1>Käyttäjän luokka</h1>
+ *
+ * @author TeemuT
+ * @version 1.0 5/2021
+ */
 public class User {
     private int age;
     private String gender;
     private int weight;
 
-    // Constructor
-    public User(int age, String gender, int weight){
+    /**
+     * Konstruktori
+     *
+     * @param age    määrittää käyttäjän iän, esim. 18
+     * @param gender määrittää käyttäjän sukupuolen, esim. "female"
+     * @param weight määrittää käyttäjän painon, esim 80
+     */
+    public User(int age, String gender, int weight) {
         this.age = age;
         this.gender = gender;
         this.weight = weight;
     }
-    public int getAge(){
-        return age;
+
+    /**
+     * Palauttaa iän tekstinä
+     *
+     * @return ikä esim. 55
+     */
+    public String getAge() {
+        return String.valueOf(age);
     }
-    public String getGender(){
+
+    /**
+     * Palauttaa sukupuolen
+     *
+     * @return sukupuoli esim. "male"
+     */
+    public String getGender() {
         return gender;
     }
-    public int getWeight(){
+
+    /**
+     * Palauttaa painon numerona
+     *
+     * @return paino esim 55
+     */
+    public int getWeight() {
         return weight;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 }

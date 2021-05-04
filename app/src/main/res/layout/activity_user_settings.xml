@@ -11,9 +11,8 @@
         android:layout_width="200dp"
         android:layout_height="33dp"
         android:layout_marginTop="228dp"
-        android:text="Edit values"
+        android:text="@string/edit_values"
         android:textAlignment="center"
-        android:textColor="#070707"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +24,7 @@
         android:id="@+id/imageButton6"
         android:layout_width="32dp"
         android:layout_height="29dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/ripple_effect"
         android:onClick="backToMain"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022"
-        app:srcCompat="@drawable/outline_keyboard_backspace_24" />
+        app:srcCompat="@drawable/outline_keyboard_backspace_24"
+        android:contentDescription="@string/exitarrow" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -43,7 +43,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/calcohol" />
+        app:srcCompat="@drawable/calcohol"
+        android:contentDescription="@string/logo" />
+
 
     <RadioGroup
         android:id="@+id/radioSex"
@@ -52,7 +54,7 @@
         android:layout_marginTop="412dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -60,15 +62,14 @@
             android:id="@+id/radioFemale"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="@string/female" />
 
         <RadioButton
             android:id="@+id/radioMale"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="@string/male" />
     </RadioGroup>
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/angry_btn"
@@ -80,7 +81,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Save"
+        android:text="@string/save"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,9 +95,9 @@
         android:id="@+id/textView4"
         android:layout_width="97dp"
         android:layout_height="22dp"
-        android:text="Weight"
+        android:text="@string/weight"
         android:textAlignment="center"
-        android:textColor="#101010"
+
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,10 +108,11 @@
     <EditText
         android:id="@+id/weightStart"
         android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="168dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="160dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Weight"
+        android:hint="@string/weight"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -122,21 +124,22 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="kg"
+        android:text="@string/kg"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.612"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.749" />
+        app:layout_constraintVertical_bias="0.763" />
 
     <EditText
         android:id="@+id/newAge"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
+        android:layout_width="66dp"
+        android:layout_height="52dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Age"
+        android:hint="@string/age"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,15 +147,14 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446" />
+        app:layout_constraintVertical_bias="0.453" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="61dp"
         android:layout_height="21dp"
-        android:text="Age"
+        android:text="@string/age"
         android:textAlignment="center"
-        android:textColor="#0B0A0A"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,16 +165,17 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="59dp"
-        android:layout_height="22dp"
-        android:text="Gender"
+        android:layout_width="63dp"
+        android:layout_height="21dp"
+        android:text="@string/gender"
         android:textAlignment="center"
-        android:textColor="#090909"
+
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintVertical_bias="0.536" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
