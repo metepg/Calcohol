@@ -1,9 +1,9 @@
 package com.example.projekti;
 
 /**
- * Luokka johon tallennetaan käyttäjän lisäämiä tietoja.
- * Luokan instanssit tallennetaan puhelimeen.
- * Instansseja käytetään sovelluksessa tiedonlähteenä.
+ * <h1>Luokka johon tallennetaan käyttäjän lisäämiä tietoja juotujen juomien määrästä</h1>
+ * <p>Käyttäjä voi tallentaa tämän luokan instansseja puhelimen tiedostoon</p>
+ * <p>Instansseja käytetään sovelluksessa tiedonlähteenä</p>
  *
  * @author Mete Güneysel
  * @version 1.0 5/2021
@@ -18,7 +18,7 @@ public class DayInfo {
     /**
      * Luokan konstruktori
      *
-     * @param date, päivämäärä muodossa ("yyyy,MM,dd") esim. 2021-05-22
+     * @param date päivämäärä muodossa ("yyyy,MM,dd") esim. 2021-05-22
      */
     public DayInfo(String date) {
         this.softAmount = 0;
@@ -31,7 +31,7 @@ public class DayInfo {
     /**
      * Päivittää lisättyjen <strong>mietojen</strong> juomien määrän (minimiarvo 0)
      *
-     * @param amount, juoman määrä kokonaislukuna millilitroissa
+     * @param amount juoman määrä kokonaislukuna millilitroissa
      */
     public void updateSoft(double amount) {
         softAmount += amount;
@@ -43,7 +43,7 @@ public class DayInfo {
     /**
      * Päivittää lisättyjen <strong>vahvojen</strong> juomien määrän (minimiarvo 0)
      *
-     * @param amount, juoman määrä kokonaislukuna millilitroissa
+     * @param amount juoman määrä kokonaislukuna millilitroissa
      */
     public void updateStrong(double amount) {
         strongAmount += amount;
@@ -55,7 +55,7 @@ public class DayInfo {
     /**
      * Päivittää lisätyn <strong>viinin</strong> määrän (minimiarvo 0)
      *
-     * @param amount, juoman määrä kokonaislukuna millilitroissa
+     * @param amount juoman määrä kokonaislukuna millilitroissa
      */
     public void updateWine(double amount) {
         wineAmount += amount;
@@ -67,7 +67,7 @@ public class DayInfo {
     /**
      * Päivittää lisätyn <strong>viinan</strong> määrän (minimiarvo 0)
      *
-     * @param amount, juoman määrä kokonaislukuna millilitroissa
+     * @param amount juoman määrä kokonaislukuna millilitroissa
      */
     public void updateLiquor(double amount) {
         liquorAmount += amount;

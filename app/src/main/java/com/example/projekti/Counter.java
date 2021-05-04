@@ -22,7 +22,7 @@ public class Counter {
      * Kasvattaa tai vähentää muuttujan <strong>big</strong> arvoa yhdellä.
      * Muuttujan arvo ei voi mennä alle 0
      *
-     * @param prefix, määrittelee laskutoimituksen (+ tai -)
+     * @param prefix määrittelee laskutoimituksen (+ tai -)
      */
     public void setBig(String prefix) {
         if (prefix.equals("+")) {
@@ -39,7 +39,7 @@ public class Counter {
      * Kasvattaa tai vähentää muuttujan <strong>small</strong> arvoa yhdellä.
      * Muuttujan arvo ei voi mennä alle 0
      *
-     * @param prefix, määrittelee laskutoimituksen (+ tai -)
+     * @param prefix määrittelee laskutoimituksen (+ tai -)
      */
     public void setSmall(String prefix) {
         if (prefix.equals("+")) {

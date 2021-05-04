@@ -16,13 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.014"
-        app:srcCompat="@drawable/calcohol" />
+        app:srcCompat="@drawable/calcohol"
+        android:contentDescription="@string/logo" />
 
     <TextView
         android:id="@+id/portions"
         android:layout_width="90dp"
         android:layout_height="25dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +37,7 @@
         android:id="@+id/textView2"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:text="Portions: "
+        android:text="@string/portionsMain"
         android:textAlignment="textStart"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +51,7 @@
         android:id="@+id/burningText"
         android:layout_width="90dp"
         android:layout_height="25dp"
-        android:text="0 h"
+        android:text="@string/_0_h"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +65,7 @@
         android:id="@+id/energyAmount"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:text="Energy:"
+        android:text="@string/energy"
         android:textAlignment="textStart"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +79,7 @@
         android:id="@+id/energyText"
         android:layout_width="90dp"
         android:layout_height="25dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +93,7 @@
         android:id="@+id/alcoholText"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:text="Alcohol in blood: "
+        android:text="@string/alcohol_in_blood"
         android:textAlignment="textStart"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +107,7 @@
         android:id="@+id/burningTime"
         android:layout_width="160dp"
         android:layout_height="25dp"
-        android:text="Time to sober:"
+        android:text="@string/time_to_sober"
         android:textAlignment="textStart"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,7 +121,7 @@
         android:id="@+id/totalText"
         android:layout_width="90dp"
         android:layout_height="25dp"
-        android:text="0.0%"
+        android:text="@string/_0_0"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,7 +143,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Save data"
+        android:text="@string/save_data"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,20 +153,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
-
     <ImageButton
         android:id="@+id/chartBtn"
         android:layout_width="40dp"
         android:layout_height="44dp"
-        android:background="@drawable/ripple_effect"
+        android:background="#FFFFFF"
         android:onClick="onChart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintHorizontal_bias="0.844"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/outline_bar_chart_24" />
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/outline_bar_chart_24"
+        android:contentDescription="@string/dataimage" />
+
 
     <View
         android:layout_width="220dp"
@@ -211,7 +213,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.509"
-        app:srcCompat="@drawable/wine" />
+        app:srcCompat="@drawable/wine"
+        android:contentDescription="@string/smallportion" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/liquorPlus"
@@ -224,7 +227,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="+"
+        android:text="@string/plus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -246,7 +249,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="+"
+        android:text="@string/plus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -268,7 +271,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="+"
+        android:text="@string/plus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -283,7 +286,7 @@
         android:id="@+id/smallLiquor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
@@ -301,7 +304,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.33"
-        app:srcCompat="@drawable/strong" />
+        app:srcCompat="@drawable/strong"
+        android:contentDescription="@string/bigportion" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -313,7 +317,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.162"
-        app:srcCompat="@drawable/soft" />
+        app:srcCompat="@drawable/soft"
+        android:contentDescription="@string/bigportion"/>
 
     <Spinner
         android:id="@+id/wineSpinner"
@@ -338,7 +343,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="-"
+        android:text="@string/minus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -359,7 +364,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.336"
-        app:srcCompat="@drawable/strongsmall" />
+        app:srcCompat="@drawable/strongsmall"
+        android:contentDescription="@string/smallportion"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/liquorMinus"
@@ -372,7 +378,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="-"
+        android:text="@string/minus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -387,7 +393,7 @@
         android:id="@+id/bigWine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.655"
@@ -399,7 +405,7 @@
         android:id="@+id/bigStrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.655"
@@ -418,13 +424,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.676"
-        app:srcCompat="@drawable/liquor" />
+        app:srcCompat="@drawable/liquor"
+        android:contentDescription="@string/smallportion"/>
 
     <TextView
         android:id="@+id/smallStrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -442,7 +449,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.169"
-        app:srcCompat="@drawable/softsmall" />
+        app:srcCompat="@drawable/softsmall"
+        android:contentDescription="@string/smallportion"/>
 
     <ImageView
         android:id="@+id/imageView8"
@@ -454,7 +462,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.673"
-        app:srcCompat="@drawable/liqourbig" />
+        app:srcCompat="@drawable/liqourbig"
+        android:contentDescription="@string/bigportion"/>
 
     <Spinner
         android:id="@+id/strongSpinner"
@@ -472,7 +481,7 @@
         android:id="@+id/smallWine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -496,7 +505,7 @@
         android:id="@+id/bigSoft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.655"
@@ -515,7 +524,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="-"
+        android:text="@string/minus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -530,7 +539,7 @@
         android:id="@+id/bigLiquor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.645"
@@ -550,7 +559,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="+"
+        android:text="@string/plus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -571,13 +580,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.504"
-        app:srcCompat="@drawable/winebig" />
+        app:srcCompat="@drawable/winebig"
+        android:contentDescription="@string/bigportion"/>
 
     <TextView
         android:id="@+id/smallSoft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -596,7 +606,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="-"
+        android:text="@string/minus"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -611,15 +621,16 @@
         android:id="@+id/userBtn"
         android:layout_width="41dp"
         android:layout_height="44dp"
-        android:background="@drawable/ripple_effect"
+        android:background="#FFFFFF"
         android:onClick="onUser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.956"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/outline_settings_accessibility_20" />
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/outline_settings_accessibility_20"
+        android:contentDescription="@string/settingslogo" />
 
     <TextView
         android:id="@+id/textView12"
@@ -640,10 +651,10 @@
         android:text="@string/liquor_40"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.582" />
 
     <TextView
         android:id="@+id/textView14"
@@ -652,7 +663,7 @@
         android:text="@string/wine_12_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.419" />
@@ -664,10 +675,10 @@
         android:text="@string/strong_6_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.248" />
+        app:layout_constraintVertical_bias="0.247" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
