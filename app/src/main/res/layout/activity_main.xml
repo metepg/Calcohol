@@ -153,21 +153,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
+
     <ImageButton
         android:id="@+id/chartBtn"
         android:layout_width="40dp"
         android:layout_height="44dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/ripple_effect"
+        android:contentDescription="@string/dataimage"
         android:onClick="onChart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/outline_bar_chart_24"
-        android:contentDescription="@string/dataimage" />
-
+        app:srcCompat="@drawable/outline_bar_chart_24" />
 
     <View
         android:layout_width="220dp"
@@ -621,7 +621,7 @@
         android:id="@+id/userBtn"
         android:layout_width="41dp"
         android:layout_height="44dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/ripple_effect"
         android:onClick="onUser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
