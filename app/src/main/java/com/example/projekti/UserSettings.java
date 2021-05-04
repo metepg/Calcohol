@@ -11,9 +11,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 /**
- * Käyttäjän asetusten aktiviteetin luokka
+ * <h1>Käyttäjän asetusten aktiviteetin luokka</h1>
+ * <p>Käyttäjä pääsee muokkamaan aikaisemmin syötettyjä arvoja</p>
  *
- * @author teme
+ * @author TeemuT
  * @version 1.1 5/2021
  */
 
@@ -87,8 +88,8 @@ public class UserSettings extends AppCompatActivity {
         aged = ageText.getText().toString();
         if (aged.isEmpty()) {
             ageText.setError("Age required");
-        } else if (Integer.parseInt(aged) < 18) {
-            ageText.setError("Only 18+ year old allowed to continue");
+        } else if (Integer.parseInt(aged) < 18 || Integer.parseInt(aged) > 99) {
+            ageText.setError("Insert age between 18 - 99");
             return "";
         }
         return aged;
@@ -104,8 +105,8 @@ public class UserSettings extends AppCompatActivity {
         weighted = weightText.getText().toString();
         if (weighted.isEmpty()) {
             weightText.setError("Weight required");
-        } else if (Integer.parseInt(weighted) < 50) {
-            weightText.setError("Weight below the required limit");
+        } else if (Integer.parseInt(weighted) < 50 || Integer.parseInt(weighted) > 150) {
+            weightText.setError("Insert weight between 50 - 150 kg");
             return "";
         }
         return weighted;

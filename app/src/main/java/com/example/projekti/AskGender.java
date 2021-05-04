@@ -12,11 +12,20 @@ import android.widget.RadioGroup;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
+/**
+ * Luokka jossa kysytään sukupuolta
+ *
+ * @author Henri Iisvirta
+ * @version 1.0 5/2021
+ */
 public class AskGender extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     private final static String USER = "properties";
     private static final String GENDERKEY = "genderValue";
 
+    /**
+     * Luokan <strong>muuttujat</strong>
+     */
     Button button;
     RadioGroup groupradio;
     RadioButton groupfemale;
@@ -24,6 +33,11 @@ public class AskGender extends AppCompatActivity {
     SharedPreferences sharedPrefs;
     String gender;
 
+    /**
+     * Haetaan aplikaatioon aikaisemmin syötetyt tiedot
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

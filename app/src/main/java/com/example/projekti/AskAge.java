@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-//First activity
 public class AskAge extends AppCompatActivity {
     String[] descriptionData = {"Age", "Gender", "Weight"};
     private final static String USER = "properties";
@@ -38,14 +37,13 @@ public class AskAge extends AppCompatActivity {
         String age = ageElement.getText().toString();
         if (age.isEmpty()) {
             ageElement.setError("Age required");
-        } else if (Integer.parseInt(age) < 18) {
-            ageElement.setError("Only 18+ year old allowed to continue");
+        } else if (Integer.parseInt(age) < 18||Integer.parseInt(age) > 99) {
+            ageElement.setError("Insert age between 18 - 99");
         } else {
             SharedPreferences userPreferences = getSharedPreferences(USER, MODE_PRIVATE);
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(AGEKEY, age);
             editor.commit();
-
             Intent askGender = new Intent(this, AskGender.class);
             startActivity(askGender);
             finish();
