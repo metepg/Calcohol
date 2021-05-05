@@ -14,6 +14,8 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 
 /**
  * <h1>Aktiviteetti jossa kysytään alussa sukupuoli</h1>
+ * <p>
+ * Käytetty kirjastoa <a href="https://github.com/kofigyan/StateProgressBar">progressbarin</a> luontiin
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021
@@ -69,7 +71,7 @@ public class AskGender extends AppCompatActivity {
         //Tallennetaan valittu arvo muistiin
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString(GENDERKEY, gender);
-        editor.commit();
+        editor.apply();
         Intent askGender = new Intent(this, AskWeight.class);
         startActivity(askGender);
         finish();

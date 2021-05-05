@@ -26,7 +26,7 @@ import java.util.List;
  *     <li>tarkastamaan alkoholin määrän veressä</li>
  *     <li>näkemään juotujen juomien kalorimäärän</li>
  * </ul>
- * <h2>Tästä aktiviteestia pääsee myös:</h2>
+ * <h2>Tästä aktiviteetista pääsee myös:</h2>
  * <ul>
  *     <li>muuttamaan tietoja (userSettings)</li>
  *     <li>tarkastelemaan lisättyjä tietoja graafisessa muodossa (AmountChart)</li>

@@ -28,6 +28,8 @@ import java.util.List;
 /**
  * <h1>Käyttäjä tarkastelee lisättyä dataa</h1>
  * <p>määritellään toiminnot barchart aktiviteettiin</p>
+ * <p>
+ * Käytetty kirjastoa <a href="https://github.com/PhilJay/MPAndroidChart">mpAndroidChart</a>
  *
  * @author TeemuT
  * @version 1.0
@@ -69,6 +71,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Hakee aloitus päivän</p>
+     *
      * @param i muuttuja
      * @return Palauttaa alkavan viikon ensimmäisen päivän
      */
@@ -81,6 +84,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Laittaa oikeat pvm näkyville</p>
+     *
      * @param c muuttuva muuttuja käyttäjän valitseman viikon mukaan
      */
     public void setDays(LocalDate c) {
@@ -99,7 +103,8 @@ public class AmountChart extends AppCompatActivity {
     }
 
     /**
-     *<p>Alustaa pylvästaulukon ja päivittää sitä</p>
+     * <p>Alustaa pylvästaulukon ja päivittää sitä</p>
+     *
      * @param date Päivämuuttuja
      */
     private void getBarEntries(LocalDate date) {
@@ -235,6 +240,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Palauttaa päivän ja kuukauden</p>
+     *
      * @param date pvm esim. 2021-05-20
      * @return Palauttaa päivän ja kuukauden esim. 20.05
      */
@@ -246,6 +252,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Katsoo onko annoksia enemmän kuin nolla</p>
+     *
      * @param value Muuttuja
      * @return Palauttaa arvon nolla jos päivälle ei ole lisättty annoksia
      */
@@ -266,6 +273,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Viikon eteenpäin painalluksella</p>
+     *
      * @param view nappi
      */
     // Next button actions
@@ -281,6 +289,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Palaa viikon taaksepäin painalluksella</p>
+     *
      * @param view nappi
      */
     public void prevWeek(View view) {
@@ -294,7 +303,8 @@ public class AmountChart extends AppCompatActivity {
     }
 
     /**
-     *<p>Palaa takaisin päänäkymään</p>
+     * <p>Palaa takaisin päänäkymään</p>
+     *
      * @param view nappi pääaktiviteettiin
      */
     public void onBackP(View view) {
@@ -304,6 +314,7 @@ public class AmountChart extends AppCompatActivity {
 
     /**
      * <p>Haetaan listalta pvm mukaan viikolle dataa</p>
+     *
      * @param date Verrataan tämän hetkistä viikkoa nykyiseen viikkoon
      * @return palautetaan muuttuja pvt saadut arvot
      */
