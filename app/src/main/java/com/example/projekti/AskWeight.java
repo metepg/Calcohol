@@ -14,6 +14,8 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 /**
  * <h1>Käyttäjän painon kysely luokka</h1>
  * <p>weight aktiviteetin luokka</p>
+ * <p>
+ * Progressbarin luontiin käytetty kirjasto: https://github.com/kofigyan/StateProgressBar
  *
  * @author TeemuT
  * @version 1.0 5/2021
@@ -48,7 +50,7 @@ public class AskWeight extends AppCompatActivity {
         EditText weightElement = findViewById(R.id.editWeight);
         String weight = (weightElement.getText().toString());
         if (weight.isEmpty()) {
-            weightElement.setError("Please, enter weight");
+            weightElement.setError("Weight required");
         } else if (Integer.parseInt(weight) < 50 || Integer.parseInt(weight) > 150) {
             weightElement.setError("Insert weight between 50 - 150 kg");
         } else {

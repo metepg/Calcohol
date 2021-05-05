@@ -13,6 +13,8 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 
 /**
  * <h1>Aktiviteetti jossa kysytään ikä</h1>
+ * <p>
+ * Progressbarin luontiin käytetty kirjasto: https://github.com/kofigyan/StateProgressBar
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021
@@ -55,7 +57,7 @@ public class AskAge extends AppCompatActivity {
             SharedPreferences userPreferences = getSharedPreferences(USER, MODE_PRIVATE);
             SharedPreferences.Editor editor = userPreferences.edit();
             editor.putString(AGEKEY, age);
-            editor.commit();
+            editor.apply();
             Intent askGender = new Intent(this, AskGender.class);
             startActivity(askGender);
             finish();
