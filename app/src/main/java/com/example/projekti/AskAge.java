@@ -14,7 +14,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 /**
  * <h1>Aktiviteetti jossa kysytään ikä</h1>
  * <p>
- * Käytetty kirjastoa <a href="https://github.com/kofigyan/StateProgressBar">progressbarin</a> luontiin
+ * Progressbarin luontiin käytetty kirjasto: https://github.com/kofigyan/StateProgressBar
  *
  * @author Henri Iisvirta
  * @version 1.0 5/2021

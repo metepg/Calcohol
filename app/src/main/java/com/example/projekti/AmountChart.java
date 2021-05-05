@@ -29,7 +29,7 @@ import java.util.List;
  * <h1>Käyttäjä tarkastelee lisättyä dataa</h1>
  * <p>määritellään toiminnot barchart aktiviteettiin</p>
  * <p>
- * Käytetty kirjastoa <a href="https://github.com/PhilJay/MPAndroidChart">mpAndroidChart</a>
+ * Pylväsdiagrammiin käytetty kirjasto: https://github.com/PhilJay/MPAndroidChart
  *
  * @author TeemuT
  * @version 1.0

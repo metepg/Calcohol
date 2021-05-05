@@ -15,7 +15,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
  * <h1>Käyttäjän painon kysely luokka</h1>
  * <p>weight aktiviteetin luokka</p>
  * <p>
- * Käytetty kirjastoa <a href="https://github.com/kofigyan/StateProgressBar">progressbarin</a> luontiin
+ * Progressbarin luontiin käytetty kirjasto: https://github.com/kofigyan/StateProgressBar
  *
  * @author TeemuT
  * @version 1.0 5/2021
