@@ -50,7 +50,6 @@ public class AskGender extends AppCompatActivity {
      *
      * @param view Painettu nappi
      */
-
     public void setGender(View view) {
         //Radiogroup toiminnot määritelty sukupuoli kohtaan
         groupradio = findViewById(R.id.groupradio);
