@@ -2,6 +2,7 @@ package com.example.projekti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -36,6 +37,9 @@ import java.util.List;
  */
 public class AmountChart extends AppCompatActivity {
     Singleton savedData;
+    private final static String USER = "properties";
+
+    SharedPreferences sharedPrefs;
 
     // Muuttujat
     BarChart barChart;
@@ -43,6 +47,7 @@ public class AmountChart extends AppCompatActivity {
     BarDataSet barDataSet;
     TextView dateView;
     TextView year;
+    TextView suggText;
 
     // Tätä lukua kasvatetaan 1 jos halutaan nähdä seuraava viikko
     // 0 näyttää nykyisen viikon
@@ -64,6 +69,15 @@ public class AmountChart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_chart);
         barChart = findViewById(R.id.idBarChart);
+
+        sharedPrefs =getSharedPreferences(USER, MODE_PRIVATE);
+        String getGender = sharedPrefs.getString("genderValue", "");
+        String portionsPerWeek = getGender.equals("male") ? "14" : "9";
+
+        String suggestedText = "Recommended portions for " + getGender + "s per week is " + portionsPerWeek;
+        suggText = findViewById(R.id.suggested);
+        suggText.setText(suggestedText);
+
         LocalDate startDay = getStartDay(0);
         getBarEntries(startDay);
         setDays(startDay);
